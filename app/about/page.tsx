@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About",
@@ -22,16 +23,16 @@ const building = [
 
 export default function About() {
   return (
-    <div className="mx-auto px-7 pt-16 pb-20" style={{ maxWidth: "660px" }}>
-      <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
+    <div className="mx-auto px-7 pt-14 pb-20" style={{ maxWidth: "660px" }}>
+      <div className="flex flex-col lg:flex-row gap-12 lg:gap-14">
         {/* ── Left: Bio ─────────────────────────────────── */}
         <div className="flex-1 min-w-0">
           <h1
             className="font-semibold mb-10"
             style={{
-              fontSize: "clamp(28px, 5vw, 38px)",
-              letterSpacing: "-0.035em",
-              lineHeight: 1.1,
+              fontSize: "clamp(30px, 5vw, 42px)",
+              letterSpacing: "-0.04em",
+              lineHeight: 1.08,
               color: "var(--text)",
             }}
           >
@@ -51,9 +52,7 @@ export default function About() {
               I follow Karpathy&apos;s philosophy of learning by building. Built
               nanoGPT from scratch, trained RL agents in simulated environments,
               analyzed the Android market with data. Every project starts with{" "}
-              <em style={{ fontStyle: "italic" }}>
-                &ldquo;I want to understand this.&rdquo;
-              </em>
+              <em>&ldquo;I want to understand this.&rdquo;</em>
             </p>
             <p>
               Right now I&apos;m building Android apps targeting India. The blog
@@ -65,7 +64,7 @@ export default function About() {
           {/* Currently building */}
           <div className="mt-10">
             <p className="section-label mb-4">Currently Building</p>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
               {building.map((item) => (
                 <li
                   key={item}
@@ -73,13 +72,14 @@ export default function About() {
                   style={{ color: "var(--muted)" }}
                 >
                   <span
-                    className="mt-[7px] shrink-0"
                     style={{
                       width: "4px",
                       height: "4px",
                       borderRadius: "50%",
-                      background: "var(--muted)",
+                      background: "var(--accent)",
                       display: "inline-block",
+                      marginTop: "9px",
+                      flexShrink: 0,
                     }}
                   />
                   {item}
@@ -89,11 +89,31 @@ export default function About() {
           </div>
         </div>
 
-        {/* ── Right: Stack & Links ───────────────────────── */}
-        <div className="lg:w-48 shrink-0">
+        {/* ── Right: Photo + Stack + Links ──────────────── */}
+        <div className="lg:w-[180px] shrink-0">
+          {/* Photo */}
+          <div
+            className="rounded-xl overflow-hidden mb-8"
+            style={{
+              width: "100%",
+              maxWidth: "180px",
+              aspectRatio: "1/1",
+              border: "1px solid var(--subtle)",
+            }}
+          >
+            <Image
+              src="/abhijit.jpg"
+              alt="Abhijit Dalal"
+              width={180}
+              height={180}
+              className="w-full h-full"
+              style={{ objectFit: "cover", objectPosition: "center top" }}
+            />
+          </div>
+
           {/* Stack */}
           <div className="mb-8">
-            <p className="section-label mb-4">Stack</p>
+            <p className="section-label mb-3.5">Stack</p>
             <div className="flex flex-wrap gap-1.5">
               {stack.map((tech) => (
                 <span key={tech} className="tag">
@@ -105,8 +125,8 @@ export default function About() {
 
           {/* Links */}
           <div>
-            <p className="section-label mb-4">Links</p>
-            <div className="flex flex-col gap-2.5">
+            <p className="section-label mb-3.5">Links</p>
+            <div className="flex flex-col gap-3">
               {[
                 {
                   label: "GitHub",
@@ -114,7 +134,7 @@ export default function About() {
                   sub: "abhijitdalal26",
                 },
                 {
-                  label: "Twitter",
+                  label: "Twitter / X",
                   href: "https://x.com/abhijitdalal_",
                   sub: "@abhijitdalal_",
                 },
@@ -133,10 +153,10 @@ export default function About() {
                         ? undefined
                         : "noopener noreferrer"
                     }
-                    className="text-[14px] transition-opacity hover:opacity-60"
+                    className="text-[14px] font-[450] transition-opacity hover:opacity-60"
                     style={{ color: "var(--text)" }}
                   >
-                    {label}
+                    {label} ↗
                   </a>
                   <p
                     className="text-[12px] mt-0.5"

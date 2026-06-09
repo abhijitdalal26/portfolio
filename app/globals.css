@@ -13,6 +13,8 @@
   --subtle: #e7e5e4;
   --card: #f5f4f2;
   --accent: #2563eb;
+  --nav-bg: rgba(250, 250, 249, 0.82);
+  --card-hover: #eeece9;
 }
 
 .dark {
@@ -21,6 +23,8 @@
   --muted: #78716c;
   --subtle: #1c1b1a;
   --card: #161514;
+  --nav-bg: rgba(12, 12, 11, 0.88);
+  --card-hover: #1e1d1c;
 }
 
 /* ── Base ──────────────────────────────────────────────── */
@@ -78,6 +82,30 @@ body {
   letter-spacing: 0;
   font-family: var(--font-geist-mono), monospace;
   border: 1px solid var(--subtle);
+}
+
+/* ── Project card ──────────────────────────────────────── */
+.project-card {
+  border: 1px solid var(--subtle);
+  border-radius: 8px;
+  padding: 20px;
+  background: var(--card);
+  transition: border-color 0.18s, background 0.18s;
+}
+
+.project-card:hover {
+  border-color: var(--muted);
+  background: var(--card-hover);
+}
+
+/* ── Hover row ─────────────────────────────────────────── */
+.hover-row {
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.hover-row:hover {
+  background: var(--card);
 }
 
 /* ── Blog prose ────────────────────────────────────────── */
