@@ -213,102 +213,27 @@ export default function Home() {
           </motion.button>
         </motion.div>
 
-        {/* ── About ─────────────────────────────────────────── */}
-        <motion.section
+        {/* ── Mini bio ──────────────────────────────────────── */}
+        <motion.div
           id="about"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.7, ease }}
-          style={{ borderTop: "1px solid var(--line)", padding: "80px 0 88px" }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.65, ease }}
+          style={{ maxWidth: 620, margin: "0 auto", textAlign: "center", paddingBottom: 76 }}
         >
-          <div style={{ maxWidth: 840, margin: "0 auto" }}>
-            <span style={{ fontFamily: "var(--mono)", fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--faint)" }}>
-              About
-            </span>
-
-            <div style={{ marginTop: 32, display: "grid", gridTemplateColumns: "1fr 200px", gap: 52, alignItems: "start" }}>
-              {/* Left — bio + stack */}
-              <div>
-                <div style={{ fontSize: 19, lineHeight: 1.72, color: "var(--sub)" }}>
-                  <p style={{ marginBottom: 18 }}>
-                    Electronics &amp; Telecom student from Mumbai. Fascinated by machine
-                    intelligence — not just using AI but{" "}
-                    <span style={{ color: "var(--ink)", fontWeight: 600 }}>understanding how it actually works</span>
-                    {" "}from the math up.
-                  </p>
-                  <p style={{ marginBottom: 18 }}>
-                    I follow Karpathy&apos;s philosophy: learn by building. Built nanoGPT from scratch,
-                    trained RL agents in simulated environments, analysed the Android market with data.
-                    Every project starts with{" "}
-                    <em style={{ color: "var(--ink)", fontWeight: 500 }}>&ldquo;I want to understand this.&rdquo;</em>
-                  </p>
-                  <p>
-                    Right now{" "}
-                    <span style={{ color: "var(--ink)", fontWeight: 600 }}>building Android apps</span>
-                    {" "}targeting India. The blog is where I think out loud — AI history, things
-                    I&apos;m learning, what I&apos;m shipping.
-                  </p>
-                </div>
-
-                <div style={{ marginTop: 28, display: "flex", flexWrap: "wrap", gap: 8 }}>
-                  {["Python", "PyTorch", "Kotlin", "Android Studio", "Next.js", "Git"].map((t) => (
-                    <span key={t} className="chip">{t}</span>
-                  ))}
-                </div>
-
-                <div style={{ marginTop: 28 }}>
-                  <span style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.2, textTransform: "uppercase", color: "var(--faint)" }}>
-                    Currently building
-                  </span>
-                  <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 8 }}>
-                    {[
-                      "Android app for the Indian market",
-                      "Studying transformer architectures beyond attention",
-                    ].map((it) => (
-                      <div key={it} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
-                        <div style={{ width: 6, height: 6, borderRadius: 999, background: "#3b82f6", marginTop: 7, flexShrink: 0 }} />
-                        <span style={{ fontSize: 15, color: "var(--sub)" }}>{it}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Right — photo + links */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", aspectRatio: "1/1" }}>
-                  <Image
-                    src="/abhijit.jpg"
-                    alt="Abhijit Dalal"
-                    width={200} height={200}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
-                  />
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                  {[
-                    { label: "GitHub", href: "https://github.com/abhijitdalal26", sub: "abhijitdalal26" },
-                    { label: "Twitter / X", href: "https://x.com/abhijitdalal_", sub: "@abhijitdalal_" },
-                    { label: "Email", href: "mailto:abhijitdalal7462@gmail.com", sub: "abhijitdalal7462" },
-                  ].map(({ label, href, sub }) => (
-                    <div key={label}>
-                      <a
-                        href={href}
-                        target={href.startsWith("mailto") ? undefined : "_blank"}
-                        rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                        style={{ fontSize: 14, fontWeight: 500, color: "var(--ink)", textDecoration: "none" }}
-                      >
-                        {label} ↗
-                      </a>
-                      <p style={{ fontSize: 12, color: "var(--faint)", marginTop: 2 }}>{sub}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.section>
+          <span style={{ fontFamily: "var(--mono)", fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--faint)" }}>
+            About
+          </span>
+          <p style={{ fontSize: 21, lineHeight: 1.58, color: "var(--sub)", letterSpacing: -0.2, margin: "18px 0 0" }}>
+            Engineer based in India. I{" "}
+            <span style={{ color: "var(--ink)", fontWeight: 600 }}>build software end-to-end</span>
+            {" "}and dig into how{" "}
+            <span style={{ color: "var(--ink)", fontWeight: 600 }}>machine intelligence actually works</span>
+            {" "}— from training models from scratch to{" "}
+            <span style={{ color: "var(--ink)", fontWeight: 600 }}>shipping apps people use</span>.
+          </p>
+        </motion.div>
 
         {/* ── Projects ──────────────────────────────────────── */}
         <div style={{ borderTop: "1px solid var(--line)", paddingTop: 64 }}>
