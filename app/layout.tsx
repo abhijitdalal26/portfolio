@@ -22,11 +22,11 @@ export const metadata: Metadata = {
   },
   description:
     "Electronics student from Mumbai. I build apps and study how intelligence works — deep learning, transformers, and shipping things.",
-  metadataBase: new URL("https://abhijitdalal.vercel.app"),
+  metadataBase: new URL("https://portfolio-website-rosy-pi-50.vercel.app"),
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://abhijitdalal.vercel.app",
+    url: "https://portfolio-website-rosy-pi-50.vercel.app",
     siteName: "Abhijit Dalal",
   },
   twitter: {
