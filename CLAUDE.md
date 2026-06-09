@@ -5,7 +5,7 @@ Personal portfolio + blog for Abhijit Dalal.
 ## Commands
 
 ```bash
-npm run dev      # Start dev server (http://localhost:3000)
+npm run dev      # Start dev server (http://localhost:3002)
 npm run build    # Production build
 npm run lint     # ESLint
 vercel --prod    # Deploy to Vercel
@@ -15,6 +15,7 @@ vercel --prod    # Deploy to Vercel
 
 - **Next.js 16** (App Router, Turbopack)
 - **Tailwind CSS v4** — configuration in `app/globals.css` via `@theme`, no `tailwind.config.js`
+- **framer-motion** — page/section animations via `FadeUp` component
 - **next-mdx-remote/rsc** — renders MDX blog posts as React Server Components
 - **gray-matter** — parses frontmatter from `.mdx` files
 - **next-themes** — dark/light/system mode via `class` attribute on `<html>`
@@ -31,12 +32,14 @@ app/
   blog/page.tsx        # Blog post list
   blog/[slug]/page.tsx # Dynamic MDX post renderer
   about/page.tsx       # Bio + stack + links
+  not-found.tsx        # Custom 404 page
   sitemap.ts           # Auto-generated sitemap
   robots.ts
 components/
   Nav.tsx              # "use client" — uses usePathname
   Footer.tsx
-  ThemeToggle.tsx      # "use client" — uses useTheme
+  Hero.tsx             # Landing hero section
+  FadeUp.tsx           # "use client" — framer-motion fade-in wrapper
 content/blog/          # MDX source files (frontmatter: title, date, description)
 lib/posts.ts           # getAllPosts(), getPost(slug), formatDate()
 ```

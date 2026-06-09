@@ -1,79 +1,63 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllPosts, formatDate } from "@/lib/posts";
+import { FadeUp } from "@/components/FadeUp";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description:
-    "Things I find fascinating. Mostly AI, deep learning, and building.",
-};
+export const metadata: Metadata = { title: "Blog" };
 
 export default function Blog() {
   const posts = getAllPosts();
 
   return (
-    <div className="mx-auto px-7 pt-14 pb-20" style={{ maxWidth: "660px" }}>
-      {/* Heading */}
-      <div className="mb-12">
-        <h1
-          className="font-semibold mb-3"
-          style={{
-            fontSize: "clamp(30px, 5vw, 42px)",
-            letterSpacing: "-0.04em",
-            lineHeight: 1.08,
-            color: "var(--text)",
-          }}
-        >
-          Writing
-        </h1>
-        <p style={{ color: "var(--muted)", fontSize: "17px", lineHeight: 1.6 }}>
-          Things I find fascinating. Mostly AI, deep learning, and building.
-        </p>
-      </div>
+    <div style={{ background: "#fafaf9", minHeight: "100vh" }}>
+      <div className="mx-auto px-8 pt-28 pb-24" style={{ maxWidth: "1000px" }}>
+        <FadeUp>
+          <p className="section-label mb-3">Writing</p>
+          <h1
+            className="font-bold mb-4"
+            style={{ fontSize: "clamp(36px, 6vw, 60px)", letterSpacing: "-0.04em", lineHeight: 1.05, color: "#09090b" }}
+          >
+            Things I find<br />fascinating
+          </h1>
+          <p className="mb-16 text-[17px]" style={{ color: "#71717a", maxWidth: "460px", lineHeight: 1.65 }}>
+            Mostly AI, deep learning, and building. Written to think out loud.
+          </p>
+        </FadeUp>
 
-      {/* Post list */}
-      {posts.length === 0 ? (
-        <p style={{ color: "var(--muted)", fontSize: "15px" }}>
-          No posts yet.
-        </p>
-      ) : (
-        <div className="flex flex-col">
-          {posts.map((post, i) => (
-            <div key={post.slug}>
-              {i > 0 && (
-                <div
-                  style={{ height: "1px", background: "var(--subtle)" }}
-                />
-              )}
-              <Link
-                href={`/blog/${post.slug}`}
-                className="hover-row group block py-5 px-4 -mx-4"
-              >
-                <div className="flex items-baseline justify-between gap-4 mb-1.5">
-                  <span
-                    className="font-[450] text-[15.5px] transition-opacity group-hover:opacity-60"
-                    style={{ color: "var(--text)", letterSpacing: "-0.015em" }}
-                  >
-                    {post.title}
-                  </span>
-                  <span
-                    className="text-[12.5px] shrink-0"
-                    style={{ color: "var(--muted)" }}
-                  >
-                    {formatDate(post.date)}
-                  </span>
-                </div>
-                <p
-                  className="text-[14px] leading-[1.55]"
-                  style={{ color: "var(--muted)" }}
+        {posts.length === 0 ? (
+          <p style={{ color: "#a1a1aa" }}>No posts yet.</p>
+        ) : (
+          <div>
+            {posts.map((post, i) => (
+              <FadeUp key={post.slug} delay={i * 0.07}>
+                {i > 0 && <div style={{ height: "1px", background: "#e4e4e7" }} />}
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="group flex items-start justify-between gap-8 py-7 no-underline"
                 >
-                  {post.description}
-                </p>
-              </Link>
-            </div>
-          ))}
-        </div>
-      )}
+                  <div className="flex-1 min-w-0">
+                    <p
+                      className="font-bold mb-2 transition-colors group-hover:opacity-60"
+                      style={{ fontSize: "18px", color: "#09090b", letterSpacing: "-0.02em", lineHeight: 1.25 }}
+                    >
+                      {post.title}
+                    </p>
+                    <p className="text-[14px] leading-[1.6]" style={{ color: "#a1a1aa" }}>
+                      {post.description}
+                    </p>
+                  </div>
+                  <div className="shrink-0 pt-1 text-right">
+                    <p className="text-[13px] mb-2" style={{ color: "#a1a1aa" }}>{formatDate(post.date)}</p>
+                    <p className="text-[13px] opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: "#3b82f6" }}>
+                      Read →
+                    </p>
+                  </div>
+                </Link>
+              </FadeUp>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
