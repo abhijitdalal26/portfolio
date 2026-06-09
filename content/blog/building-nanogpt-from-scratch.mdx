@@ -1,0 +1,29 @@
+---
+title: "Building nanoGPT from Scratch — Following Karpathy"
+date: "2026-05-15"
+description: "What I learned building a character-level language model by following Andrej Karpathy's Zero to Hero lecture series."
+---
+
+There's a specific kind of understanding you only get from building something from nothing. Reading about transformers — attention weights, key-query-value projections, positional encodings — gives you the shape of the thing. Building one gives you the texture.
+
+I worked through Andrej Karpathy's *Zero to Hero* series and built a character-level GPT from scratch in PyTorch. The model is small — a few million parameters, trained on text — but architecturally it's the same thing powering the big language models. That's what makes the exercise valuable.
+
+## What clicked
+
+The bigram model you build first is almost too simple. Predict the next character using only the previous one, represented as a learned lookup table. It barely works, but it teaches the essential loop: forward pass → loss → backward pass → parameter update. Everything later builds on that loop.
+
+The jump to attention is where things got interesting. The trick Karpathy uses to motivate self-attention is elegant: start with a simple averaging of past tokens (bag-of-words), then make that averaging data-dependent. Once you see it that way — attention as a learned, contextual aggregation — the QKV matrix math stops feeling arbitrary.
+
+Multi-head attention was the moment I understood why it's plural. Different heads learn to attend to different things: one might track subject-verb agreement, another might track coreference. The model learns to decompose the representation problem.
+
+## What was hard
+
+Masking. Getting the causal mask right — ensuring the model can only see past tokens, never future ones during training — took more debugging than I expected. A single off-by-one error here and the model cheats by looking ahead.
+
+Positional encodings were also non-obvious. Without them, the model is permutation-invariant — it has no sense of order. The learned position embeddings are almost insultingly simple (just another lookup table), but they work.
+
+## What it taught me
+
+The main thing: large language models are not magic. They're next-token predictors scaled up. The architecture is clean, the training objective is simple, and the "intelligence" emerges from the scale and quality of data. Understanding the small version makes the large versions legible rather than mysterious.
+
+Karpathy's pedagogical instinct is to start from first principles and let complexity emerge. That's now how I approach most learning.

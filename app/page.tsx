@@ -1,65 +1,194 @@
-import Image from "next/image";
+import Link from "next/link";
+import { getAllPosts, formatDate } from "@/lib/posts";
+
+const featuredProjects = [
+  {
+    title: "Autonomous Racing with Reinforcement Learning",
+    description:
+      "Deep RL agents trained using PPO in Gymnasium CarRacing-v3 and Unity ML-Agents.",
+    tags: ["Python", "PyTorch", "PPO", "Unity"],
+    href: "https://github.com/abhijitdalal26/autonomous-racing-using-rl",
+  },
+  {
+    title: "HarryPotterGPT — nanoGPT from Scratch",
+    description:
+      "Built a transformer language model from scratch following Karpathy's Zero to Hero lectures.",
+    tags: ["Python", "PyTorch", "Transformers"],
+    href: "https://github.com/abhijitdalal26",
+  },
+];
 
 export default function Home() {
+  const posts = getAllPosts().slice(0, 3);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="mx-auto px-7" style={{ maxWidth: "660px" }}>
+      {/* ── Hero ─────────────────────────────────────────── */}
+      <section className="pt-20 pb-24">
+        {/* Status eyebrow */}
+        <div
+          className="flex items-center gap-2 mb-6"
+          style={{ fontSize: "12.5px", color: "var(--muted)" }}
+        >
+          <span className="pulse-dot" />
+          <span>Open to work · Building in public · Mumbai, India</span>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        {/* Name */}
+        <h1
+          className="font-semibold mb-6"
+          style={{
+            fontSize: "clamp(40px, 7vw, 58px)",
+            letterSpacing: "-0.04em",
+            lineHeight: 1.05,
+          }}
+        >
+          Abhijit
+          <br />
+          Dalal
+        </h1>
+
+        {/* Tagline */}
+        <p
+          className="mb-8 max-w-[500px]"
+          style={{ color: "var(--muted)", fontSize: "17px" }}
+        >
+          I study{" "}
+          <span className="font-[500]" style={{ color: "var(--text)" }}>
+            how intelligence works
+          </span>{" "}
+          and build apps people actually use. Electronics student by degree,{" "}
+          <span className="font-[500]" style={{ color: "var(--text)" }}>
+            indie developer
+          </span>{" "}
+          by choice — obsessed with deep learning, transformers, and shipping
+          things.
+        </p>
+
+        {/* CTA */}
+        <div className="flex items-center gap-5 flex-wrap">
+          <Link
+            href="/projects"
+            className="inline-flex items-center px-4 py-2 rounded-lg text-[14px] font-[500] transition-opacity hover:opacity-80"
+            style={{ background: "var(--text)", color: "var(--bg)" }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            See my projects
+          </Link>
+          <Link
+            href="/blog"
+            className="text-[14px] transition-opacity hover:opacity-60"
+            style={{ color: "var(--muted)" }}
           >
-            Documentation
-          </a>
+            Read the blog →
+          </Link>
         </div>
-      </main>
+      </section>
+
+      {/* ── Selected Work ─────────────────────────────────── */}
+      <section className="pb-20">
+        <p className="section-label mb-6">Selected Work</p>
+
+        <div>
+          {featuredProjects.map((project, i) => (
+            <div key={project.title}>
+              {i > 0 && (
+                <div style={{ height: "1px", background: "var(--subtle)" }} />
+              )}
+              <div className="py-5">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <p
+                      className="font-[500] mb-1.5"
+                      style={{
+                        fontSize: "15px",
+                        color: "var(--text)",
+                        letterSpacing: "-0.015em",
+                      }}
+                    >
+                      {project.title}
+                    </p>
+                    <p
+                      className="mb-3 text-[14px] leading-[1.55]"
+                      style={{ color: "var(--muted)" }}
+                    >
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.tags.map((tag) => (
+                        <span key={tag} className="tag">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[13px] shrink-0 transition-opacity hover:opacity-60 mt-0.5"
+                    style={{ color: "var(--muted)" }}
+                  >
+                    GitHub ↗
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-3">
+          <Link
+            href="/projects"
+            className="text-[13.5px] transition-opacity hover:opacity-60"
+            style={{ color: "var(--muted)" }}
+          >
+            All projects →
+          </Link>
+        </div>
+      </section>
+
+      {/* ── Writing ────────────────────────────────────────── */}
+      <section className="pb-20">
+        <p className="section-label mb-6">Writing</p>
+
+        <div>
+          {posts.map((post, i) => (
+            <div key={post.slug}>
+              {i > 0 && (
+                <div
+                  style={{ height: "1px", background: "var(--subtle)" }}
+                />
+              )}
+              <Link href={`/blog/${post.slug}`} className="group block py-4">
+                <div className="flex items-baseline justify-between gap-4">
+                  <span
+                    className="text-[15px] transition-opacity group-hover:opacity-60"
+                    style={{ color: "var(--text)", letterSpacing: "-0.01em" }}
+                  >
+                    {post.title}
+                  </span>
+                  <span
+                    className="text-[13px] shrink-0"
+                    style={{ color: "var(--muted)" }}
+                  >
+                    {formatDate(post.date)}
+                  </span>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-3">
+          <Link
+            href="/blog"
+            className="text-[13.5px] transition-opacity hover:opacity-60"
+            style={{ color: "var(--muted)" }}
+          >
+            All posts →
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
