@@ -88,8 +88,43 @@ body {
 .prose hr { border: none; border-top: 1px solid var(--line); margin: 2.5em 0; }
 .prose blockquote { border-left: 3px solid var(--accent); padding-left: 1.25em; color: var(--sub); font-style: italic; margin: 1.6em 0; }
 
-/* ── Scroll animation helper ───────────────────────────── */
+/* ── Background animated blobs ─────────────────────────── */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+.blob-1 {
+  width: 700px; height: 700px;
+  top: -8%; left: -8%;
+  background: radial-gradient(circle, rgba(255,120,73,0.15) 0%, transparent 70%);
+  animation: blob-drift 18s ease-in-out infinite;
+}
+.blob-2 {
+  width: 580px; height: 580px;
+  top: 0%; right: -6%;
+  background: radial-gradient(circle, rgba(147,197,253,0.11) 0%, transparent 70%);
+  animation: blob-drift 22s ease-in-out infinite reverse;
+  animation-delay: -6s;
+}
+.blob-3 {
+  width: 520px; height: 520px;
+  bottom: 10%; left: 30%;
+  background: radial-gradient(circle, rgba(196,181,253,0.10) 0%, transparent 70%);
+  animation: blob-drift 16s ease-in-out infinite;
+  animation-delay: -10s;
+}
+
+@keyframes blob-drift {
+  0%, 100% { transform: translate(0px,   0px)  scale(1.00); }
+  25%       { transform: translate(40px, -30px) scale(1.04); }
+  50%       { transform: translate(-20px, 40px) scale(0.97); }
+  75%       { transform: translate(30px,  20px) scale(1.02); }
+}
+
+/* ── Scroll arrow bounce ───────────────────────────────── */
 @keyframes bounce-y {
   0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(6px); }
+  50%       { transform: translateY(7px); }
 }
