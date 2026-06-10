@@ -127,7 +127,7 @@ export default function Home() {
             </div>
           </div>
 
-          <h1 style={{ fontFamily: "var(--sans)", fontSize: "clamp(48px, 9vw, 88px)", lineHeight: 1.0, fontWeight: 800, letterSpacing: "-0.03em", margin: "0 0 24px", color: "var(--ink)" }}>
+          <h1 style={{ fontFamily: "var(--sans)", fontSize: "clamp(38px, 9vw, 88px)", lineHeight: 1.0, fontWeight: 800, letterSpacing: "-0.03em", margin: "0 0 24px", color: "var(--ink)" }}>
             Abhijit Dalal
           </h1>
 

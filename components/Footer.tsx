@@ -6,10 +6,10 @@ export function Footer() {
   return (
     <footer style={{ borderTop: "1px solid var(--line)" }}>
       <div
+        className="page-wrap"
         style={{
-          maxWidth: 1240,
-          margin: "0 auto",
-          padding: "24px 48px 36px",
+          paddingTop: 24,
+          paddingBottom: 36,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",

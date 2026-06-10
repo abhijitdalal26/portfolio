@@ -51,11 +51,15 @@ body {
   align-items: start;
 }
 
+/* ── Marquee section labels ─────────────────────────── */
+.marquee-label { padding: 10px 48px 0; }
+
 @media (max-width: 720px) {
-  .page-wrap  { padding: 0 20px; }
-  .grid-2     { grid-template-columns: 1fr; }
-  .grid-2-wide{ grid-template-columns: 1fr; }
-  .about-cols { grid-template-columns: 1fr; gap: 40px; }
+  .page-wrap    { padding: 0 20px; }
+  .grid-2       { grid-template-columns: 1fr; }
+  .grid-2-wide  { grid-template-columns: 1fr; }
+  .about-cols   { grid-template-columns: 1fr; gap: 40px; }
+  .marquee-label{ padding: 10px 20px 0; }
 }
 
 /* ── Hover helpers (CSS-only, usable from Server Components) ── */

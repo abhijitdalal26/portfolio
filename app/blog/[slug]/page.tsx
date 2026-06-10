@@ -6,8 +6,6 @@ import { getAllPosts, getPost, formatDate } from "@/lib/posts";
 
 type Props = { params: Promise<{ slug: string }> };
 
-const W = { maxWidth: 1240, margin: "0 auto", padding: "0 64px" };
-
 export async function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }));
 }
@@ -26,7 +24,7 @@ export default async function BlogPost({ params }: Props) {
 
   return (
     <div style={{ background: "var(--bg)", minHeight: "100vh" }}>
-      <div style={{ ...W, paddingTop: 80, paddingBottom: 96 }}>
+      <div className="page-wrap" style={{ paddingTop: 80, paddingBottom: 96 }}>
         <div style={{ maxWidth: 680, margin: "0 auto" }}>
 
           <Link

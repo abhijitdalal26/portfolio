@@ -25,14 +25,12 @@ export function Nav() {
       }}
     >
       <div
+        className="page-wrap"
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           height: 60,
-          maxWidth: 1240,
-          margin: "0 auto",
-          padding: "0 48px",
         }}
       >
         <Link

@@ -151,13 +151,13 @@ export default function About() {
       {/* ── Scrolling strips ─────────────────────────────── */}
       <div style={{ borderTop: "1px solid var(--line)", borderBottom: "1px solid var(--line)" }}>
         <div style={{ borderBottom: "1px solid var(--line)" }}>
-          <div style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", padding: "10px 48px 0" }}>
+          <div className="marquee-label" style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)" }}>
             Areas
           </div>
           <Marquee items={areas} />
         </div>
         <div>
-          <div style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", padding: "10px 48px 0" }}>
+          <div className="marquee-label" style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)" }}>
             Stack
           </div>
           <Marquee items={stackBadges} reverse />
