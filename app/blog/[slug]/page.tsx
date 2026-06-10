@@ -6,6 +6,8 @@ import { getAllPosts, getPost, formatDate } from "@/lib/posts";
 
 type Props = { params: Promise<{ slug: string }> };
 
+const W = { maxWidth: 1240, margin: "0 auto", padding: "0 64px" };
+
 export async function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }));
 }
@@ -23,36 +25,48 @@ export default async function BlogPost({ params }: Props) {
   if (!post) notFound();
 
   return (
-    <div style={{ background: "#fafaf9", minHeight: "100vh" }}>
-      <div className="mx-auto px-8 pt-28 pb-24" style={{ maxWidth: "720px" }}>
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-1.5 text-[13px] mb-12 transition-opacity hover:opacity-60"
-          style={{ color: "#a1a1aa" }}
-        >
-          ← All posts
-        </Link>
+    <div style={{ background: "var(--bg)", minHeight: "100vh" }}>
+      <div style={{ ...W, paddingTop: 80, paddingBottom: 96 }}>
+        <div style={{ maxWidth: 680, margin: "0 auto" }}>
 
-        <header className="mb-12">
-          <p className="section-label mb-4">{formatDate(post.date)}</p>
-          <h1
-            className="font-bold mb-4"
-            style={{ fontSize: "clamp(28px, 5vw, 44px)", letterSpacing: "-0.035em", lineHeight: 1.08, color: "#09090b" }}
+          <Link
+            href="/blog"
+            style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13, marginBottom: 48, color: "var(--faint)", textDecoration: "none" }}
           >
-            {post.title}
-          </h1>
-          {post.description && (
-            <p style={{ fontSize: "17px", lineHeight: 1.65, color: "#71717a" }}>
-              {post.description}
-            </p>
-          )}
-        </header>
+            ← All posts
+          </Link>
 
-        <div style={{ height: "1px", background: "#e4e4e7", marginBottom: "2.5rem" }} />
+          <header style={{ marginBottom: 48 }}>
+            <span style={{ fontFamily: "var(--mono)", fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--faint)" }}>
+              {formatDate(post.date)}
+            </span>
+            <h1
+              style={{
+                fontFamily: "var(--disp)",
+                fontSize: "clamp(28px, 5vw, 44px)",
+                letterSpacing: "-0.035em",
+                lineHeight: 1.08,
+                color: "var(--ink)",
+                fontWeight: 600,
+                marginTop: 16,
+                marginBottom: 16,
+              }}
+            >
+              {post.title}
+            </h1>
+            {post.description && (
+              <p style={{ fontSize: 17, lineHeight: 1.65, color: "var(--sub)" }}>
+                {post.description}
+              </p>
+            )}
+          </header>
 
-        <article className="prose">
-          <MDXRemote source={post.content} />
-        </article>
+          <div style={{ height: 1, background: "var(--line)", marginBottom: 40 }} />
+
+          <article className="prose">
+            <MDXRemote source={post.content} />
+          </article>
+        </div>
       </div>
     </div>
   );

@@ -1,46 +1,66 @@
+"use client";
+
+import Link from "next/link";
+
 export function Footer() {
   return (
-    <footer
-      style={{
-        maxWidth: 1240,
-        margin: "0 auto",
-        padding: "30px 64px 48px",
-        marginTop: 84,
-        borderTop: "1px solid var(--line)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}
-    >
-      <span style={{ fontSize: 14, color: "var(--faint)", whiteSpace: "nowrap" }}>
-        © 2026 Abhijit Dalal · Next.js
-      </span>
-      <div style={{ display: "flex", gap: 24, fontSize: 14, color: "var(--sub)" }}>
-        {[
-          { label: "GitHub", href: "https://github.com/abhijitdalal26" },
-          { label: "X / Twitter", href: "https://x.com/abhijitdalal_" },
-          { label: "Email", href: "mailto:abhijitdalal7462@gmail.com" },
-        ].map(({ label, href }) => (
-          <a
-            key={label}
-            href={href}
-            target={href.startsWith("mailto") ? undefined : "_blank"}
-            rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 5,
-              color: "var(--sub)",
-              textDecoration: "none",
-              transition: "color 0.15s",
-            }}
+    <footer style={{ borderTop: "1px solid var(--line)" }}>
+      <div
+        style={{
+          maxWidth: 1240,
+          margin: "0 auto",
+          padding: "24px 48px 36px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 24,
+          flexWrap: "wrap",
+        }}
+      >
+        <div>
+          <Link
+            href="/"
+            style={{ fontSize: 15, fontWeight: 600, color: "var(--ink)", textDecoration: "none", display: "block", marginBottom: 3 }}
           >
-            {label}{" "}
-            <svg width={13} height={13} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M4 12L12 4M5 4h7v7" />
-            </svg>
-          </a>
-        ))}
+            Abhijit Dalal
+          </Link>
+          <span style={{ fontSize: 13, color: "var(--faint)", fontFamily: "var(--mono)" }}>
+            © 2026 · Built with Next.js
+          </span>
+        </div>
+
+        <div style={{ display: "flex", gap: 4 }}>
+          {[
+            { label: "GitHub",    href: "https://github.com/abhijitdalal26" },
+            { label: "Twitter",   href: "https://x.com/abhijitdalal_" },
+            { label: "Email",     href: "mailto:abhijitdalal7462@gmail.com" },
+          ].map(({ label, href }) => (
+            <a
+              key={label}
+              href={href}
+              target={href.startsWith("mailto") ? undefined : "_blank"}
+              rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+              style={{
+                fontSize: 13.5,
+                color: "var(--sub)",
+                textDecoration: "none",
+                padding: "6px 12px",
+                borderRadius: 6,
+                transition: "color 0.15s, background 0.15s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "var(--ink)";
+                e.currentTarget.style.background = "var(--panel)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = "var(--sub)";
+                e.currentTarget.style.background = "transparent";
+              }}
+            >
+              {label}
+            </a>
+          ))}
+        </div>
       </div>
     </footer>
   );
