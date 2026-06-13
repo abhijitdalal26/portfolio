@@ -218,3 +218,126 @@ body {
 .prose li { margin-bottom: 0.4em; }
 .prose hr { border: none; border-top: 1px solid var(--line); margin: 2.5em 0; }
 .prose blockquote { border-left: 3px solid var(--line); padding-left: 1.25em; color: var(--sub); font-style: italic; margin: 1.6em 0; }
+
+/* ── Tablet padding (721–1024px) ───────────────────────── */
+@media (min-width: 721px) and (max-width: 1024px) {
+  .page-wrap   { padding: 0 32px; }
+  .about-cols  { gap: 48px; }
+}
+
+/* ── Very small phones (<400px) ────────────────────────── */
+@media (max-width: 400px) {
+  .page-wrap { padding: 0 16px; }
+}
+
+/* ── Nav — hamburger / desktop links ───────────────────── */
+.nav-links     { display: flex; align-items: center; gap: 2px; }
+.nav-hamburger { display: none; align-items: center; justify-content: center; }
+
+@media (max-width: 720px) {
+  .nav-links     { display: none; }
+  .nav-hamburger { display: flex; }
+}
+
+/* ── Nav mobile dropdown ────────────────────────────────── */
+.nav-mobile-menu {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  z-index: 98;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  padding: 8px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ── Hero responsive ────────────────────────────────────── */
+.hero-content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 72px 24px 48px;
+}
+@media (max-width: 720px) {
+  .hero-content { padding: 40px 20px 32px; }
+}
+
+.hero-avatar {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 32px;
+  border: 2px solid rgba(0,0,0,0.1);
+}
+@media (max-width: 480px) {
+  .hero-avatar { width: 80px; height: 80px; margin-bottom: 24px; }
+}
+
+/* ── Blog list row ──────────────────────────────────────── */
+.blog-row {
+  text-decoration: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 26px 14px;
+  margin: 0 -14px;
+}
+@media (max-width: 560px) {
+  .blog-row             { flex-direction: column; gap: 4px; padding: 20px 14px; }
+  .blog-row-meta        { text-align: left; padding-top: 0; }
+}
+
+/* ── About photo ────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .about-photo { max-width: 200px; margin-left: auto; margin-right: auto; }
+}
+
+/* ── Section spacing ────────────────────────────────────── */
+.s-pt-80 { padding-top: 80px; }
+.s-pt-64 { padding-top: 64px; }
+.s-pb-88 { padding-bottom: 88px; }
+.s-pb-20 { padding-bottom: 20px; }
+
+@media (max-width: 720px) {
+  .s-pt-80 { padding-top: 48px; }
+  .s-pt-64 { padding-top: 40px; }
+  .s-pb-88 { padding-bottom: 56px; }
+}
+
+/* ── Touch targets on mobile ────────────────────────────── */
+@media (max-width: 720px) {
+  .btn-primary, .btn-ghost { min-height: 44px; }
+  .btn-primary             { padding: 12px 22px; }
+  .btn-ghost               { padding: 12px 22px; }
+}
+
+/* ── Prose mobile ───────────────────────────────────────── */
+@media (max-width: 720px) {
+  .prose          { font-size: 16px; }
+  .prose pre      { padding: 14px; }
+  .prose h2       { font-size: 22px; }
+  .prose h3       { font-size: 18px; }
+}
+
+/* ── Theme toggle view transition ───────────────────────── */
+::view-transition-old(root) { animation: none; }
+::view-transition-new(root) { animation: theme-reveal 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+
+@keyframes theme-reveal {
+  from { clip-path: circle(0% at var(--toggle-x, 50%) var(--toggle-y, 50%)); }
+  to   { clip-path: circle(170% at var(--toggle-x, 50%) var(--toggle-y, 50%)); }
+}
