@@ -244,26 +244,17 @@ body {
 .nav-hamburger { display: none; align-items: center; }
 
 .nav-link {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
-  color: var(--sub);
+  color: var(--ink);
   text-decoration: none;
-  padding: 10px 13px;
-  transition: color 0.15s;
-  min-height: 44px;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
   display: inline-flex;
   align-items: center;
 }
-.nav-link:hover  { color: var(--ink); }
-.nav-link-active { color: var(--ink); font-weight: 500; }
-
-.nav-divider {
-  display: inline-block;
-  width: 1px;
-  height: 16px;
-  background: var(--line);
-  margin: 0 8px;
-}
+.nav-link:hover  { opacity: 1; }
+.nav-link-active { opacity: 1; }
 
 .nav-icon-btn {
   display: inline-flex;
@@ -271,30 +262,31 @@ body {
   justify-content: center;
   width: 32px;
   height: 32px;
-  border-radius: 6px;
   border: none;
   background: transparent;
-  color: var(--faint);
+  color: var(--ink);
+  opacity: 0.6;
   text-decoration: none;
   cursor: pointer;
-  transition: color 0.15s;
+  transition: opacity 0.2s ease;
   padding: 0;
 }
-.nav-icon-btn:hover { color: var(--ink); }
+.nav-icon-btn:hover { opacity: 1; }
 
 @media (max-width: 720px) {
   .nav-links     { display: none; }
-  .nav-hamburger { display: flex; gap: 4px; }
+  .nav-hamburger { display: flex; }
 }
 
 /* ── Nav mobile dropdown ────────────────────────────────── */
 .nav-mobile-menu {
-  position: fixed;
-  top: 56px;
+  position: absolute;
+  top: 100%;
   left: 0;
   right: 0;
-  z-index: 98;
+  z-index: 100;
   background: var(--bg);
+  border-bottom: 1px solid var(--line);
   padding: 8px 20px 16px;
   display: flex;
   flex-direction: column;
@@ -389,26 +381,19 @@ body {
 }
 
 /* ── Theme toggle view transition ───────────────────────── */
+/* WAAPI drives the clip-path animation from ThemeToggle.tsx;
+   disable browser defaults, then layer based on direction.  */
 
-/* Default (going to light): new light theme expands from button */
-::view-transition-old(root) { animation: none; z-index: 1; }
-::view-transition-new(root) { animation: theme-reveal 0.7s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; }
-
-/* Going to dark: NEW dark expands from bottom-left corner */
-:root[data-theme-to="dark"] ::view-transition-old(root) {
+::view-transition-old(root),
+::view-transition-new(root) {
   animation: none;
-  z-index: 1;
-}
-:root[data-theme-to="dark"] ::view-transition-new(root) {
-  animation: theme-reveal-corner 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 2;
+  mix-blend-mode: normal;
 }
 
-@keyframes theme-reveal {
-  from { clip-path: circle(0% at var(--toggle-x, 100%) var(--toggle-y, 0%)); }
-  to   { clip-path: circle(170% at var(--toggle-x, 100%) var(--toggle-y, 0%)); }
-}
-@keyframes theme-reveal-corner {
-  from { clip-path: circle(0% at 0% 100%); }
-  to   { clip-path: circle(170% at 0% 100%); }
-}
+/* dark → light: new (light) expands on top */
+[data-theme-direction="to-light"]::view-transition-new(root) { z-index: 9999; }
+[data-theme-direction="to-light"]::view-transition-old(root) { z-index: 1; }
+
+/* light → dark: old (light) shrinks on top, revealing new (dark) below */
+[data-theme-direction="to-dark"]::view-transition-old(root)  { z-index: 9999; }
+[data-theme-direction="to-dark"]::view-transition-new(root)  { z-index: 1; }

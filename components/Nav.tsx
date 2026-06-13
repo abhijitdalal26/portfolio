@@ -2,10 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { flushSync } from "react-dom";
 import { AnimatedSignature } from "./AnimatedSignature";
+import { ThemeToggle } from "./ThemeToggle";
 
 const links = [
   { href: "/projects", label: "Projects" },
@@ -29,117 +28,40 @@ function GitHubIcon() {
   );
 }
 
-function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) return <div style={{ width: 32, height: 32 }} />;
-
-  const isDark = resolvedTheme === "dark";
-
-  const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-    const next = isDark ? "light" : "dark";
-
-    if (!("startViewTransition" in document)) {
-      setTheme(next);
-      return;
-    }
-
-    document.documentElement.style.setProperty("--toggle-x", `${x}px`);
-    document.documentElement.style.setProperty("--toggle-y", `${y}px`);
-    document.documentElement.dataset.themeTo = next;
-
-    const vt = document as Document & {
-      startViewTransition: (cb: () => void) => { finished: Promise<void> };
-    };
-    const transition = vt.startViewTransition(() => {
-      flushSync(() => setTheme(next));
-    });
-    transition.finished.then(() => {
-      delete document.documentElement.dataset.themeTo;
-    });
-  };
-
-  return (
-    <button onClick={handleToggle} aria-label="Toggle theme" className="nav-icon-btn">
-      {isDark ? (
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="5"/>
-          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-      ) : (
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      )}
-    </button>
-  );
-}
-
 export function Nav() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [atTop, setAtTop] = useState(true);
   const isHome = pathname === "/";
 
   useEffect(() => { setMenuOpen(false); }, [pathname]);
 
-  useEffect(() => {
-    if (!isHome) { setAtTop(false); return; }
-    const onScroll = () => setAtTop(window.scrollY < 60);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [isHome]);
-
   return (
-    <>
-      <nav
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 100,
-          background: isHome && atTop ? "transparent" : "var(--bg)",
-          transition: "background 0.4s ease",
-        }}
-      >
-        <div
-          className="page-wrap"
-          style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 56 }}
-        >
-          {/* LEFT: animated signature as home link */}
+    <div style={{ position: "relative" }}>
+      <nav style={{
+        background: isHome ? "transparent" : "var(--bg)",
+        borderBottom: isHome ? "none" : "1px solid var(--line)",
+      }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "1.5rem 2rem" }}>
           <Link href="/" style={{ textDecoration: "none", color: "var(--ink)", display: "flex", alignItems: "center" }}>
             <AnimatedSignature />
           </Link>
 
-          {/* RIGHT desktop: links + icons */}
-          <div className="nav-links" style={{ alignItems: "center", gap: 0 }}>
+          {/* Desktop */}
+          <div className="nav-links" style={{ alignItems: "center", gap: "1.2rem" }}>
             {links.map(({ href, label }) => {
               const isActive = pathname === href || pathname.startsWith(href + "/");
               return (
-                <Link
-                  key={href}
-                  href={href}
-                  className={`nav-link${isActive ? " nav-link-active" : ""}`}
-                >
+                <Link key={href} href={href} className={`nav-link${isActive ? " nav-link-active" : ""}`}>
                   {label}
                 </Link>
               );
             })}
-            <span className="nav-divider" />
             <GitHubIcon />
             <ThemeToggle />
           </div>
 
-          {/* Mobile: icons + hamburger */}
-          <div className="nav-hamburger" style={{ gap: 4 }}>
+          {/* Mobile */}
+          <div className="nav-hamburger" style={{ gap: "1.2rem" }}>
             <GitHubIcon />
             <ThemeToggle />
             <button
@@ -161,23 +83,18 @@ export function Nav() {
         </div>
       </nav>
 
-      {/* Mobile dropdown */}
       {menuOpen && (
         <div className="nav-mobile-menu">
           {links.map(({ href, label }) => {
             const isActive = pathname === href || pathname.startsWith(href + "/");
             return (
-              <Link
-                key={href}
-                href={href}
-                className={`nav-mobile-link${isActive ? " nav-link-active" : ""}`}
-              >
+              <Link key={href} href={href} className={`nav-mobile-link${isActive ? " nav-link-active" : ""}`}>
                 {label}
               </Link>
             );
           })}
         </div>
       )}
-    </>
+    </div>
   );
 }
