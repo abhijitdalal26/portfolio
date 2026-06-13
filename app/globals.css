@@ -16,6 +16,17 @@
   --mono: "JetBrains Mono", monospace;
 }
 
+.dark {
+  --bg:         #0c0c0b;
+  --panel:      #161514;
+  --ink:        #f2f0ed;
+  --sub:        #78716c;
+  --faint:      #57534e;
+  --line:       rgba(255,255,255,0.09);
+  --accent:     #3b82f6;
+  --accent-ink: #0c0c0b;
+}
+
 /* ── Base ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; background: var(--bg); }
