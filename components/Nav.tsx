@@ -36,7 +36,7 @@ export function Nav() {
   useEffect(() => { setMenuOpen(false); }, [pathname]);
 
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative", zIndex: 10 }}>
       <nav style={{
         background: isHome ? "transparent" : "var(--bg)",
         borderBottom: isHome ? "none" : "1px solid var(--line)",
