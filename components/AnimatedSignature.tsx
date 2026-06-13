@@ -1,20 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 export function AnimatedSignature() {
+  const [version, setVersion] = useState(0);
   const [drawn, setDrawn] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setDrawn(true), 250);
+    setDrawn(false);
+    const t = setTimeout(() => setDrawn(true), version === 0 ? 300 : 60);
     return () => clearTimeout(t);
-  }, []);
+  }, [version]);
 
-  const seg = (delay: number, duration = 0.8) => ({
+  const retrigger = useCallback(() => setVersion(v => v + 1), []);
+
+  const seg = (delay: number, dur = 0.42) => ({
     strokeDasharray: "1",
-    strokeDashoffset: drawn ? 0 : 1,
+    strokeDashoffset: drawn ? "0" : "1",
     transition: drawn
-      ? `stroke-dashoffset ${duration}s cubic-bezier(0.4,0,0.2,1) ${delay}s`
+      ? `stroke-dashoffset ${dur}s cubic-bezier(0.4,0,0.2,1) ${delay}s`
       : "none",
   });
 
@@ -23,40 +27,39 @@ export function AnimatedSignature() {
     stroke: "currentColor",
     strokeLinecap: "round" as const,
     strokeLinejoin: "round" as const,
+    strokeWidth: 2,
   };
 
   return (
     <svg
-      viewBox="0 0 80 50"
-      width="70"
-      height="44"
+      viewBox="0 0 76 46"
+      width="68"
+      height="42"
       aria-label="Abhijit Dalal"
+      onMouseEnter={retrigger}
       style={{ display: "block", overflow: "visible", color: "var(--ink)" }}
     >
-      {/* Cursive A */}
-      <path
-        {...base}
-        pathLength={1}
-        strokeWidth={2}
-        d="M 12,40 C 20,20 25,10 30,10 C 35,10 32,20 25,40 C 20,50 12,40 16,32 C 20,25 25,25 35,25 C 45,25 48,22 50,22"
-        style={seg(0, 0.9)}
+      {/* A — left leg */}
+      <path {...base} pathLength={1} d="M 3,42 L 17,5" style={seg(0, 0.36)} />
+      {/* A — right leg */}
+      <path {...base} pathLength={1} d="M 17,5 L 31,42" style={seg(0.07, 0.36)} />
+      {/* A — crossbar */}
+      <path {...base} pathLength={1} d="M 9.5,26 L 24.5,26" style={seg(0.24, 0.22)} />
+      {/* separator dot */}
+      <circle
+        cx="37.5"
+        cy="42"
+        r="1.8"
+        fill="currentColor"
+        style={{
+          opacity: drawn ? 0.35 : 0,
+          transition: drawn ? "opacity 0.2s ease 0.62s" : "none",
+        }}
       />
-      {/* Cursive d */}
-      <path
-        {...base}
-        pathLength={1}
-        strokeWidth={2}
-        d="M 50,22 C 42,20 38,25 38,32 C 38,40 45,42 50,38 C 52,35 54,20 55,5 C 55,5 52,30 52,40 C 52,45 57,45 60,38"
-        style={seg(0.8, 0.8)}
-      />
-      {/* Flourish */}
-      <path
-        {...base}
-        pathLength={1}
-        strokeWidth={1.5}
-        d="M 8,46 C 30,48 50,48 72,44"
-        style={{ ...seg(1.5, 0.5), opacity: 0.42 }}
-      />
+      {/* D — vertical stroke */}
+      <path {...base} pathLength={1} d="M 44,5 L 44,42" style={seg(0.38, 0.32)} />
+      {/* D — open curve */}
+      <path {...base} pathLength={1} d="M 44,5 C 59,5 68,13 68,23.5 C 68,34 59,42 44,42" style={seg(0.44, 0.46)} />
     </svg>
   );
 }
