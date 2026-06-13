@@ -99,7 +99,7 @@ export function AuroraBg() {
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(ellipse 90% 70% at 50% 50%, transparent 40%, rgba(250,250,249,0.7) 100%)",
+            "radial-gradient(ellipse 90% 70% at 50% 50%, transparent 40%, var(--bg) 100%)",
         }}
       />
     </div>

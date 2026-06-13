@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { flushSync } from "react-dom";
+import { AnimatedSignature } from "./AnimatedSignature";
 
 const links = [
   { href: "/projects", label: "Projects" },
@@ -12,12 +13,28 @@ const links = [
   { href: "/about",    label: "About"    },
 ];
 
+function GitHubIcon() {
+  return (
+    <a
+      href="https://github.com/abhijitdalal26"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="GitHub"
+      className="nav-icon-btn"
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+      </svg>
+    </a>
+  );
+}
+
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  if (!mounted) return <div style={{ width: 44, height: 44 }} />;
+  if (!mounted) return <div style={{ width: 32, height: 32 }} />;
 
   const isDark = resolvedTheme === "dark";
 
@@ -34,40 +51,23 @@ function ThemeToggle() {
 
     document.documentElement.style.setProperty("--toggle-x", `${x}px`);
     document.documentElement.style.setProperty("--toggle-y", `${y}px`);
+    document.documentElement.dataset.themeTo = next;
 
-    (document as Document & { startViewTransition: (cb: () => void) => void })
-      .startViewTransition(() => { flushSync(() => setTheme(next)); });
+    const vt = document as Document & {
+      startViewTransition: (cb: () => void) => { finished: Promise<void> };
+    };
+    const transition = vt.startViewTransition(() => {
+      flushSync(() => setTheme(next));
+    });
+    transition.finished.then(() => {
+      delete document.documentElement.dataset.themeTo;
+    });
   };
 
   return (
-    <button
-      onClick={handleToggle}
-      aria-label="Toggle theme"
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: 44,
-        height: 44,
-        borderRadius: 8,
-        border: "1px solid var(--line)",
-        background: "transparent",
-        color: "var(--sub)",
-        cursor: "pointer",
-        flexShrink: 0,
-        transition: "background 0.15s, color 0.15s",
-      }}
-      onMouseEnter={e => {
-        (e.currentTarget as HTMLButtonElement).style.background = "var(--panel)";
-        (e.currentTarget as HTMLButtonElement).style.color = "var(--ink)";
-      }}
-      onMouseLeave={e => {
-        (e.currentTarget as HTMLButtonElement).style.background = "transparent";
-        (e.currentTarget as HTMLButtonElement).style.color = "var(--sub)";
-      }}
-    >
+    <button onClick={handleToggle} aria-label="Toggle theme" className="nav-icon-btn">
       {isDark ? (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="12" cy="12" r="5"/>
           <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
           <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
@@ -75,7 +75,7 @@ function ThemeToggle() {
           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
         </svg>
       ) : (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
         </svg>
       )}
@@ -86,8 +86,18 @@ function ThemeToggle() {
 export function Nav() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [atTop, setAtTop] = useState(true);
+  const isHome = pathname === "/";
 
   useEffect(() => { setMenuOpen(false); }, [pathname]);
+
+  useEffect(() => {
+    if (!isHome) { setAtTop(false); return; }
+    const onScroll = () => setAtTop(window.scrollY < 60);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isHome]);
 
   return (
     <>
@@ -96,77 +106,53 @@ export function Nav() {
           position: "sticky",
           top: 0,
           zIndex: 100,
-          backdropFilter: "blur(16px) saturate(180%)",
-          WebkitBackdropFilter: "blur(16px) saturate(180%)",
-          background: "color-mix(in srgb, var(--bg) 88%, transparent)",
-          borderBottom: "1px solid var(--line)",
+          background: isHome && atTop ? "transparent" : "var(--bg)",
+          transition: "background 0.4s ease",
         }}
       >
         <div
           className="page-wrap"
-          style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 60 }}
+          style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 56 }}
         >
-          <Link
-            href="/"
-            style={{ fontFamily: "var(--sans)", fontSize: 15, fontWeight: 600, letterSpacing: -0.3, color: "var(--ink)", textDecoration: "none" }}
-          >
-            Abhijit Dalal
+          {/* LEFT: animated signature as home link */}
+          <Link href="/" style={{ textDecoration: "none", color: "var(--ink)", display: "flex", alignItems: "center" }}>
+            <AnimatedSignature />
           </Link>
 
-          {/* Desktop nav links */}
-          <div className="nav-links">
+          {/* RIGHT desktop: links + icons */}
+          <div className="nav-links" style={{ alignItems: "center", gap: 0 }}>
             {links.map(({ href, label }) => {
               const isActive = pathname === href || pathname.startsWith(href + "/");
               return (
                 <Link
                   key={href}
                   href={href}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    padding: "10px 14px",
-                    borderRadius: 8,
-                    fontSize: 14,
-                    fontWeight: isActive ? 500 : 400,
-                    color: isActive ? "var(--accent)" : "var(--sub)",
-                    textDecoration: "none",
-                    background: isActive ? "rgba(37,99,235,0.07)" : "transparent",
-                    transition: "background 0.15s, color 0.15s",
-                  }}
+                  className={`nav-link${isActive ? " nav-link-active" : ""}`}
                 >
                   {label}
                 </Link>
               );
             })}
+            <span className="nav-divider" />
+            <GitHubIcon />
             <ThemeToggle />
           </div>
 
-          {/* Mobile right side: theme + hamburger */}
-          <div className="nav-hamburger" style={{ gap: 8 }}>
+          {/* Mobile: icons + hamburger */}
+          <div className="nav-hamburger" style={{ gap: 4 }}>
+            <GitHubIcon />
             <ThemeToggle />
             <button
               onClick={() => setMenuOpen(o => !o)}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: 44,
-                height: 44,
-                borderRadius: 8,
-                border: "1px solid var(--line)",
-                background: menuOpen ? "var(--panel)" : "transparent",
-                color: "var(--ink)",
-                cursor: "pointer",
-                transition: "background 0.15s",
-              }}
+              className="nav-icon-btn"
             >
               {menuOpen ? (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
                 </svg>
               ) : (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
                 </svg>
               )}
@@ -184,16 +170,7 @@ export function Nav() {
               <Link
                 key={href}
                 href={href}
-                style={{
-                  display: "block",
-                  padding: "12px 10px",
-                  borderRadius: 8,
-                  fontSize: 15,
-                  fontWeight: isActive ? 500 : 400,
-                  color: isActive ? "var(--accent)" : "var(--ink)",
-                  textDecoration: "none",
-                  background: isActive ? "rgba(37,99,235,0.07)" : "transparent",
-                }}
+                className={`nav-mobile-link${isActive ? " nav-link-active" : ""}`}
               >
                 {label}
               </Link>

@@ -102,7 +102,7 @@ export default function Home() {
     <div style={{ background: "var(--bg)", color: "var(--ink)", fontFamily: "var(--sans)" }}>
 
       {/* ── Hero ─────────────────────────────────────────── */}
-      <div style={{ position: "relative", overflow: "hidden", minHeight: "calc(100vh - 60px)", display: "flex", flexDirection: "column" }}>
+      <div style={{ position: "relative", overflow: "hidden", minHeight: "100vh", marginTop: -60, paddingTop: 60, display: "flex", flexDirection: "column" }}>
         <AuroraBg />
 
         <div className="hero-content">
