@@ -1,4 +1,4 @@
-# abhijit dalal — portfolio
+# abhijit dalal / portfolio
 
 Personal portfolio and blog. Built with Next.js 16, Tailwind CSS v4, and MDX.
 
@@ -6,11 +6,11 @@ Personal portfolio and blog. Built with Next.js 16, Tailwind CSS v4, and MDX.
 
 ## Stack
 
-- **Next.js 16** — App Router, Turbopack
-- **Tailwind CSS v4** — config via `app/globals.css`, no `tailwind.config.js`
-- **next-mdx-remote** — MDX blog posts rendered as React Server Components
-- **framer-motion** — page animations
-- **next-themes** — light/dark toggle with View Transitions API ripple effect
+- **Next.js 16** (App Router, Turbopack)
+- **Tailwind CSS v4** (config via `app/globals.css`, no `tailwind.config.js`)
+- **next-mdx-remote** (MDX blog posts as React Server Components)
+- **framer-motion** (page animations)
+- **next-themes** (light/dark toggle with View Transitions API ripple)
 
 ## Dev
 
@@ -37,7 +37,7 @@ Content here...
 
 ## Deploy
 
-Connected to Vercel — pushing to `main` auto-deploys to production.
+Connected to Vercel. Pushing to `main` auto-deploys to production.
 
 ```bash
 git push origin main
