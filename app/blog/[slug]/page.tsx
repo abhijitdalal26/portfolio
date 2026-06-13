@@ -24,7 +24,7 @@ export default async function BlogPost({ params }: Props) {
 
   return (
     <div style={{ background: "var(--bg)", minHeight: "100vh" }}>
-      <div className="page-wrap" style={{ paddingTop: 80, paddingBottom: 96 }}>
+      <div className="page-wrap s-pt-80" style={{ paddingBottom: 96 }}>
         <div style={{ maxWidth: 680, margin: "0 auto" }}>
 
           <Link

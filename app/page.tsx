@@ -105,26 +105,10 @@ export default function Home() {
       <div style={{ position: "relative", overflow: "hidden", minHeight: "calc(100vh - 60px)", display: "flex", flexDirection: "column" }}>
         <AuroraBg />
 
-        <div
-          style={{
-            position: "relative",
-            zIndex: 1,
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
-            maxWidth: 680,
-            margin: "0 auto",
-            padding: "72px 24px 48px",
-          }}
-        >
-          <div style={{ marginBottom: 32 }}>
-            <div style={{ width: 112, height: 112, borderRadius: "50%", overflow: "hidden", margin: "0 auto", border: "2px solid rgba(0,0,0,0.1)" }}>
-              <Image src="/abhijit.jpg" alt="Abhijit Dalal" width={112} height={112} priority
-                style={{ objectFit: "cover", objectPosition: "center top", width: "100%", height: "100%" }} />
-            </div>
+        <div className="hero-content">
+          <div className="hero-avatar">
+            <Image src="/abhijit.jpg" alt="Abhijit Dalal" width={112} height={112} priority
+              style={{ objectFit: "cover", objectPosition: "center top", width: "100%", height: "100%" }} />
           </div>
 
           <h1 style={{ fontFamily: "var(--sans)", fontSize: "clamp(38px, 9vw, 88px)", lineHeight: 1.0, fontWeight: 800, letterSpacing: "-0.03em", margin: "0 0 24px", color: "var(--ink)" }}>
@@ -152,7 +136,7 @@ export default function Home() {
       </div>
 
       {/* ── Projects ─────────────────────────────────────── */}
-      <div className="page-wrap" style={{ paddingTop: 80, paddingBottom: 20 }}>
+      <div className="page-wrap s-pt-80 s-pb-20">
 
         <div style={{ marginBottom: 72, maxWidth: 600, position: "relative", paddingLeft: 28, borderLeft: "3px solid var(--accent)" }}>
 <p style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: "clamp(19px, 2.2vw, 24px)", lineHeight: 1.65, color: "var(--ink)", margin: 0, position: "relative" }}>
@@ -220,7 +204,7 @@ export default function Home() {
       </div>
 
       {/* ── Writing ──────────────────────────────────────── */}
-      <div className="page-wrap" style={{ paddingTop: 64, paddingBottom: 88 }}>
+      <div className="page-wrap s-pt-64 s-pb-88">
         <div style={{ marginBottom: 28, borderTop: "1px solid var(--line)", paddingTop: 28 }}>
           <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 8 }}>
             Latest Writing

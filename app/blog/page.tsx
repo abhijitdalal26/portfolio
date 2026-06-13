@@ -31,14 +31,13 @@ export default function Blog() {
                   {i > 0 && <div style={{ height: 1, background: "var(--line)" }} />}
                   <Link
                     href={`/blog/${post.slug}`}
-                    className="hover-row"
-                    style={{ textDecoration: "none", display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 32, padding: "26px 14px", margin: "0 -14px" }}
+                    className="hover-row blog-row"
                   >
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <p style={{ fontSize: 17, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.02em", lineHeight: 1.3, marginBottom: 6 }}>{post.title}</p>
                       <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--faint)" }}>{post.description}</p>
                     </div>
-                    <div style={{ flexShrink: 0, paddingTop: 2, textAlign: "right" }}>
+                    <div className="blog-row-meta" style={{ flexShrink: 0, paddingTop: 2, textAlign: "right" }}>
                       <p style={{ fontSize: 12, color: "var(--faint)", fontFamily: "var(--mono)", marginBottom: 6, whiteSpace: "nowrap" }}>{formatDate(post.date)}</p>
                       <span style={{ fontSize: 13, color: "var(--sub)", fontWeight: 500 }}>Read →</span>
                     </div>
