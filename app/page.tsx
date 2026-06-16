@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useCallback } from "react";
-import { AuroraBg } from "@/components/AuroraBg";
+import { StarsBg } from "@/components/StarsBg";
 
 function ArrowRight({ size = 15 }: { size?: number }) {
   return (
@@ -103,7 +103,7 @@ export default function Home() {
 
       {/* ── Hero ─────────────────────────────────────────── */}
       <div style={{ position: "relative", overflow: "hidden", minHeight: "100vh", marginTop: -72, paddingTop: 72, display: "flex", flexDirection: "column" }}>
-        <AuroraBg />
+        <StarsBg />
 
         <div className="hero-content">
           <div className="hero-avatar">
