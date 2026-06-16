@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useCallback } from "react";
 import { StarsBg } from "@/components/StarsBg";
+import { FadeUp } from "@/components/FadeUp";
 
 function ArrowRight({ size = 15 }: { size?: number }) {
   return (
@@ -138,26 +139,30 @@ export default function Home() {
       {/* ── Projects ─────────────────────────────────────── */}
       <div className="page-wrap s-pt-80 s-pb-20">
 
-        <div style={{ marginBottom: 72, maxWidth: 600, position: "relative", paddingLeft: 28, borderLeft: "3px solid var(--accent)" }}>
-<p style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: "clamp(19px, 2.2vw, 24px)", lineHeight: 1.65, color: "var(--ink)", margin: 0, position: "relative" }}>
-            I love working on new tech and building products people actually use —
-            from RL agents to large language models.
-          </p>
-        </div>
-
-        <div style={{ marginBottom: 32 }}>
-          <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 8 }}>
-            Featured Work
+        <FadeUp>
+          <div style={{ marginBottom: 72, maxWidth: 600, position: "relative", paddingLeft: 28, borderLeft: "3px solid var(--accent)" }}>
+            <p style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: "clamp(19px, 2.2vw, 24px)", lineHeight: 1.65, color: "var(--ink)", margin: 0, position: "relative" }}>
+              I love working on new tech and building products people actually use —
+              from RL agents to large language models.
+            </p>
           </div>
-          <h2 style={{ fontFamily: "var(--disp)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
-            My Top Projects
-          </h2>
-        </div>
+        </FadeUp>
+
+        <FadeUp>
+          <div style={{ marginBottom: 32 }}>
+            <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 8 }}>
+              Featured Work
+            </div>
+            <h2 style={{ fontFamily: "var(--disp)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
+              My Top Projects
+            </h2>
+          </div>
+        </FadeUp>
 
         <div className="grid-2">
-          {PROJECTS.map((p) => (
+          {PROJECTS.map((p, i) => (
+            <FadeUp key={p.n} delay={(i % 2) * 90} className="h-full">
             <GlowCard
-              key={p.n}
               style={{ background: "var(--panel)", border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden", display: "flex", flexDirection: "column", height: "100%" }}
             >
               <div style={{ height: 190, padding: "12px 12px 0", position: "relative" }}>
@@ -189,6 +194,7 @@ export default function Home() {
                 </div>
               </div>
             </GlowCard>
+            </FadeUp>
           ))}
         </div>
 
@@ -205,18 +211,21 @@ export default function Home() {
 
       {/* ── Writing ──────────────────────────────────────── */}
       <div className="page-wrap s-pt-64 s-pb-88">
-        <div style={{ marginBottom: 28, borderTop: "1px solid var(--line)", paddingTop: 28 }}>
-          <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 8 }}>
-            Latest Writing
+        <FadeUp>
+          <div style={{ marginBottom: 28, borderTop: "1px solid var(--line)", paddingTop: 28 }}>
+            <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 8 }}>
+              Latest Writing
+            </div>
+            <h2 style={{ fontFamily: "var(--disp)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
+              Writing
+            </h2>
           </div>
-          <h2 style={{ fontFamily: "var(--disp)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
-            Writing
-          </h2>
-        </div>
+        </FadeUp>
 
         <div className="grid-2-wide">
-          {POSTS.map((post) => (
-            <Link key={post.title} href={`/blog/${post.slug}`} style={{ textDecoration: "none", display: "block", height: "100%" }}>
+          {POSTS.map((post, i) => (
+            <FadeUp key={post.title} delay={(i % 2) * 90} className="h-full">
+            <Link href={`/blog/${post.slug}`} style={{ textDecoration: "none", display: "block", height: "100%" }}>
               <GlowCard style={{ background: "var(--panel)", border: "1px solid var(--line)", borderRadius: 14, padding: "24px 26px 20px", display: "flex", flexDirection: "column", height: "100%" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, position: "relative", zIndex: 2 }}>
                   <span style={{ fontFamily: "var(--mono)", fontSize: 10.5, letterSpacing: 1, textTransform: "uppercase", color: "var(--sub)" }}>{post.tag}</span>
@@ -234,6 +243,7 @@ export default function Home() {
                 </span>
               </GlowCard>
             </Link>
+            </FadeUp>
           ))}
         </div>
 

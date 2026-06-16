@@ -37,6 +37,53 @@ body {
   font-size: 16px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Text selection — on-brand accent tint */
+::selection { background: color-mix(in srgb, var(--accent) 24%, transparent); color: var(--ink); }
+
+/* Custom scrollbar */
+* { scrollbar-width: thin; scrollbar-color: var(--faint) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 999px;
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--faint); }
+
+/* Keyboard focus ring — visible only for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+/* ── Scroll reveal ─────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
 }
 
 /* ── Responsive layout ─────────────────────────────────── */
@@ -97,6 +144,8 @@ body {
 
 /* ── Buttons ───────────────────────────────────────────── */
 .btn-primary {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -109,10 +158,34 @@ body {
   color: var(--bg);
   text-decoration: none;
   border: none;
-  transition: opacity 0.15s, transform 0.15s;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
   white-space: nowrap;
 }
-.btn-primary:hover { opacity: 0.82; transform: translateY(-1px); }
+/* Light sweep that crosses the button on hover */
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    color-mix(in srgb, var(--bg) 45%, transparent),
+    transparent
+  );
+  transform: skewX(-18deg);
+  transition: left 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px -10px color-mix(in srgb, var(--ink) 65%, transparent);
+}
+.btn-primary:hover::after { left: 130%; }
+.btn-primary:active { transform: translateY(0) scale(0.98); }
+.btn-primary > * { position: relative; z-index: 1; }
 
 .btn-ghost {
   display: inline-flex;
@@ -136,8 +209,14 @@ body {
   transform: translateY(-1px);
 }
 
-/* ── Glow card — mouse-tracking gradient ───────────────── */
-.glow-card { position: relative; }
+/* ── Glow card — mouse-tracking gradient + hover lift ──── */
+.glow-card {
+  position: relative;
+  transition:
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.32s ease,
+    box-shadow 0.32s ease;
+}
 
 .glow-card::before {
   content: '';
@@ -145,16 +224,21 @@ body {
   inset: 0;
   border-radius: inherit;
   background: radial-gradient(
-    circle 220px at var(--gx, 50%) var(--gy, 50%),
-    rgba(0,0,0,0.05),
-    transparent
+    circle 240px at var(--gx, 50%) var(--gy, 50%),
+    color-mix(in srgb, var(--accent) 14%, transparent),
+    transparent 65%
   );
   opacity: 0;
-  transition: opacity 0.25s;
+  transition: opacity 0.3s;
   pointer-events: none;
   z-index: 1;
 }
 
+.glow-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  box-shadow: 0 18px 40px -22px color-mix(in srgb, var(--ink) 55%, transparent);
+}
 .glow-card:hover::before { opacity: 1; }
 
 /* ── Chip / tag pill ───────────────────────────────────── */
@@ -199,6 +283,15 @@ body {
   0%   { transform: translate(0,    0)    scale(1.02); }
   100% { transform: translate(-6%,  9%)   scale(0.96); }
 }
+
+/* ── StarsBg theme switching (no-JS, no blink) ─────────── */
+/* Aurora: display:none in dark so it takes no space and can't intercept events. */
+.stars-layer-light { display: block; }
+.dark .stars-layer-light { display: none; }
+/* Stars: visibility:hidden (not display:none) keeps canvas in layout so the ResizeObserver
+   still fires and the RAF keeps compositing — no GPU pause, no blank-frame flicker on reveal. */
+.stars-layer-dark  { visibility: hidden; }
+.dark .stars-layer-dark  { visibility: visible; }
 
 /* ── Blog prose ────────────────────────────────────────── */
 .prose {
@@ -245,6 +338,7 @@ body {
 .nav-hamburger { display: none; align-items: center; }
 
 .nav-link {
+  position: relative;
   font-size: 15px;
   font-weight: 400;
   color: var(--ink);
@@ -254,8 +348,23 @@ body {
   display: inline-flex;
   align-items: center;
 }
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 1.5px;
+  background: var(--accent);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
 .nav-link:hover  { opacity: 1; }
+.nav-link:hover::after { transform: scaleX(1); }
 .nav-link-active { opacity: 1; }
+.nav-link-active::after { transform: scaleX(1); }
 
 .nav-icon-btn {
   display: inline-flex;
@@ -303,6 +412,23 @@ body {
   transition: color 0.15s;
 }
 .nav-mobile-link:hover { color: var(--ink); }
+
+/* ── Hero entrance — staggered rise on first paint ─────── */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-content > * {
+  animation: hero-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-content > *:nth-child(1) { animation-delay: 0.05s; }
+.hero-content > *:nth-child(2) { animation-delay: 0.16s; }
+.hero-content > *:nth-child(3) { animation-delay: 0.27s; }
+.hero-content > *:nth-child(4) { animation-delay: 0.38s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-content > * { animation: none; }
+}
 
 /* ── Hero responsive ────────────────────────────────────── */
 .hero-content {

@@ -15,7 +15,7 @@ vercel --prod    # Deploy to Vercel
 
 - **Next.js 16** (App Router, Turbopack)
 - **Tailwind CSS v4** — configuration in `app/globals.css` via `@theme`, no `tailwind.config.js`
-- **framer-motion** — page/section animations via `FadeUp` component
+- **Scroll reveals** — `FadeUp` (`components/FadeUp.tsx`) is a dependency-free IntersectionObserver wrapper that fades + rises children into view once on scroll; honors `prefers-reduced-motion` and is SSR-safe. Reveal styles (`.reveal` / `.reveal-in`) live in `globals.css`.
 - **next-mdx-remote/rsc** — renders MDX blog posts as React Server Components
 - **gray-matter** — parses frontmatter from `.mdx` files
 - **next-themes** — dark/light toggle via `class` on `<html>`; default `light`, no system detection
@@ -41,7 +41,7 @@ components/
   Footer.tsx
   Hero.tsx             # Dark full-screen hero (used on homepage)
   AuroraBg.tsx         # Animated aurora gradient background
-  FadeUp.tsx           # "use client" — framer-motion fade-in wrapper
+  FadeUp.tsx           # "use client" — IntersectionObserver scroll-reveal wrapper
 content/blog/          # MDX source files (frontmatter: title, date, description)
 lib/posts.ts           # getAllPosts(), getPost(slug), formatDate()
 ```

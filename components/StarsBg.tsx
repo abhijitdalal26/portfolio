@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useTheme } from "next-themes";
+import { useEffect, useRef } from "react";
 import { AuroraBg } from "./AuroraBg";
 
 interface StaticStar {
@@ -38,17 +37,32 @@ function StarCanvas() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let dpr = window.devicePixelRatio || 1;
+    // Cap DPR at 2 — beyond that the canvas gets huge with no visible gain.
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let running = false;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const resize = () => {
       const w = canvas.offsetWidth;
       const h = canvas.offsetHeight;
       if (w === 0 || h === 0) return;
-      dpr = window.devicePixelRatio || 1;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = w * dpr;
       canvas.height = h * dpr;
-      ctx.scale(dpr, dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       buildStars(w, h);
+      if (reduceMotion) drawStatic(w, h); // single static frame, no RAF
+    };
+
+    // Static (no-motion) frame: just the twinkle-free starfield.
+    const drawStatic = (w: number, h: number) => {
+      ctx.clearRect(0, 0, w, h);
+      for (const s of staticStars.current) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 248, 230, ${s.baseOpacity})`;
+        ctx.fill();
+      }
     };
 
     const buildStars = (w: number, h: number) => {
@@ -161,17 +175,47 @@ function StarCanvas() {
         return s.age < s.lifetime && s.x < w + 160 && s.y < h + 160;
       });
 
-      rafRef.current = requestAnimationFrame(draw);
+      if (running) rafRef.current = requestAnimationFrame(draw);
     };
 
     resize();
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
-    rafRef.current = requestAnimationFrame(draw);
+
+    // Reduced motion: render one static frame and never start the loop.
+    if (reduceMotion) {
+      return () => ro.disconnect();
+    }
+
+    const start = () => {
+      if (running) return;
+      running = true;
+      rafRef.current = requestAnimationFrame(draw);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(rafRef.current);
+    };
+
+    // Pause the loop whenever the hero scrolls offscreen — saves CPU/battery.
+    const vis = new IntersectionObserver(
+      ([e]) => (e.isIntersecting ? start() : stop()),
+      { threshold: 0 }
+    );
+    vis.observe(canvas);
+
+    // Pause when the tab is backgrounded.
+    const onVisibility = () =>
+      document.hidden ? stop() : (canvas.offsetParent !== null && start());
+    document.addEventListener("visibilitychange", onVisibility);
+
+    start();
 
     return () => {
-      cancelAnimationFrame(rafRef.current);
+      stop();
       ro.disconnect();
+      vis.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 
@@ -191,69 +235,68 @@ function StarCanvas() {
 }
 
 export function StarsBg() {
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted || resolvedTheme !== "dark") {
-    return <AuroraBg />;
-  }
-
   return (
-    <div
-      aria-hidden="true"
-      style={{
-        position: "absolute",
-        inset: 0,
-        overflow: "hidden",
-        pointerEvents: "none",
-        zIndex: 0,
-      }}
-    >
-      {/* Warm deep-space atmosphere */}
-      <div
-        style={{
-          position: "absolute",
-          width: "90vw",
-          height: "65vw",
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle at center, rgba(70, 45, 15, 0.07) 0%, transparent 70%)",
-          filter: "blur(100px)",
-          top: "-15%",
-          left: "5%",
-        }}
-      />
+    <>
+      {/* Light mode: aurora. CSS hides via display:none in dark. */}
+      <div className="stars-layer-light" style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
+        <AuroraBg />
+      </div>
 
-      {/* Subtle cool-blue nebula opposite corner */}
+      {/* Dark mode: stars canvas. CSS hides via visibility:hidden in light. */}
       <div
-        style={{
-          position: "absolute",
-          width: "50vw",
-          height: "50vw",
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle at center, rgba(30, 50, 100, 0.07) 0%, transparent 70%)",
-          filter: "blur(80px)",
-          bottom: "0%",
-          right: "-5%",
-        }}
-      />
-
-      <StarCanvas />
-
-      {/* Vignette — same as AuroraBg */}
-      <div
+        className="stars-layer-dark"
+        aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
-          background:
-            "radial-gradient(ellipse 90% 70% at 50% 50%, transparent 40%, var(--bg) 100%)",
+          overflow: "hidden",
+          zIndex: 0,
+          pointerEvents: "none",
         }}
-      />
-    </div>
+      >
+        {/* Warm deep-space atmosphere */}
+        <div
+          style={{
+            position: "absolute",
+            width: "90vw",
+            height: "65vw",
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle at center, rgba(70, 45, 15, 0.07) 0%, transparent 70%)",
+            filter: "blur(100px)",
+            top: "-15%",
+            left: "5%",
+          }}
+        />
+
+        {/* Subtle cool-blue nebula opposite corner */}
+        <div
+          style={{
+            position: "absolute",
+            width: "50vw",
+            height: "50vw",
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle at center, rgba(30, 50, 100, 0.07) 0%, transparent 70%)",
+            filter: "blur(80px)",
+            bottom: "0%",
+            right: "-5%",
+          }}
+        />
+
+        <StarCanvas />
+
+        {/* Vignette */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            background:
+              "radial-gradient(ellipse 90% 70% at 50% 50%, transparent 40%, var(--bg) 100%)",
+          }}
+        />
+      </div>
+    </>
   );
 }
