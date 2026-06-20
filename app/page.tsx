@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useCallback } from "react";
-import { AuroraBg } from "@/components/AuroraBg";
+import { WaveBg } from "@/components/WaveBg";
 import { FadeUp } from "@/components/FadeUp";
 
 function ArrowRight({ size = 15 }: { size?: number }) {
@@ -104,7 +104,7 @@ export default function Home() {
 
       {/* ── Hero ─────────────────────────────────────────── */}
       <div style={{ position: "relative", overflow: "hidden", minHeight: "100vh", marginTop: -72, paddingTop: 72, display: "flex", flexDirection: "column" }}>
-        <AuroraBg />
+        <WaveBg />
 
         <div className="hero-content">
           <div className="hero-avatar">
@@ -134,6 +134,21 @@ export default function Home() {
             </Link>
           </div>
         </div>
+
+        {/* Fade wave into the page background */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 160,
+            pointerEvents: "none",
+            background: "linear-gradient(to bottom, transparent, var(--bg))",
+            zIndex: 1,
+          }}
+        />
       </div>
 
       {/* ── Projects ─────────────────────────────────────── */}
