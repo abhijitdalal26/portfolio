@@ -3,11 +3,13 @@ import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Providers } from "@/components/Providers";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: { template: "%s | Abhijit Dalal", default: "Abhijit Dalal — Engineer · ML / AI" },
   description: "I build apps and study how intelligence works. Engineer from India.",
-  metadataBase: new URL("https://portfolio-website-rosy-pi-50.vercel.app"),
+  metadataBase: new URL("https://abhijitdalal.vercel.app"),
   twitter: { card: "summary_large_image", creator: "@abhijitdalal_" },
 };
 
@@ -28,6 +30,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
           <Footer />
         </Providers>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
