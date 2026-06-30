@@ -94,7 +94,7 @@ Posts are sorted newest-first. The filename becomes the URL slug.
 
 ## Deployment
 
-- **Live URL:** https://portfolio-website-rosy-pi-50.vercel.app
+- **Live URL:** https://abhijitdalal-abhijit-dalals-projects.vercel.app
 - **GitHub:** https://github.com/abhijitdalal26/portfolio
 - **Vercel project:** `portfolio-website` (abhijit-dalals-projects team)
 - To enable auto-deploy on push: Vercel dashboard → Settings → Git → connect repo
