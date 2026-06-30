@@ -209,6 +209,23 @@ body {
   transform: translateY(-1px);
 }
 
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--sub);
+  text-decoration: none;
+  transition: color 0.15s, border-color 0.15s;
+}
+.social-icon:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
 /* ── Glow card — mouse-tracking gradient + hover lift ──── */
 .glow-card {
   position: relative;
@@ -445,7 +462,8 @@ body {
   padding: 72px 24px 48px;
 }
 @media (max-width: 720px) {
-  .hero-content { padding: 40px 20px 32px; }
+  .hero-wrap    { min-height: auto !important; }
+  .hero-content { padding: 24px 20px 32px; justify-content: flex-start; }
 }
 
 .hero-avatar {

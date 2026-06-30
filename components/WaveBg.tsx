@@ -108,7 +108,7 @@ export function WaveBg() {
         animId = requestAnimationFrame(animate);
 
         camera.position.x += (mouseX - camera.position.x) * 0.05;
-        camera.position.y += (-mouseY + 200 - camera.position.y) * 0.05;
+        camera.position.y += (200 - camera.position.y) * 0.05;
         camera.lookAt(scene.position);
 
         const pos = geometry.attributes.position.array as Float32Array;
