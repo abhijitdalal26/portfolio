@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { projects, getProject } from "@/lib/projects";
 import { FadeUp } from "@/components/FadeUp";
@@ -12,14 +11,6 @@ function ArrowUpRight() {
     </svg>
   );
 }
-function ArrowLeft() {
-  return (
-    <svg width={14} height={14} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M13 8H3M7 4L3 8l4 4" />
-    </svg>
-  );
-}
-
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
@@ -42,19 +33,13 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
 
           <FadeUp>
-            <Link href="/projects" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, color: "var(--sub)", textDecoration: "none", marginBottom: 32 }}>
-              <ArrowLeft /> All projects
-            </Link>
-          </FadeUp>
-
-          <FadeUp>
             <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14 }}>
               {project.logo && (
                 <div style={{ width: 44, height: 44, borderRadius: 12, overflow: "hidden", flexShrink: 0, border: "1px solid var(--line)" }}>
                   <Image src={project.logo} alt="" width={44} height={44} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
                 </div>
               )}
-              <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)" }}>
+              <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--sub)" }}>
                 {project.kind}
               </div>
               {project.status === "current" && (
@@ -127,22 +112,6 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                   {project.screenshots.map((src) => (
                     <div key={src} style={{ width: 220, borderRadius: 12, overflow: "hidden", border: "1px solid var(--line)", position: "relative", aspectRatio: "9/19" }}>
                       <Image src={src} alt="" fill style={{ objectFit: "cover" }} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </FadeUp>
-          )}
-
-          {project.techStack && (
-            <FadeUp>
-              <div style={{ marginBottom: 40 }}>
-                <h2 style={{ fontFamily: "var(--sans)", fontSize: 24, fontWeight: 600, marginBottom: 16 }}>Tech stack</h2>
-                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                  {project.techStack.map((group) => (
-                    <div key={group.label} style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "baseline" }}>
-                      <span style={{ fontFamily: "var(--mono)", fontSize: 12, color: "var(--faint)", minWidth: 120 }}>{group.label}</span>
-                      <span style={{ fontSize: 14.5, color: "var(--sub)" }}>{group.items.join(" · ")}</span>
                     </div>
                   ))}
                 </div>

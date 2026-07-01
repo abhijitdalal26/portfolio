@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
@@ -33,14 +32,11 @@ export default async function BlogPost({ params }: Props) {
       <div className="page-wrap s-pt-80" style={{ paddingBottom: 96 }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
 
-          <Link
-            href="/blog"
-            style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13, marginBottom: 48, color: "var(--faint)", textDecoration: "none" }}
-          >
-            ← All posts
-          </Link>
-
           <div className="blog-layout">
+            <div className="blog-toc">
+              <Toc items={headings} />
+            </div>
+
             <div style={{ maxWidth: 680 }}>
               <header style={{ marginBottom: 48 }}>
                 <span style={{ fontFamily: "var(--mono)", fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--faint)" }}>
@@ -82,10 +78,6 @@ export default async function BlogPost({ params }: Props) {
                   }}
                 />
               </article>
-            </div>
-
-            <div className="blog-toc">
-              <Toc items={headings} />
             </div>
           </div>
 

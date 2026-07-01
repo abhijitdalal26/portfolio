@@ -18,7 +18,6 @@ export type Project = {
   cardPreview?: { images: string[]; caption: string };
   story: string[];
   howItWorks?: string[];
-  techStack?: { label: string; items: string[] }[];
   architecture?: { title: string; note?: string; code: string }[];
 };
 
@@ -53,10 +52,6 @@ export const projects: Project[] = [
       "Each frame is resized to 640×640, normalized, and run through a float16 YOLO11 model on-device via TensorFlow Lite.",
       "The raw output is decoded into bounding boxes + Cat/Dog confidence and drawn on a Canvas overlay.",
       "Live inference is throttled to ~300ms per frame so it doesn't peg the CPU.",
-    ],
-    techStack: [
-      { label: "App", items: ["Kotlin", "CameraX", "TensorFlow Lite", "YOLO11 (float16)", "Canvas overlay"] },
-      { label: "Model training", items: ["Python", "TensorFlow / Keras", "MobileNetV3Large transfer learning", "Kaggle"] },
     ],
     architecture: [
       {

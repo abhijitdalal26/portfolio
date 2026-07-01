@@ -116,7 +116,7 @@ body {
 }
 .blog-layout {
   display: grid;
-  grid-template-columns: 1fr 180px;
+  grid-template-columns: 180px 1fr;
   gap: 56px;
   align-items: start;
 }
@@ -231,13 +231,14 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1px solid var(--line);
-  color: var(--sub);
+  border: 1.5px solid var(--faint);
+  color: var(--ink);
   text-decoration: none;
-  transition: color 0.15s, border-color 0.15s;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
 }
 .social-icon:hover {
-  color: var(--ink);
+  color: var(--accent-ink);
+  background: var(--ink);
   border-color: var(--ink);
 }
 
