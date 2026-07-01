@@ -23,7 +23,7 @@ function CloseIcon() {
 }
 
 export function Toc({ items }: { items: TocItem[] }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   if (items.length === 0) return null;
 
