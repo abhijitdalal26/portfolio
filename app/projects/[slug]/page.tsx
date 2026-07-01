@@ -81,7 +81,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
                   {project.story.map((p, i) => (
-                    <p key={i} style={{ fontSize: 16, lineHeight: 1.75, color: "var(--ink)" }}>{p}</p>
+                    <p key={i} style={{ fontSize: 16, lineHeight: 1.75, color: "var(--sub)" }}>{p}</p>
                   ))}
                 </div>
               </div>
@@ -99,7 +99,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
               <FadeUp>
                 <div style={{ display: "flex", flexDirection: "column", gap: 18, marginBottom: 40 }}>
                   {project.story.map((p, i) => (
-                    <p key={i} style={{ fontSize: 16, lineHeight: 1.75, color: "var(--ink)" }}>{p}</p>
+                    <p key={i} style={{ fontSize: 16, lineHeight: 1.75, color: "var(--sub)" }}>{p}</p>
                   ))}
                 </div>
               </FadeUp>

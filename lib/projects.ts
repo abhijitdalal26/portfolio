@@ -29,7 +29,7 @@ export const projects: Project[] = [
     status: "done",
     kind: "Mobile · Computer Vision",
     tags: ["Kotlin", "Android", "TensorFlow Lite", "CameraX", "YOLO11"],
-    blurb: "Real-time cat vs dog detector for Android, running a custom-trained YOLO11 model fully on-device. My first time taking a model past a notebook — training, quantizing, and shipping it as a real app.",
+    blurb: "Real-time cat vs dog detector for Android — point the camera or upload a photo and it tells you which one it sees, running a custom-trained YOLO11 model fully on-device.",
     github: "https://github.com/abhijitdalal26/cats-vs-dogs-android-app",
     links: [
       { label: "Kaggle Notebook", href: "https://www.kaggle.com/code/abhijitdalal26/dog-vs-cat-detection/" },

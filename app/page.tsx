@@ -40,28 +40,10 @@ function GlowCard({ children, style, className }: { children: React.ReactNode; s
 
 const POSTS = [
   {
-    title: "The History of Deep Learning, Era by Era",
-    date: "May 2026", read: "12 min", tag: "Essay",
-    slug: "the-history-of-deep-learning",
-    excerpt: "From the perceptron in 1958 to foundation models today — the ideas, winters, and breakthroughs that shaped modern AI.",
-  },
-  {
     title: "Building nanoGPT from Scratch",
     date: "May 2026", read: "9 min", tag: "Notes",
     slug: "building-nanogpt-from-scratch",
     excerpt: "What I learned re-implementing a GPT character by character — tokenization, attention, and the training loop, demystified.",
-  },
-  {
-    title: "How Transformers Changed Everything",
-    date: "Jun 2026", read: "7 min", tag: "Essay",
-    slug: "how-transformers-changed-everything",
-    excerpt: "Attention is all you need — but why? A plain-language look at the architecture behind today's language models.",
-  },
-  {
-    title: "Deep RL for Autonomous Systems",
-    date: "Jun 2026", read: "10 min", tag: "Notes",
-    slug: "deep-rl-autonomous-systems",
-    excerpt: "Notes from training racing agents with PPO — reward shaping, the sim-to-real gap, and what actually moved the needle.",
   },
 ];
 
