@@ -114,12 +114,6 @@ body {
   gap: 40px;
   align-items: start;
 }
-.blog-layout {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 56px;
-  align-items: start;
-}
 
 /* ── Marquee section labels ─────────────────────────── */
 .marquee-label { padding: 10px 48px 0; }
@@ -130,8 +124,6 @@ body {
   .grid-2-wide  { grid-template-columns: 1fr; }
   .about-cols   { grid-template-columns: 1fr; gap: 40px; }
   .project-hero { grid-template-columns: 1fr; }
-  .blog-layout  { grid-template-columns: 1fr; }
-  .blog-toc     { display: none; }
   .marquee-label{ padding: 10px 20px 0; }
 }
 
