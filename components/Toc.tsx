@@ -52,7 +52,7 @@ export function Toc({ items }: { items: TocItem[] }) {
           }}
         >
           <div style={{ padding: "176px 32px 64px" }}>
-            <div style={{ fontSize: 22, fontWeight: 600, color: "var(--sub)", marginBottom: 28, letterSpacing: "-0.01em" }}>
+            <div style={{ fontSize: 22, fontWeight: 600, color: "var(--ink)", marginBottom: 28, letterSpacing: "-0.01em" }}>
               Contents
             </div>
 
@@ -61,8 +61,7 @@ export function Toc({ items }: { items: TocItem[] }) {
                 <li key={item.id}>
                   <a
                     href={`#${item.id}`}
-                    onClick={() => setOpen(false)}
-                    style={{ fontSize: 16, fontWeight: 500, color: "var(--ink)", textDecoration: "none", lineHeight: 1.4, letterSpacing: "-0.01em" }}
+                    style={{ fontSize: 16, fontWeight: 500, color: "var(--sub)", textDecoration: "none", lineHeight: 1.4, letterSpacing: "-0.01em" }}
                   >
                     {i + 1}. {item.text}
                   </a>
