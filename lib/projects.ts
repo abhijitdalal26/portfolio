@@ -17,6 +17,7 @@ export type Project = {
   story: string[];
   howItWorks?: string[];
   techStack?: { label: string; items: string[] }[];
+  architecture?: { title: string; note?: string; code: string }[];
 };
 
 export const projects: Project[] = [
@@ -50,6 +51,60 @@ export const projects: Project[] = [
     techStack: [
       { label: "App", items: ["Kotlin", "CameraX", "TensorFlow Lite", "YOLO11 (float16)", "Canvas overlay"] },
       { label: "Model training", items: ["Python", "TensorFlow / Keras", "MobileNetV3Large transfer learning", "Kaggle"] },
+    ],
+    architecture: [
+      {
+        title: "The classifier head (v1 notebook)",
+        note: "MobileNetV3Large pretrained on ImageNet, frozen, with a small custom head bolted on top — classic transfer learning.",
+        code: `def catVsdogModel(image_shape=IMG_SIZE, data_augmentation=data_augmenter()):
+    image_shape = image_shape + (3,)
+
+    base_model = tf.keras.applications.MobileNetV3Large(
+        input_shape=image_shape,
+        include_top=False, # remove ImageNet classification head (1000 classes)
+        weights='imagenet')
+
+    # Freeze the base model so we don't overwrite the pre-trained weights
+    base_model.trainable = False
+
+    inputs = tf.keras.Input(shape=image_shape)
+    x = data_augmentation(inputs)
+    x = preprocess_input(x)          # same preprocessing MobileNetV3 was trained on
+    x = base_model(x, training=False)
+
+    x = tfl.GlobalAveragePooling2D()(x)   # 7x7 spatial features -> single vector
+    x = tf.keras.layers.Dropout(0.2)(x)
+    outputs = tf.keras.layers.Dense(1)(x) # single logit: cat vs dog
+
+    return tf.keras.Model(inputs, outputs)`,
+      },
+      {
+        title: "Fine-tuning the last layers",
+        note: "After training the head, I unfroze the top of MobileNetV3Large and fine-tuned with a much smaller learning rate.",
+        code: `base_model = model.get_layer('MobileNetV3Large')
+base_model.trainable = True
+
+# Freeze everything except the last 30 layers
+fine_tune_at = 165
+for layer in base_model.layers[:fine_tune_at]:
+    layer.trainable = False`,
+      },
+      {
+        title: "Quantizing to int8 for on-device inference",
+        note: "Full INT8 quantization using a representative dataset — this is what made the model small and fast enough to run on a phone.",
+        code: `def representative_data_gen():
+    for images, _ in train_ds.take(100):
+        yield [images]
+
+converter = tf.lite.TFLiteConverter.from_saved_model("/kaggle/working/saved_model")
+converter.optimizations = [tf.lite.Optimize.DEFAULT]
+converter.representative_dataset = representative_data_gen
+
+# Force full INT8 — weights, activations, input and output
+converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
+converter.inference_input_type = tf.int8
+converter.inference_output_type = tf.int8`,
+      },
     ],
   },
 ];

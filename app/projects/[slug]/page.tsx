@@ -76,7 +76,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
           {project.heroVideo && (
             <FadeUp>
               <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", marginBottom: 40, background: "var(--panel)" }}>
-                <video src={project.heroVideo} controls playsInline style={{ width: "100%", display: "block", maxHeight: 560, margin: "0 auto" }} />
+                <video src={project.heroVideo} controls autoPlay loop muted playsInline style={{ width: "100%", display: "block", maxHeight: 560, margin: "0 auto" }} />
               </div>
             </FadeUp>
           )}
@@ -134,6 +134,30 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                     <div key={group.label} style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "baseline" }}>
                       <span style={{ fontFamily: "var(--mono)", fontSize: 12, color: "var(--faint)", minWidth: 120 }}>{group.label}</span>
                       <span style={{ fontSize: 14.5, color: "var(--sub)" }}>{group.items.join(" · ")}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </FadeUp>
+          )}
+
+          {project.architecture && project.architecture.length > 0 && (
+            <FadeUp>
+              <div style={{ marginBottom: 40 }}>
+                <h2 style={{ fontFamily: "var(--disp)", fontSize: 24, fontWeight: 600, marginBottom: 8 }}>From the training notebook</h2>
+                <p style={{ fontSize: 14.5, color: "var(--sub)", lineHeight: 1.6, marginBottom: 20 }}>
+                  The key pieces of the model architecture and training pipeline, straight from the notebook.
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+                  {project.architecture.map((block) => (
+                    <div key={block.title}>
+                      <h3 style={{ fontSize: 15.5, fontWeight: 600, color: "var(--ink)", marginBottom: block.note ? 4 : 10 }}>{block.title}</h3>
+                      {block.note && (
+                        <p style={{ fontSize: 14, color: "var(--sub)", lineHeight: 1.6, marginBottom: 10 }}>{block.note}</p>
+                      )}
+                      <div className="prose">
+                        <pre><code>{block.code}</code></pre>
+                      </div>
                     </div>
                   ))}
                 </div>
