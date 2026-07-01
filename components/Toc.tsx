@@ -46,11 +46,13 @@ export function Toc({ items }: { items: TocItem[] }) {
       {open && (
         <div
           style={{
-            position: "fixed", inset: 0, zIndex: 200,
-            background: "var(--bg)", overflowY: "auto",
+            position: "fixed", top: 0, left: 0, bottom: 0, zIndex: 200,
+            width: "min(360px, 88vw)",
+            background: "var(--bg)", borderRight: "1px solid var(--line)",
+            overflowY: "auto",
           }}
         >
-          <div style={{ maxWidth: 640, margin: "0 auto", padding: "96px 32px 64px" }}>
+          <div style={{ padding: "130px 32px 64px" }}>
             <div style={{ fontFamily: "var(--mono)", fontSize: 12, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 24 }}>
               Contents
             </div>
@@ -61,7 +63,7 @@ export function Toc({ items }: { items: TocItem[] }) {
                   <a
                     href={`#${item.id}`}
                     onClick={() => setOpen(false)}
-                    style={{ fontSize: 24, fontWeight: 500, color: "var(--ink)", textDecoration: "none", lineHeight: 1.4, letterSpacing: "-0.01em" }}
+                    style={{ fontSize: 20, fontWeight: 500, color: "var(--ink)", textDecoration: "none", lineHeight: 1.4, letterSpacing: "-0.01em" }}
                   >
                     {i + 1}. {item.text}
                   </a>
