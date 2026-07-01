@@ -3,8 +3,6 @@ import Image from "next/image";
 
 export const metadata: Metadata = { title: "About" };
 
-const stack = ["Python", "PyTorch", "Next.js", "TypeScript", "Kotlin", "Android Studio", "React", "Git", "PostgreSQL", "Jupyter"];
-
 const areas: { label: string; color: string }[] = [
   { label: "LLMs",                  color: "#7c3aed" },
   { label: "NLP",                   color: "#2563eb" },
