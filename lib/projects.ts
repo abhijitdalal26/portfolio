@@ -14,6 +14,7 @@ export type Project = {
   heroVideo?: string;
   screenshots?: string[];
   logo?: string;
+  cardPreview?: { images: string[]; caption: string };
   story: string[];
   howItWorks?: string[];
   techStack?: { label: string; items: string[] }[];
@@ -37,6 +38,10 @@ export const projects: Project[] = [
     heroVideo: "/projects/pawvision/detecting-cat.mp4",
     screenshots: ["/projects/pawvision/detected-cat.jpeg"],
     logo: "/projects/pawvision/logo.png",
+    cardPreview: {
+      images: ["/projects/pawvision/cat.jpg", "/projects/pawvision/dog.jpg"],
+      caption: "Cat vs Dog — Kaggle training data",
+    },
     story: [
       "Right after finishing Andrew Ng's Machine Learning Specialization, I wanted to see a model go beyond a notebook — so I trained a classifier on the classic Kaggle Dogs vs Cats dataset and turned it into a real Android app called PawVision.",
       "The first version was a MobileNetV3Large transfer-learning classifier converted to an int8 TFLite model — single-shot classification on a gallery photo. I later retrained it as a YOLO11 detector so the app could draw a live bounding box and run continuously off the camera feed, not just on uploaded images.",

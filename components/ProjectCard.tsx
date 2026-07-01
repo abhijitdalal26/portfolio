@@ -32,7 +32,20 @@ export function ProjectCard({ project }: { project: Project }) {
         onMouseMove={onMouseMove}
         style={{ background: "var(--panel)", border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden", display: "flex", flexDirection: "column", height: "100%" }}
       >
-        {thumb && (
+        {project.cardPreview ? (
+          <div style={{ padding: "12px 12px 0" }}>
+            <div style={{ display: "flex", height: 190, borderRadius: 8, overflow: "hidden", position: "relative" }}>
+              {project.cardPreview.images.map((src, i) => (
+                <div key={src} style={{ flex: 1, position: "relative", borderRight: i === 0 ? "1px solid var(--line)" : "none" }}>
+                  <Image src={src} alt="" fill style={{ objectFit: "cover" }} sizes="(max-width: 720px) 50vw, 280px" />
+                </div>
+              ))}
+            </div>
+            <div style={{ fontFamily: "var(--mono)", fontSize: 10.5, color: "var(--faint)", textAlign: "center", padding: "8px 0 0" }}>
+              {project.cardPreview.caption}
+            </div>
+          </div>
+        ) : thumb && (
           <div style={{ height: 190, padding: "12px 12px 0", position: "relative" }}>
             <div style={{ width: "100%", height: "100%", borderRadius: 8, overflow: "hidden", position: "relative" }}>
               <Image src={thumb} alt={project.title} fill style={{ objectFit: "cover", objectPosition: "top" }} sizes="(max-width: 720px) 100vw, 560px" />

@@ -73,29 +73,38 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             </div>
           </FadeUp>
 
-          {project.heroVideo && (
+          {project.heroVideo ? (
             <FadeUp>
-              <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", marginBottom: 40, background: "var(--panel)" }}>
-                <video src={project.heroVideo} controls autoPlay loop muted playsInline style={{ width: "100%", display: "block", maxHeight: 560, margin: "0 auto" }} />
+              <div className="project-hero" style={{ marginBottom: 40 }}>
+                <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)" }}>
+                  <video src={project.heroVideo} controls autoPlay loop muted playsInline style={{ width: "100%", display: "block" }} />
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+                  {project.story.map((p, i) => (
+                    <p key={i} style={{ fontSize: 16, lineHeight: 1.75, color: "var(--ink)" }}>{p}</p>
+                  ))}
+                </div>
               </div>
             </FadeUp>
-          )}
+          ) : (
+            <>
+              {project.heroImage && (
+                <FadeUp>
+                  <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", marginBottom: 40, position: "relative", aspectRatio: "16/9" }}>
+                    <Image src={project.heroImage} alt={project.title} fill style={{ objectFit: "cover" }} />
+                  </div>
+                </FadeUp>
+              )}
 
-          {!project.heroVideo && project.heroImage && (
-            <FadeUp>
-              <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", marginBottom: 40, position: "relative", aspectRatio: "16/9" }}>
-                <Image src={project.heroImage} alt={project.title} fill style={{ objectFit: "cover" }} />
-              </div>
-            </FadeUp>
+              <FadeUp>
+                <div style={{ display: "flex", flexDirection: "column", gap: 18, marginBottom: 40 }}>
+                  {project.story.map((p, i) => (
+                    <p key={i} style={{ fontSize: 16, lineHeight: 1.75, color: "var(--ink)" }}>{p}</p>
+                  ))}
+                </div>
+              </FadeUp>
+            </>
           )}
-
-          <FadeUp>
-            <div style={{ display: "flex", flexDirection: "column", gap: 18, marginBottom: 40 }}>
-              {project.story.map((p, i) => (
-                <p key={i} style={{ fontSize: 16, lineHeight: 1.75, color: "var(--ink)" }}>{p}</p>
-              ))}
-            </div>
-          </FadeUp>
 
           {project.howItWorks && (
             <FadeUp>
