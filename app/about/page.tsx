@@ -36,14 +36,14 @@ function Marquee({ items, reverse = false }: { items: { label: string; color: st
   return (
     <div style={{ overflow: "hidden", padding: "12px 0" }}>
       <style>{`
-        @keyframes mq { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+        @keyframes mq-left { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+        @keyframes mq-right { from { transform: translateX(-50%) } to { transform: translateX(0) } }
       `}</style>
       <div
         style={{
           display: "flex",
           width: "max-content",
-          animation: `mq 32s linear infinite`,
-          animationDirection: reverse ? "reverse" : "normal",
+          animation: `${reverse ? "mq-right" : "mq-left"} 32s linear infinite`,
           gap: 10,
           paddingRight: 10,
         }}
