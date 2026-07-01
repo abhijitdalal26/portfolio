@@ -29,7 +29,7 @@ export const projects: Project[] = [
     status: "done",
     kind: "Mobile · Computer Vision",
     tags: ["Kotlin", "Android", "TensorFlow Lite", "CameraX", "YOLO11"],
-    blurb: "Real-time cat vs dog detector for Android — the first thing I built after finishing Andrew Ng's ML Specialization.",
+    blurb: "Real-time cat vs dog detector for Android, running a custom-trained YOLO11 model fully on-device. My first time taking a model past a notebook — training, quantizing, and shipping it as a real app.",
     github: "https://github.com/abhijitdalal26/cats-vs-dogs-android-app",
     links: [
       { label: "Kaggle Notebook", href: "https://www.kaggle.com/code/abhijitdalal26/dog-vs-cat-detection/" },
@@ -39,10 +39,10 @@ export const projects: Project[] = [
     logo: "/projects/pawvision/logo.png",
     cardPreview: {
       images: ["/projects/pawvision/cat.jpg", "/projects/pawvision/dog.jpg"],
-      caption: "Cat vs Dog — Kaggle training data",
+      caption: "Cat vs Dog",
     },
     story: [
-      "Right after finishing Andrew Ng's Machine Learning Specialization, I wanted to see a model go beyond a notebook — so I trained a classifier on the classic Kaggle Dogs vs Cats dataset and turned it into a real Android app called PawVision.",
+      "I wanted to see a model go beyond a notebook — so I trained a classifier on the classic Kaggle Dogs vs Cats dataset and turned it into a real Android app called PawVision, and learned what it actually takes to ship a model as something people can install and use.",
       "The first version was a MobileNetV3Large transfer-learning classifier converted to an int8 TFLite model — single-shot classification on a gallery photo. I later retrained it as a YOLO11 detector so the app could draw a live bounding box and run continuously off the camera feed, not just on uploaded images.",
       "The clip above is PawVision correctly spotting a real stray cat outside, live, at 92% confidence.",
     ],
