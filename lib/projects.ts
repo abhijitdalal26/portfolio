@@ -3,6 +3,7 @@ export type ProjectLink = { label: string; href: string };
 export type Project = {
   slug: string;
   title: string;
+  tagline: string;
   order: number;
   status: "current" | "done";
   kind: string;
@@ -25,6 +26,7 @@ export const projects: Project[] = [
   {
     slug: "pawvision",
     title: "PawVision",
+    tagline: "Cat vs Dog Classifier",
     order: 1,
     status: "done",
     kind: "Mobile · Computer Vision",

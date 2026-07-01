@@ -5,14 +5,6 @@ import Link from "next/link";
 import { useRef, useCallback } from "react";
 import type { Project } from "@/lib/projects";
 
-function ArrowUpRight() {
-  return (
-    <svg width={13} height={13} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 12L12 4M5 4h7v7" />
-    </svg>
-  );
-}
-
 export function ProjectCard({ project }: { project: Project }) {
   const ref = useRef<HTMLDivElement>(null);
   const onMouseMove = useCallback((e: React.MouseEvent) => {
@@ -53,19 +45,15 @@ export function ProjectCard({ project }: { project: Project }) {
           </div>
         )}
 
-        <div style={{ padding: "20px 22px 22px", display: "flex", flexDirection: "column", flex: 1, position: "relative", zIndex: 2 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-            <div style={{ fontSize: 19, fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.2, color: "var(--ink)" }}>{project.title}</div>
-            {project.status === "current" && (
-              <span style={{ fontSize: 10.5, fontWeight: 500, padding: "2px 8px", borderRadius: 999, background: "rgba(34,197,94,0.1)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.2)", fontFamily: "var(--mono)", whiteSpace: "nowrap" }}>
-                In Progress
-              </span>
-            )}
+        <div style={{ padding: "18px 22px 20px", display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 2 }}>
+          <div style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.2, color: "var(--ink)" }}>
+            {project.title} <span style={{ fontWeight: 400, color: "var(--sub)" }}>— {project.tagline}</span>
           </div>
-          <div style={{ fontSize: 14, color: "var(--sub)", lineHeight: 1.6, marginBottom: 18, flex: 1 }}>{project.blurb}</div>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 13, color: "var(--accent)", fontWeight: 600 }}>
-            View project <ArrowUpRight />
-          </span>
+          {project.status === "current" && (
+            <span style={{ fontSize: 10.5, fontWeight: 500, padding: "2px 8px", borderRadius: 999, background: "rgba(34,197,94,0.1)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.2)", fontFamily: "var(--mono)", whiteSpace: "nowrap" }}>
+              In Progress
+            </span>
+          )}
         </div>
       </div>
     </Link>
