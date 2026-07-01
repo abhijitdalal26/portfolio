@@ -5,7 +5,7 @@ import type { TocItem } from "@/lib/toc";
 
 function HamburgerIcon() {
   return (
-    <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+    <svg width={26} height={26} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
       <line x1="3" y1="6" x2="21" y2="6" />
       <line x1="3" y1="12" x2="21" y2="12" />
       <line x1="3" y1="18" x2="21" y2="18" />
@@ -15,7 +15,7 @@ function HamburgerIcon() {
 
 function CloseIcon() {
   return (
-    <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+    <svg width={26} height={26} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
       <line x1="18" y1="6" x2="6" y2="18" />
       <line x1="6" y1="6" x2="18" y2="18" />
     </svg>
@@ -33,9 +33,9 @@ export function Toc({ items }: { items: TocItem[] }) {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close contents" : "Open contents"}
         style={{
-          position: "fixed", top: 116, left: 24, zIndex: 210,
+          position: "fixed", top: 26, left: 110, zIndex: 210,
           display: "inline-flex", alignItems: "center", justifyContent: "center",
-          width: 32, height: 32, padding: 0,
+          width: 36, height: 36, padding: 0,
           background: "none", border: "none", color: "var(--ink)",
           cursor: "pointer",
         }}
@@ -51,7 +51,7 @@ export function Toc({ items }: { items: TocItem[] }) {
             overflowY: "auto",
           }}
         >
-          <div style={{ padding: "176px 32px 64px" }}>
+          <div style={{ padding: "130px 32px 64px" }}>
             <div style={{ fontSize: 22, fontWeight: 600, color: "var(--ink)", marginBottom: 28, letterSpacing: "-0.01em" }}>
               Contents
             </div>
