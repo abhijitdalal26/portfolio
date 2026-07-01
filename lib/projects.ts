@@ -36,7 +36,6 @@ export const projects: Project[] = [
       { label: "Download APK", href: "https://github.com/abhijitdalal26/cats-vs-dogs-android-app/blob/main/PawVision.zip" },
     ],
     heroVideo: "/projects/pawvision/detecting-cat.mp4",
-    screenshots: ["/projects/pawvision/detected-cat.jpeg"],
     logo: "/projects/pawvision/logo.png",
     cardPreview: {
       images: ["/projects/pawvision/cat.jpg", "/projects/pawvision/dog.jpg"],
