@@ -14,12 +14,11 @@ export default function Blog() {
       <div className="page-wrap" style={{ paddingTop: 60, paddingBottom: 88 }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
 
-          <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 10 }}>Writing</div>
           <h1 style={{ fontFamily: "var(--sans)", fontSize: "clamp(34px, 5.5vw, 54px)", letterSpacing: "-0.04em", lineHeight: 1.02, fontWeight: 700, marginBottom: 12 }}>
             Things I find<br />fascinating
           </h1>
           <p style={{ fontSize: 16, color: "var(--sub)", lineHeight: 1.65, marginBottom: 48, maxWidth: 420 }}>
-            Mostly AI, deep learning, and building. Written to think out loud.
+            Mostly AI, deep learning, and history. Written to think out loud.
           </p>
 
           {posts.length === 0 ? (
