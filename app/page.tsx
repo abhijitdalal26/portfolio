@@ -132,9 +132,6 @@ export default function Home() {
         <div className="page-wrap s-pt-64 s-pb-88">
           <FadeUp>
             <div style={{ marginBottom: 28, borderTop: "1px solid var(--line)", paddingTop: 28 }}>
-              <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 8 }}>
-                Latest
-              </div>
               <h2 style={{ fontFamily: "var(--sans)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
                 Blog
               </h2>
