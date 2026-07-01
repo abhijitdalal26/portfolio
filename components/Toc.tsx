@@ -33,10 +33,10 @@ export function Toc({ items }: { items: TocItem[] }) {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close contents" : "Open contents"}
         style={{
-          position: "fixed", top: 88, left: 24, zIndex: 210,
+          position: "fixed", top: 116, left: 24, zIndex: 210,
           display: "inline-flex", alignItems: "center", justifyContent: "center",
-          width: 44, height: 44, borderRadius: "50%",
-          background: "var(--bg)", border: "1.5px solid var(--faint)", color: "var(--ink)",
+          width: 32, height: 32, padding: 0,
+          background: "none", border: "none", color: "var(--ink)",
           cursor: "pointer",
         }}
       >
@@ -48,22 +48,21 @@ export function Toc({ items }: { items: TocItem[] }) {
           style={{
             position: "fixed", top: 0, left: 0, bottom: 0, zIndex: 200,
             width: "min(360px, 88vw)",
-            background: "var(--bg)", borderRight: "1px solid var(--line)",
             overflowY: "auto",
           }}
         >
-          <div style={{ padding: "130px 32px 64px" }}>
-            <div style={{ fontFamily: "var(--mono)", fontSize: 12, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 24 }}>
+          <div style={{ padding: "176px 32px 64px" }}>
+            <div style={{ fontSize: 22, fontWeight: 600, color: "var(--sub)", marginBottom: 28, letterSpacing: "-0.01em" }}>
               Contents
             </div>
 
-            <ul style={{ display: "flex", flexDirection: "column", gap: 24, listStyle: "none" }}>
+            <ul style={{ display: "flex", flexDirection: "column", gap: 20, listStyle: "none" }}>
               {items.map((item, i) => (
                 <li key={item.id}>
                   <a
                     href={`#${item.id}`}
                     onClick={() => setOpen(false)}
-                    style={{ fontSize: 20, fontWeight: 500, color: "var(--ink)", textDecoration: "none", lineHeight: 1.4, letterSpacing: "-0.01em" }}
+                    style={{ fontSize: 16, fontWeight: 500, color: "var(--ink)", textDecoration: "none", lineHeight: 1.4, letterSpacing: "-0.01em" }}
                   >
                     {i + 1}. {item.text}
                   </a>
