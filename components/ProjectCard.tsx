@@ -54,24 +54,18 @@ export function ProjectCard({ project }: { project: Project }) {
         )}
 
         <div style={{ padding: "20px 22px 22px", display: "flex", flexDirection: "column", flex: 1, position: "relative", zIndex: 2 }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8, gap: 8 }}>
-            <span style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1, textTransform: "uppercase", color: "var(--faint)" }}>{project.kind}</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+            <div style={{ fontSize: 19, fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.2, color: "var(--ink)" }}>{project.title}</div>
             {project.status === "current" && (
               <span style={{ fontSize: 10.5, fontWeight: 500, padding: "2px 8px", borderRadius: 999, background: "rgba(34,197,94,0.1)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.2)", fontFamily: "var(--mono)", whiteSpace: "nowrap" }}>
                 In Progress
               </span>
             )}
           </div>
-          <div style={{ fontSize: 19, fontWeight: 600, letterSpacing: "-0.02em", marginBottom: 8, lineHeight: 1.2, color: "var(--ink)" }}>{project.title}</div>
           <div style={{ fontSize: 14, color: "var(--sub)", lineHeight: 1.6, marginBottom: 18, flex: 1 }}>{project.blurb}</div>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", justifyContent: "space-between" }}>
-            <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
-              {project.tags.map((t) => <span key={t} className="chip">{t}</span>)}
-            </div>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 13, color: "var(--accent)", fontWeight: 600 }}>
-              View project <ArrowUpRight />
-            </span>
-          </div>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 13, color: "var(--accent)", fontWeight: 600 }}>
+            View project <ArrowUpRight />
+          </span>
         </div>
       </div>
     </Link>
