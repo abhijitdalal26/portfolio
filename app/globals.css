@@ -11,7 +11,7 @@
   --accent:     #2563eb;
   --accent-ink: #fafaf9;
 
-  --sans: "Newsreader", Georgia, serif;
+  --sans: "Inter", system-ui, sans-serif;
   --disp: "Newsreader", Georgia, serif;
   --mono: "JetBrains Mono", monospace;
 }

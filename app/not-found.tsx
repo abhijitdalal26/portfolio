@@ -8,7 +8,7 @@ export default function NotFound() {
         display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
       }}
     >
-      <h1 style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: 64, letterSpacing: "-0.04em", color: "var(--ink)", fontWeight: 600, margin: 0 }}>
+      <h1 style={{ fontFamily: "var(--sans)", fontSize: 64, letterSpacing: "-0.04em", color: "var(--ink)", fontWeight: 600, margin: 0 }}>
         404
       </h1>
       <p style={{ color: "var(--sub)", marginTop: 12, marginBottom: 28, fontSize: 16 }}>Page not found.</p>

@@ -86,7 +86,7 @@ export default function About() {
             {/* Left */}
             <div>
               <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 10 }}>About</div>
-              <h1 style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: "clamp(34px, 5.5vw, 54px)", letterSpacing: "-0.04em", lineHeight: 1.02, fontWeight: 700, marginBottom: 28 }}>
+              <h1 style={{ fontFamily: "var(--sans)", fontSize: "clamp(34px, 5.5vw, 54px)", letterSpacing: "-0.04em", lineHeight: 1.02, fontWeight: 700, marginBottom: 28 }}>
                 Electronics student,<br />
                 <span style={{ color: "var(--sub)" }}>indie developer</span>
               </h1>

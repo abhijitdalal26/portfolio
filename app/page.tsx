@@ -132,7 +132,7 @@ export default function Home() {
 
         <FadeUp>
           <div style={{ marginBottom: 72, maxWidth: 600, position: "relative", paddingLeft: 28, borderLeft: "3px solid var(--accent)" }}>
-            <p style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: "clamp(19px, 2.2vw, 24px)", lineHeight: 1.65, color: "var(--ink)", margin: 0, position: "relative" }}>
+            <p style={{ fontFamily: "var(--sans)", fontSize: "clamp(19px, 2.2vw, 24px)", lineHeight: 1.65, color: "var(--ink)", margin: 0, position: "relative" }}>
               I love working on new tech and building products people actually use —
               from RL agents to large language models.
             </p>
@@ -149,7 +149,7 @@ export default function Home() {
                     Currently Working On
                   </div>
                 </div>
-                <h2 style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
+                <h2 style={{ fontFamily: "var(--sans)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
                   In the Lab
                 </h2>
               </div>
@@ -170,7 +170,7 @@ export default function Home() {
             <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 8 }}>
               Timeline
             </div>
-            <h2 style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
+            <h2 style={{ fontFamily: "var(--sans)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
               Projects
             </h2>
           </div>
@@ -208,7 +208,7 @@ export default function Home() {
                   <span style={{ width: 3, height: 3, borderRadius: 999, background: "var(--faint)", display: "inline-block" }} />
                   <span style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--faint)" }}>{post.date} · {post.read}</span>
                 </div>
-                <div style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.3, marginBottom: 10, color: "var(--ink)", position: "relative", zIndex: 2 }}>
+                <div style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: 19, fontWeight: 600, letterSpacing: "-0.01em", lineHeight: 1.3, marginBottom: 10, color: "var(--ink)", position: "relative", zIndex: 2 }}>
                   {post.title}
                 </div>
                 <p style={{ fontSize: 14, color: "var(--sub)", lineHeight: 1.65, margin: "0 0 18px", flex: 1, position: "relative", zIndex: 2 }}>
