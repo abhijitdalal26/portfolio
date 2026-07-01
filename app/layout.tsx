@@ -7,7 +7,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
-  title: { template: "%s | Abhijit Dalal", default: "Abhijit Dalal — Engineer · ML / AI" },
+  title: { template: "%s | Abhijit Dalal", default: "Abhijit Dalal" },
   description: "I build apps and study how intelligence works. Engineer from India.",
   metadataBase: new URL("https://abhijitdalal.vercel.app"),
   twitter: { card: "summary_large_image", creator: "@abhijitdalal_" },

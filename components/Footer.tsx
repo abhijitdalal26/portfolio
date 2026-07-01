@@ -25,7 +25,7 @@ export function Footer() {
             Abhijit Dalal
           </Link>
           <span style={{ fontSize: 13, color: "var(--faint)", fontFamily: "var(--mono)" }}>
-            © 2026 · Built with Next.js
+            © {new Date().getFullYear()} Abhijit Dalal
           </span>
         </div>
 

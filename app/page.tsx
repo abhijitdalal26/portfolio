@@ -1,55 +1,15 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useCallback } from "react";
 import { WaveBg } from "@/components/WaveBg";
 import { FadeUp } from "@/components/FadeUp";
 import { ProjectCard } from "@/components/ProjectCard";
 import { getProjectsByStatus } from "@/lib/projects";
-
-function ArrowRight({ size = 15 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 8h10M9 4l4 4-4 4" />
-    </svg>
-  );
-}
-function ArrowUpRight({ size = 13 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 12L12 4M5 4h7v7" />
-    </svg>
-  );
-}
-
-function GlowCard({ children, style, className }: { children: React.ReactNode; style?: React.CSSProperties; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const onMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    ref.current.style.setProperty("--gx", `${e.clientX - r.left}px`);
-    ref.current.style.setProperty("--gy", `${e.clientY - r.top}px`);
-  }, []);
-  return (
-    <div ref={ref} className={`glow-card${className ? " " + className : ""}`} onMouseMove={onMouseMove} style={style}>
-      {children}
-    </div>
-  );
-}
-
-const POSTS = [
-  {
-    title: "Building nanoGPT from Scratch",
-    date: "May 2026", read: "9 min", tag: "Notes",
-    slug: "building-nanogpt-from-scratch",
-    excerpt: "What I learned re-implementing a GPT character by character — tokenization, attention, and the training loop, demystified.",
-  },
-];
+import { getAllPosts, formatDate } from "@/lib/posts";
 
 export default function Home() {
   const current = getProjectsByStatus("current");
   const done = getProjectsByStatus("done");
+  const posts = getAllPosts().slice(0, 4);
 
   return (
     <div style={{ background: "var(--bg)", color: "var(--ink)", fontFamily: "var(--sans)" }}>
@@ -168,53 +128,32 @@ export default function Home() {
       </div>
 
       {/* ── Writing ──────────────────────────────────────── */}
-      <div className="page-wrap s-pt-64 s-pb-88">
-        <FadeUp>
-          <div style={{ marginBottom: 28, borderTop: "1px solid var(--line)", paddingTop: 28 }}>
-            <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 8 }}>
-              Latest Writing
+      {posts.length > 0 && (
+        <div className="page-wrap s-pt-64 s-pb-88">
+          <FadeUp>
+            <div style={{ marginBottom: 28, borderTop: "1px solid var(--line)", paddingTop: 28 }}>
+              <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 8 }}>
+                Latest
+              </div>
+              <h2 style={{ fontFamily: "var(--sans)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
+                Blog
+              </h2>
             </div>
-            <h2 style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
-              Writing
-            </h2>
+          </FadeUp>
+
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {posts.map((post, i) => (
+              <FadeUp key={post.slug} delay={(i % 2) * 90}>
+                {i > 0 && <div style={{ height: 1, background: "var(--line)" }} />}
+                <Link href={`/blog/${post.slug}`} className="hover-row blog-row">
+                  <span style={{ fontSize: 17, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.02em" }}>{post.title}</span>
+                  <span style={{ fontSize: 12, color: "var(--faint)", fontFamily: "var(--mono)", flexShrink: 0, whiteSpace: "nowrap" }}>{formatDate(post.date)}</span>
+                </Link>
+              </FadeUp>
+            ))}
           </div>
-        </FadeUp>
-
-        <div className="grid-2-wide">
-          {POSTS.map((post, i) => (
-            <FadeUp key={post.title} delay={(i % 2) * 90} className="h-full">
-            <Link href={`/blog/${post.slug}`} style={{ textDecoration: "none", display: "block", height: "100%" }}>
-              <GlowCard style={{ background: "var(--panel)", border: "1px solid var(--line)", borderRadius: 14, padding: "24px 26px 20px", display: "flex", flexDirection: "column", height: "100%" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, position: "relative", zIndex: 2 }}>
-                  <span style={{ fontFamily: "var(--mono)", fontSize: 10.5, letterSpacing: 1, textTransform: "uppercase", color: "var(--sub)" }}>{post.tag}</span>
-                  <span style={{ width: 3, height: 3, borderRadius: 999, background: "var(--faint)", display: "inline-block" }} />
-                  <span style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--faint)" }}>{post.date} · {post.read}</span>
-                </div>
-                <div style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: 19, fontWeight: 600, letterSpacing: "-0.01em", lineHeight: 1.3, marginBottom: 10, color: "var(--ink)", position: "relative", zIndex: 2 }}>
-                  {post.title}
-                </div>
-                <p style={{ fontSize: 14, color: "var(--sub)", lineHeight: 1.65, margin: "0 0 18px", flex: 1, position: "relative", zIndex: 2 }}>
-                  {post.excerpt}
-                </p>
-                <span style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: 13, fontWeight: 600, color: "var(--accent)", position: "relative", zIndex: 2 }}>
-                  Read more <ArrowRight size={12} />
-                </span>
-              </GlowCard>
-            </Link>
-            </FadeUp>
-          ))}
         </div>
-
-        <div style={{ marginTop: 28, display: "flex", justifyContent: "center" }}>
-          <Link href="/blog"
-            style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 500, color: "var(--sub)", textDecoration: "none", padding: "11px 26px", borderRadius: 999, border: "1px solid var(--line)", transition: "color 0.15s, border-color 0.15s" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "var(--accent)"; (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--accent)"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "var(--sub)"; (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--line)"; }}
-          >
-            Read all posts <ArrowRight size={14} />
-          </Link>
-        </div>
-      </div>
+      )}
 
     </div>
   );

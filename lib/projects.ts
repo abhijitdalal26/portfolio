@@ -41,7 +41,7 @@ export const projects: Project[] = [
     logo: "/projects/pawvision/logo.png",
     cardPreview: {
       images: ["/projects/pawvision/cat.jpg", "/projects/pawvision/dog.jpg"],
-      caption: "Cat vs Dog",
+      caption: "My First Android App",
     },
     story: [
       "I wanted to see a model go beyond a notebook — so I trained a classifier on the classic Kaggle Dogs vs Cats dataset and turned it into a real Android app called PawVision, and learned what it actually takes to ship a model as something people can install and use.",
