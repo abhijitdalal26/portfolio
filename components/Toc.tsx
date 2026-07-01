@@ -33,7 +33,7 @@ export function Toc({ items }: { items: TocItem[] }) {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close contents" : "Open contents"}
         style={{
-          position: "fixed", top: 26, left: 110, zIndex: 210,
+          position: "fixed", top: 116, left: 24, zIndex: 210,
           display: "inline-flex", alignItems: "center", justifyContent: "center",
           width: 36, height: 36, padding: 0,
           background: "none", border: "none", color: "var(--ink)",
@@ -51,7 +51,7 @@ export function Toc({ items }: { items: TocItem[] }) {
             overflowY: "auto",
           }}
         >
-          <div style={{ padding: "130px 32px 64px" }}>
+          <div style={{ padding: "176px 32px 64px" }}>
             <div style={{ fontSize: 22, fontWeight: 600, color: "var(--ink)", marginBottom: 28, letterSpacing: "-0.01em" }}>
               Contents
             </div>
