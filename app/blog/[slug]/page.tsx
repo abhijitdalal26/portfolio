@@ -40,7 +40,7 @@ export default async function BlogPost({ params }: Props) {
             </span>
             <h1
               style={{
-                fontFamily: "var(--disp)",
+                fontFamily: "var(--disp)", fontStyle: "italic",
                 fontSize: "clamp(28px, 5vw, 44px)",
                 letterSpacing: "-0.035em",
                 lineHeight: 1.08,

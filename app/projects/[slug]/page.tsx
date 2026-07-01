@@ -63,7 +63,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                 </span>
               )}
             </div>
-            <h1 style={{ fontFamily: "var(--disp)", fontSize: "clamp(34px, 5.5vw, 54px)", letterSpacing: "-0.04em", lineHeight: 1.02, fontWeight: 700, marginBottom: 16 }}>
+            <h1 style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: "clamp(34px, 5.5vw, 54px)", letterSpacing: "-0.04em", lineHeight: 1.02, fontWeight: 700, marginBottom: 16 }}>
               {project.title}
             </h1>
             <p style={{ fontSize: 16, color: "var(--sub)", maxWidth: 560, lineHeight: 1.65, marginBottom: 24 }}>{project.blurb}</p>
@@ -109,7 +109,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
           {project.howItWorks && (
             <FadeUp>
               <div style={{ marginBottom: 40 }}>
-                <h2 style={{ fontFamily: "var(--disp)", fontSize: 24, fontWeight: 600, marginBottom: 16 }}>How it works</h2>
+                <h2 style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: 24, fontWeight: 600, marginBottom: 16 }}>How it works</h2>
                 <ul style={{ display: "flex", flexDirection: "column", gap: 10, paddingLeft: 20 }}>
                   {project.howItWorks.map((s, i) => (
                     <li key={i} style={{ fontSize: 15.5, lineHeight: 1.65, color: "var(--sub)" }}>{s}</li>
@@ -122,7 +122,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
           {project.screenshots && project.screenshots.length > 0 && (
             <FadeUp>
               <div style={{ marginBottom: 40 }}>
-                <h2 style={{ fontFamily: "var(--disp)", fontSize: 24, fontWeight: 600, marginBottom: 16 }}>Screenshots</h2>
+                <h2 style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: 24, fontWeight: 600, marginBottom: 16 }}>Screenshots</h2>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
                   {project.screenshots.map((src) => (
                     <div key={src} style={{ width: 220, borderRadius: 12, overflow: "hidden", border: "1px solid var(--line)", position: "relative", aspectRatio: "9/19" }}>
@@ -137,7 +137,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
           {project.techStack && (
             <FadeUp>
               <div style={{ marginBottom: 40 }}>
-                <h2 style={{ fontFamily: "var(--disp)", fontSize: 24, fontWeight: 600, marginBottom: 16 }}>Tech stack</h2>
+                <h2 style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: 24, fontWeight: 600, marginBottom: 16 }}>Tech stack</h2>
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                   {project.techStack.map((group) => (
                     <div key={group.label} style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "baseline" }}>
@@ -153,7 +153,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
           {project.architecture && project.architecture.length > 0 && (
             <FadeUp>
               <div style={{ marginBottom: 40 }}>
-                <h2 style={{ fontFamily: "var(--disp)", fontSize: 24, fontWeight: 600, marginBottom: 8 }}>From the training notebook</h2>
+                <h2 style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: 24, fontWeight: 600, marginBottom: 8 }}>From the training notebook</h2>
                 <p style={{ fontSize: 14.5, color: "var(--sub)", lineHeight: 1.6, marginBottom: 20 }}>
                   The key pieces of the model architecture and training pipeline, straight from the notebook.
                 </p>

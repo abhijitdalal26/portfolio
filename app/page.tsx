@@ -149,7 +149,7 @@ export default function Home() {
                     Currently Working On
                   </div>
                 </div>
-                <h2 style={{ fontFamily: "var(--disp)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
+                <h2 style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
                   In the Lab
                 </h2>
               </div>
@@ -170,7 +170,7 @@ export default function Home() {
             <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 8 }}>
               Timeline
             </div>
-            <h2 style={{ fontFamily: "var(--disp)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
+            <h2 style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
               Projects
             </h2>
           </div>
@@ -192,7 +192,7 @@ export default function Home() {
             <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 8 }}>
               Latest Writing
             </div>
-            <h2 style={{ fontFamily: "var(--disp)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
+            <h2 style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
               Writing
             </h2>
           </div>
