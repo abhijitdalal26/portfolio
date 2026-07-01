@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/posts";
+import { projects } from "@/lib/projects";
 
 const BASE_URL = "https://portfolio-website-rosy-pi-50.vercel.app";
 
@@ -9,6 +10,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const postRoutes = posts.map((post) => ({
     url: `${BASE_URL}/blog/${post.slug}`,
     lastModified: new Date(post.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  const projectRoutes = projects.map((project) => ({
+    url: `${BASE_URL}/projects/${project.slug}`,
+    lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
@@ -39,5 +47,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
     ...postRoutes,
+    ...projectRoutes,
   ];
 }

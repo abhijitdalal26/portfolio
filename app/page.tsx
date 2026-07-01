@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRef, useCallback } from "react";
 import { WaveBg } from "@/components/WaveBg";
 import { FadeUp } from "@/components/FadeUp";
+import { ProjectCard } from "@/components/ProjectCard";
+import { getProjectsByStatus } from "@/lib/projects";
 
 function ArrowRight({ size = 15 }: { size?: number }) {
   return (
@@ -36,41 +38,6 @@ function GlowCard({ children, style, className }: { children: React.ReactNode; s
   );
 }
 
-const PROJECTS = [
-  {
-    n: "01", title: "Graphify Code",
-    blurb: "Turn any codebase into an interactive knowledge graph you can actually explore — built as a VS Code extension.",
-    tags: ["TypeScript", "VS Code", "SaaS"],
-    kind: "Developer tool", year: "2026",
-    img: "/projects/graphify.png",
-    href: "https://github.com/abhijitdalal26",
-  },
-  {
-    n: "02", title: "Autonomous Racing · RL",
-    blurb: "Deep RL agents that learn to race — 2D (Gymnasium) and 3D (Unity ML-Agents) with PPO. Best agent completes a full lap.",
-    tags: ["Python", "PyTorch", "PPO", "Unity"],
-    kind: "Research", year: "2026",
-    img: "/projects/racing.jpg",
-    href: "https://github.com/abhijitdalal26/autonomous-racing-using-rl",
-  },
-  {
-    n: "03", title: "HarryPotterGPT",
-    blurb: "A GPT built from scratch, character by character — following Karpathy's nanoGPT, end to end. Trained on the full HP corpus.",
-    tags: ["Python", "PyTorch", "nanoGPT"],
-    kind: "Learning in public", year: "2025",
-    img: "/projects/transformer.png",
-    href: "https://github.com/abhijitdalal26",
-  },
-  {
-    n: "04", title: "Play Store Analysis",
-    blurb: "Deep data analysis on the Android market — scraped 11,176 apps across 10 countries. Published on Kaggle.",
-    tags: ["Python", "Jupyter", "pandas", "PostgreSQL"],
-    kind: "Data · Analysis", year: "2024",
-    img: "/projects/playstore.png",
-    href: "https://github.com/abhijitdalal26/play-store-app-analysis",
-  },
-];
-
 const POSTS = [
   {
     title: "The History of Deep Learning, Era by Era",
@@ -99,6 +66,9 @@ const POSTS = [
 ];
 
 export default function Home() {
+  const current = getProjectsByStatus("current");
+  const done = getProjectsByStatus("done");
+
   return (
     <div style={{ background: "var(--bg)", color: "var(--ink)", fontFamily: "var(--sans)" }}>
 
@@ -169,64 +139,49 @@ export default function Home() {
           </div>
         </FadeUp>
 
+        {current.length > 0 && (
+          <>
+            <FadeUp>
+              <div style={{ marginBottom: 32 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+                  <span className="pulse-dot" />
+                  <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)" }}>
+                    Currently Working On
+                  </div>
+                </div>
+                <h2 style={{ fontFamily: "var(--disp)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
+                  In the Lab
+                </h2>
+              </div>
+            </FadeUp>
+
+            <div className="grid-2" style={{ marginBottom: 72 }}>
+              {current.map((p, i) => (
+                <FadeUp key={p.slug} delay={(i % 2) * 90} className="h-full">
+                  <ProjectCard project={p} />
+                </FadeUp>
+              ))}
+            </div>
+          </>
+        )}
+
         <FadeUp>
           <div style={{ marginBottom: 32 }}>
             <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 8 }}>
-              Featured Work
+              Timeline
             </div>
             <h2 style={{ fontFamily: "var(--disp)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
-              My Top Projects
+              Projects
             </h2>
           </div>
         </FadeUp>
 
         <div className="grid-2">
-          {PROJECTS.map((p, i) => (
-            <FadeUp key={p.n} delay={(i % 2) * 90} className="h-full">
-            <GlowCard
-              style={{ background: "var(--panel)", border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden", display: "flex", flexDirection: "column", height: "100%" }}
-            >
-              <div style={{ height: 190, padding: "12px 12px 0", position: "relative" }}>
-                <div style={{ width: "100%", height: "100%", borderRadius: 8, overflow: "hidden", position: "relative" }}>
-                  <Image src={p.img} alt={p.title} fill style={{ objectFit: "cover", objectPosition: "top" }} sizes="(max-width: 720px) 100vw, 560px" />
-                </div>
-              </div>
-
-              <div style={{ padding: "20px 22px 22px", display: "flex", flexDirection: "column", flex: 1, position: "relative", zIndex: 2 }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-                  <span style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1, textTransform: "uppercase", color: "var(--faint)" }}>{p.kind}</span>
-                  <span style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--faint)" }}>{p.year}</span>
-                </div>
-                <div style={{ fontSize: 19, fontWeight: 600, letterSpacing: "-0.02em", marginBottom: 8, lineHeight: 1.2 }}>{p.title}</div>
-                <div style={{ fontSize: 14, color: "var(--sub)", lineHeight: 1.6, marginBottom: 18, flex: 1 }}>{p.blurb}</div>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", justifyContent: "space-between" }}>
-                  <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
-                    {p.tags.map((t) => <span key={t} className="chip">{t}</span>)}
-                  </div>
-                  {p.href && (
-                    <a href={p.href} target="_blank" rel="noopener noreferrer"
-                      style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 13, color: "var(--sub)", textDecoration: "none", transition: "color 0.15s" }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = "var(--sub)")}
-                    >
-                      GitHub <ArrowUpRight />
-                    </a>
-                  )}
-                </div>
-              </div>
-            </GlowCard>
+          {done.map((p, i) => (
+            <FadeUp key={p.slug} delay={(i % 2) * 90} className="h-full">
+              <ProjectCard project={p} />
             </FadeUp>
           ))}
-        </div>
-
-        <div style={{ marginTop: 28, display: "flex", justifyContent: "center" }}>
-          <Link href="/projects"
-            style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 500, color: "var(--sub)", textDecoration: "none", padding: "11px 26px", borderRadius: 999, border: "1px solid var(--line)", transition: "color 0.15s, border-color 0.15s" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "var(--accent)"; (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--accent)"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "var(--sub)"; (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--line)"; }}
-          >
-            View all projects <ArrowRight size={14} />
-          </Link>
         </div>
       </div>
 

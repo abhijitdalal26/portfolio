@@ -1,6 +1,9 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useRef, useCallback } from "react";
+import type { Project } from "@/lib/projects";
 
 function ArrowUpRight() {
   return (
@@ -10,15 +13,7 @@ function ArrowUpRight() {
   );
 }
 
-export function ProjectCard({ title, year, kind, description, tags, href, status }: {
-  title: string;
-  year: string;
-  kind: string;
-  description: string;
-  tags: string[];
-  href: string | null;
-  status: string | null;
-}) {
+export function ProjectCard({ project }: { project: Project }) {
   const ref = useRef<HTMLDivElement>(null);
   const onMouseMove = useCallback((e: React.MouseEvent) => {
     if (!ref.current) return;
@@ -27,42 +22,45 @@ export function ProjectCard({ title, year, kind, description, tags, href, status
     ref.current.style.setProperty("--gy", `${e.clientY - r.top}px`);
   }, []);
 
+  const thumb = project.screenshots?.[0] ?? project.heroImage;
+
   return (
-    <div
-      ref={ref}
-      className="glow-card"
-      onMouseMove={onMouseMove}
-      style={{ background: "var(--panel)", border: "1px solid var(--line)", borderRadius: 16, padding: "24px 28px" }}
-    >
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16, marginBottom: 10, position: "relative", zIndex: 2 }}>
-        <div>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 4 }}>
-            <h2 style={{ fontSize: 17, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.02em", margin: 0 }}>{title}</h2>
-            {status && (
-              <span style={{ fontSize: 10.5, fontWeight: 500, padding: "2px 8px", borderRadius: 999, background: "rgba(34,197,94,0.1)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.2)", fontFamily: "var(--mono)" }}>
-                {status}
+    <Link href={`/projects/${project.slug}`} style={{ textDecoration: "none", display: "block", height: "100%" }}>
+      <div
+        ref={ref}
+        className="glow-card"
+        onMouseMove={onMouseMove}
+        style={{ background: "var(--panel)", border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden", display: "flex", flexDirection: "column", height: "100%" }}
+      >
+        {thumb && (
+          <div style={{ height: 190, padding: "12px 12px 0", position: "relative" }}>
+            <div style={{ width: "100%", height: "100%", borderRadius: 8, overflow: "hidden", position: "relative" }}>
+              <Image src={thumb} alt={project.title} fill style={{ objectFit: "cover", objectPosition: "top" }} sizes="(max-width: 720px) 100vw, 560px" />
+            </div>
+          </div>
+        )}
+
+        <div style={{ padding: "20px 22px 22px", display: "flex", flexDirection: "column", flex: 1, position: "relative", zIndex: 2 }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8, gap: 8 }}>
+            <span style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1, textTransform: "uppercase", color: "var(--faint)" }}>{project.kind}</span>
+            {project.status === "current" && (
+              <span style={{ fontSize: 10.5, fontWeight: 500, padding: "2px 8px", borderRadius: 999, background: "rgba(34,197,94,0.1)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.2)", fontFamily: "var(--mono)", whiteSpace: "nowrap" }}>
+                In Progress
               </span>
             )}
           </div>
-          <span style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--faint)" }}>{kind} · {year}</span>
+          <div style={{ fontSize: 19, fontWeight: 600, letterSpacing: "-0.02em", marginBottom: 8, lineHeight: 1.2, color: "var(--ink)" }}>{project.title}</div>
+          <div style={{ fontSize: 14, color: "var(--sub)", lineHeight: 1.6, marginBottom: 18, flex: 1 }}>{project.blurb}</div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
+              {project.tags.map((t) => <span key={t} className="chip">{t}</span>)}
+            </div>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 13, color: "var(--accent)", fontWeight: 600 }}>
+              View project <ArrowUpRight />
+            </span>
+          </div>
         </div>
-        {href && (
-          <a
-            href={href} target="_blank" rel="noopener noreferrer"
-            style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 13, fontWeight: 500, color: "var(--sub)", textDecoration: "none", padding: "5px 12px", borderRadius: 999, border: "1px solid var(--line)", flexShrink: 0, transition: "color 0.15s, border-color 0.15s" }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = "var(--ink)"; e.currentTarget.style.borderColor = "rgba(0,0,0,0.22)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = "var(--sub)"; e.currentTarget.style.borderColor = "var(--line)"; }}
-          >
-            GitHub <ArrowUpRight />
-          </a>
-        )}
       </div>
-
-      <p style={{ fontSize: 14, lineHeight: 1.65, color: "var(--sub)", marginBottom: 14, position: "relative", zIndex: 2 }}>{description}</p>
-
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 6, position: "relative", zIndex: 2 }}>
-        {tags.map((t) => <span key={t} className="chip">{t}</span>)}
-      </div>
-    </div>
+    </Link>
   );
 }
