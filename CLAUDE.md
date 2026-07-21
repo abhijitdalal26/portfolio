@@ -18,7 +18,7 @@ vercel --prod    # Deploy to Vercel
 - **Scroll reveals** — `FadeUp` (`components/FadeUp.tsx`) is a dependency-free IntersectionObserver wrapper that fades + rises children into view once on scroll; honors `prefers-reduced-motion` and is SSR-safe. Reveal styles (`.reveal` / `.reveal-in`) live in `globals.css`.
 - **next-mdx-remote/rsc** — renders MDX blog posts as React Server Components, with `rehype-slug` + `rehype-autolink-headings` (behavior: "wrap") so every `##`/`###` heading gets an anchor id and becomes clickable
 - **gray-matter** — parses frontmatter from `.mdx` files
-- **next-themes** — dark/light toggle via `class` on `<html>`; default `light`, no system detection
+- **next-themes** — dark/light toggle via `class` on `<html>`; defaults to the visitor's OS preference (`system`, `enableSystem`)
 - **Fonts** — Inter (`--sans`) is used everywhere: nav, hero, project pages, headings. Newsreader (`--disp`, serif, upright + italic) is reserved for the blog only — blog list/post titles, `.prose h2`/`h3`, and the homepage "Blog" section post titles. JetBrains Mono (`--mono`) is used for small uppercase labels, tags, and code blocks.
 
 ## Project Structure
