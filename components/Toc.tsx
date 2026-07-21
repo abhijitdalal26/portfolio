@@ -33,7 +33,8 @@ export function Toc({ items }: { items: TocItem[] }) {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close contents" : "Open contents"}
         style={{
-          position: "fixed", top: 116, left: 24, zIndex: 210,
+          position: "fixed", top: "50%", left: 24, zIndex: 210,
+          transform: "translateY(-50%)",
           display: "inline-flex", alignItems: "center", justifyContent: "center",
           width: 36, height: 36, padding: 0,
           background: "none", border: "none", color: "var(--ink)",
