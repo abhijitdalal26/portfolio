@@ -3,27 +3,23 @@
 import { useEffect, useState } from "react";
 import type { TocItem } from "@/lib/toc";
 
-// Each line represents a stretch of the page (top / middle / bottom) and
-// darkens as scroll position approaches that stretch, doubling the icon as
-// a lightweight reading-progress indicator.
+// Each line represents a stretch of the page (top / middle / bottom). The
+// one matching the current scroll third is dark, the rest stay faint — a
+// lightweight reading-progress indicator, switched instantly, not blended.
 function HamburgerIcon({ progress }: { progress: number }) {
-  const targets = [0, 0.5, 1];
-  const ys = [4, 12, 20];
+  const ys = [2, 12, 22];
+  const activeIndex = progress < 1 / 3 ? 0 : progress < 2 / 3 ? 1 : 2;
 
   return (
     <svg width={26} height={26} viewBox="0 0 24 24" fill="none" strokeWidth="3.2" strokeLinecap="round">
-      {ys.map((y, i) => {
-        const intensity = Math.max(0, 1 - Math.abs(progress - targets[i]) * 2.2);
-        const opacity = 0.32 + intensity * 0.68;
-        return (
-          <line
-            key={y}
-            x1="3" y1={y} x2="21" y2={y}
-            stroke="var(--ink)"
-            strokeOpacity={opacity}
-          />
-        );
-      })}
+      {ys.map((y, i) => (
+        <line
+          key={y}
+          x1="3" y1={y} x2="21" y2={y}
+          stroke="var(--ink)"
+          strokeOpacity={i === activeIndex ? 1 : 0.32}
+        />
+      ))}
     </svg>
   );
 }
