@@ -11,7 +11,7 @@ function HamburgerIcon({ progress }: { progress: number }) {
   const ys = [4, 12, 20];
 
   return (
-    <svg width={26} height={26} viewBox="0 0 24 24" fill="none" strokeWidth="2.4" strokeLinecap="round">
+    <svg width={26} height={26} viewBox="0 0 24 24" fill="none" strokeWidth="3.2" strokeLinecap="round">
       {ys.map((y, i) => {
         const intensity = Math.max(0, 1 - Math.abs(progress - targets[i]) * 2.2);
         const opacity = 0.32 + intensity * 0.68;
