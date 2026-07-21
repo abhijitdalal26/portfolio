@@ -3,12 +3,28 @@
 import { useEffect, useState } from "react";
 import type { TocItem } from "@/lib/toc";
 
-function HamburgerIcon() {
+// Each line represents a stretch of the page (top / middle / bottom) and
+// darkens as scroll position approaches that stretch, doubling the icon as
+// a lightweight reading-progress indicator.
+function HamburgerIcon({ progress }: { progress: number }) {
+  const targets = [0, 0.5, 1];
+  const ys = [4, 12, 20];
+
   return (
-    <svg width={26} height={26} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
-      <line x1="3" y1="6" x2="21" y2="6" />
-      <line x1="3" y1="12" x2="21" y2="12" />
-      <line x1="3" y1="18" x2="21" y2="18" />
+    <svg width={26} height={26} viewBox="0 0 24 24" fill="none" strokeWidth="2.4" strokeLinecap="round">
+      {ys.map((y, i) => {
+        const intensity = Math.max(0, 1 - Math.abs(progress - targets[i]) * 2.2);
+        const opacity = 0.32 + intensity * 0.68;
+        return (
+          <line
+            key={y}
+            x1="3" y1={y} x2="21" y2={y}
+            stroke="var(--ink)"
+            strokeOpacity={opacity}
+            style={{ transition: "stroke-opacity 150ms ease" }}
+          />
+        );
+      })}
     </svg>
   );
 }
@@ -16,6 +32,7 @@ function HamburgerIcon() {
 export function Toc({ items }: { items: TocItem[] }) {
   const [open, setOpen] = useState(true);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     if (items.length === 0) return;
@@ -37,6 +54,21 @@ export function Toc({ items }: { items: TocItem[] }) {
     return () => observer.disconnect();
   }, [items]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? window.scrollY / docHeight : 0;
+      setScrollProgress(Math.min(1, Math.max(0, progress)));
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, []);
+
   if (items.length === 0) return null;
 
   return (
@@ -53,7 +85,7 @@ export function Toc({ items }: { items: TocItem[] }) {
           cursor: "pointer",
         }}
       >
-        <HamburgerIcon />
+        <HamburgerIcon progress={scrollProgress} />
       </button>
 
       {open && (
@@ -61,10 +93,11 @@ export function Toc({ items }: { items: TocItem[] }) {
           style={{
             position: "fixed", top: 0, left: 56, bottom: 0, zIndex: 200,
             width: "min(360px, 88vw)",
+            display: "flex", flexDirection: "column", justifyContent: "center",
             overflowY: "auto",
           }}
         >
-          <div style={{ padding: "176px 32px 64px" }}>
+          <div style={{ padding: "48px 32px" }}>
             <div style={{ fontSize: 22, fontWeight: 600, color: "var(--ink)", marginBottom: 28, letterSpacing: "-0.01em" }}>
               Contents
             </div>
