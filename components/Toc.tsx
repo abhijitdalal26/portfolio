@@ -98,11 +98,11 @@ export function Toc({ items }: { items: TocItem[] }) {
           }}
         >
           <div style={{ padding: "48px 32px" }}>
-            <div style={{ fontSize: 22, fontWeight: 600, color: "var(--ink)", marginBottom: 28, letterSpacing: "-0.01em" }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: "var(--faint)", marginBottom: 16, letterSpacing: 1, textTransform: "uppercase" }}>
               Contents
             </div>
 
-            <ul style={{ display: "flex", flexDirection: "column", gap: 20, listStyle: "none" }}>
+            <ul style={{ display: "flex", flexDirection: "column", gap: 13, listStyle: "none" }}>
               {items.map((item, i) => {
                 const isActive = activeId === item.id;
                 return (
@@ -110,12 +110,12 @@ export function Toc({ items }: { items: TocItem[] }) {
                     <a
                       href={`#${item.id}`}
                       style={{
-                        fontSize: 16,
+                        fontSize: 13.5,
                         fontWeight: isActive ? 600 : 500,
                         color: isActive ? "var(--ink)" : "var(--sub)",
                         textDecoration: "none",
-                        lineHeight: 1.4,
-                        letterSpacing: "-0.01em",
+                        lineHeight: 1.35,
+                        letterSpacing: "-0.005em",
                       }}
                     >
                       {i + 1}. {item.text}
