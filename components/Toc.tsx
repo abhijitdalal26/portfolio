@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { TocItem } from "@/lib/toc";
 
 function HamburgerIcon() {
@@ -13,17 +13,29 @@ function HamburgerIcon() {
   );
 }
 
-function CloseIcon() {
-  return (
-    <svg width={26} height={26} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
-    </svg>
-  );
-}
-
 export function Toc({ items }: { items: TocItem[] }) {
   const [open, setOpen] = useState(true);
+  const [activeId, setActiveId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (items.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveId(entry.target.id);
+        });
+      },
+      { rootMargin: "-160px 0px -70% 0px", threshold: 0 }
+    );
+
+    items.forEach((item) => {
+      const el = document.getElementById(item.id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [items]);
 
   if (items.length === 0) return null;
 
@@ -41,13 +53,13 @@ export function Toc({ items }: { items: TocItem[] }) {
           cursor: "pointer",
         }}
       >
-        {open ? <CloseIcon /> : <HamburgerIcon />}
+        <HamburgerIcon />
       </button>
 
       {open && (
         <div
           style={{
-            position: "fixed", top: 0, left: 0, bottom: 0, zIndex: 200,
+            position: "fixed", top: 0, left: 56, bottom: 0, zIndex: 200,
             width: "min(360px, 88vw)",
             overflowY: "auto",
           }}
@@ -58,16 +70,26 @@ export function Toc({ items }: { items: TocItem[] }) {
             </div>
 
             <ul style={{ display: "flex", flexDirection: "column", gap: 20, listStyle: "none" }}>
-              {items.map((item, i) => (
-                <li key={item.id}>
-                  <a
-                    href={`#${item.id}`}
-                    style={{ fontSize: 16, fontWeight: 500, color: "var(--sub)", textDecoration: "none", lineHeight: 1.4, letterSpacing: "-0.01em" }}
-                  >
-                    {i + 1}. {item.text}
-                  </a>
-                </li>
-              ))}
+              {items.map((item, i) => {
+                const isActive = activeId === item.id;
+                return (
+                  <li key={item.id}>
+                    <a
+                      href={`#${item.id}`}
+                      style={{
+                        fontSize: 16,
+                        fontWeight: isActive ? 600 : 500,
+                        color: isActive ? "var(--ink)" : "var(--sub)",
+                        textDecoration: "none",
+                        lineHeight: 1.4,
+                        letterSpacing: "-0.01em",
+                      }}
+                    >
+                      {i + 1}. {item.text}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
