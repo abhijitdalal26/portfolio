@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { projects, getProject } from "@/lib/projects";
 import { FadeUp } from "@/components/FadeUp";
+import { ScreenshotCarousel } from "@/components/ScreenshotCarousel";
 
 function ArrowUpRight() {
   return (
@@ -112,22 +113,6 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             </FadeUp>
           )}
 
-          {project.screenshots && project.screenshots.length > 0 && (
-            <FadeUp>
-              <div style={{ marginBottom: 40 }}>
-                <h2 style={{ fontFamily: "var(--sans)", fontSize: 24, fontWeight: 600, marginBottom: 16 }}>Screenshots</h2>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 14, alignItems: "flex-start" }}>
-                  {project.screenshots.map((src) => (
-                    <div key={src} style={{ height: 320, maxWidth: "100%", borderRadius: 12, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)" }}>
-                      <img src={src} alt="" style={{ height: 320, width: "auto", maxWidth: "100%", objectFit: "contain", display: "block" }} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </FadeUp>
-          )}
-
           {project.diagrams && project.diagrams.length > 0 && (
             <FadeUp>
               <div style={{ marginBottom: 40 }}>
@@ -139,13 +124,37 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                   {project.diagrams.map((d) => (
                     <div key={d.title}>
                       <h3 style={{ fontFamily: "var(--sans)", fontSize: 18, fontWeight: 600, color: "var(--ink)", marginBottom: 10 }}>{d.title}</h3>
-                      <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 18, position: "relative" }}>
+                      <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 18, position: "relative", maxWidth: d.imageMaxWidth ?? "none", marginInline: d.imageMaxWidth ? "auto" : undefined }}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={d.image} alt={d.title} style={{ width: "100%", display: "block" }} />
                       </div>
                       <p style={{ fontSize: 15.5, color: "var(--ink)", lineHeight: 1.65, margin: 0 }}>{d.caption}</p>
                     </div>
                   ))}
+                </div>
+              </div>
+            </FadeUp>
+          )}
+
+          {project.screenshots && project.screenshots.length > 0 && (
+            <FadeUp>
+              <div style={{ marginBottom: 40 }}>
+                <h2 style={{ fontFamily: "var(--sans)", fontSize: 24, fontWeight: 600, marginBottom: 16 }}>Website Screenshots</h2>
+                <ScreenshotCarousel images={project.screenshots} />
+              </div>
+            </FadeUp>
+          )}
+
+          {project.openclaw && (
+            <FadeUp>
+              <div style={{ marginBottom: 40 }}>
+                <h2 style={{ fontFamily: "var(--sans)", fontSize: 24, fontWeight: 600, marginBottom: 16 }}>{project.openclaw.title}</h2>
+                <div style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}>
+                  <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", flexShrink: 0, width: project.openclaw.imageMaxWidth ?? 280, maxWidth: "100%" }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={project.openclaw.image} alt={project.openclaw.title} style={{ width: "100%", display: "block" }} />
+                  </div>
+                  <p style={{ flex: "1 1 260px", fontSize: 15.5, color: "var(--ink)", lineHeight: 1.65, margin: 0 }}>{project.openclaw.caption}</p>
                 </div>
               </div>
             </FadeUp>

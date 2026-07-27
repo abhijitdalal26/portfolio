@@ -22,7 +22,8 @@ export type Project = {
   story: string[];
   howItWorks?: string[];
   diagramsIntro?: string;
-  diagrams?: { title: string; image: string; caption: string }[];
+  diagrams?: { title: string; image: string; caption: string; imageMaxWidth?: number }[];
+  openclaw?: { title: string; image: string; caption: string; imageMaxWidth?: number };
   architectureSteps?: string[];
 };
 
@@ -171,23 +172,49 @@ export const projects: Project[] = [
       { label: "DPO Paper", href: "https://arxiv.org/abs/2305.18290" },
     ],
     heroImage: "/projects/harry-potter-gpt/hero.png",
-    screenshots: [
-      "/projects/harry-potter-gpt/diagram1.png",
-      "/projects/harry-potter-gpt/diagram2.png",
-      "/projects/harry-potter-gpt/diagram3.png",
-    ],
     story: [
-      "Harry Potter GPT is a language model built to talk about the books the way a genuinely into-it fan would, someone who knows the story well enough to ask questions back, notice details, and keep the conversation going.",
-      "Rather than downloading a pretrained chatbot and prompting it to act like a fan, the whole thing is built from the ground up, following Andrej Karpathy's lectures on how GPT models actually work. It started as a GPT-2 style model trained on all seven Harry Potter books so it would pick up the world, the characters, and the writing style. That gave it the vocabulary of the Potter universe, but not yet the ability to hold a conversation.",
-      "So I took it through supervised fine-tuning next, showing it thousands of question and answer style exchanges so it would learn to respond in a chat format instead of just continuing a story. Then came the last and most interesting stage, preference alignment. I generated pairs of responses to the same question, one that felt like a real fan reply and one that felt flat or robotic, and trained the model to prefer the good one using a technique called DPO (Direct Preference Optimization), which is a simpler cousin of the reinforcement learning from human feedback (RLHF) process behind tools like ChatGPT.",
-      "I will be upfront about the results. The model's answers are nowhere near as sharp as ChatGPT or Claude, and it sometimes drifts into nonsense mid sentence. That was never the goal though. The goal was to understand, end to end, what actually happens between typing a question and getting an answer: how raw text becomes tokens, how a transformer predicts the next one, how a base model gets fine tuned into something that follows instructions, and how it gets nudged toward answers people actually prefer. Every one of those stages is something I built and trained myself, not something I called through an API.",
+      "Harry Potter GPT started less as \"let's build a Harry Potter chatbot\" and more as a question I kept getting stuck on: what actually happens, mechanically, between typing a question and getting an answer out of something like ChatGPT? The Harry Potter books were really just the excuse, training data that's fun to sample from while learning how a modern language model actually gets built, stage by stage, starting from a network that knows nothing and ending at something aligned to a preference.",
+      "The original idea behind picking Harry Potter specifically was wanting an AI that talks about the books the way a genuinely into-it fan would: not roleplaying as a specific character, but an outside voice that knows the story well enough to ask questions back, notice details you missed, and keep a conversation going instead of just answering and going quiet.",
+      "So rather than downloading a pretrained chatbot and prompting it to act like a fan, the whole thing is built from the ground up, following Andrej Karpathy's lectures on how GPT models actually work and forking his nanoGPT repo as the base to build on. It started as a GPT-2 (124M parameter) model trained on all seven Harry Potter books so it would pick up the world, the characters, and the writing style. That gave it the vocabulary of the Potter universe, but not yet the ability to hold a conversation.",
+      "From there it went through supervised fine-tuning, showing it thousands of question-and-answer style exchanges so it would learn to respond in a chat format instead of just continuing a story. Then came the last and most interesting stage: preference alignment. I generated pairs of responses to the same question, one that felt like a real fan reply and one that felt flat or robotic, and trained the model to prefer the good one using DPO (Direct Preference Optimization), a simpler cousin of the RLHF process behind tools like ChatGPT.",
+      "I'll be upfront about the results. The model's answers are nowhere near as sharp as ChatGPT or Claude, and it sometimes drifts into nonsense mid-sentence, especially the further past the Harry Potter prompt it wanders. That was never really the goal though. The goal was to understand, end to end, what actually happens at each stage: how raw text becomes tokens, how a transformer predicts the next one, how a base model gets fine-tuned into something that follows a format, and how it gets nudged toward answers people actually prefer. Every one of those stages is something I built and trained myself, not something called through an API.",
     ],
     howItWorks: [
-      "Stage 1, continued pretraining: started from a GPT-2 architecture and trained it on the text of all seven Harry Potter books so it absorbed the world, characters, and voice of the series.",
-      "Stage 2, supervised fine-tuning: trained the model on thousands of question and answer pairs written in a fan-discussion format, so it learned to respond conversationally instead of just predicting the next sentence of a story.",
-      "Stage 3, preference alignment with DPO: built a dataset of paired responses, a strong fan-like answer next to a weak generic one, and trained the model to prefer the strong one. This is the same idea behind RLHF, minus the separate reward model.",
-      "Loss dropped from around 3.5 right after switching to the chat format down to about 1.5 to 1.8 once the model learned both the Harry Potter world and how to hold a conversation about it.",
-      "The whole pipeline runs on nanoGPT, a compact and readable GPT implementation, which made it possible to actually read and understand every part of training rather than treating it as a black box.",
+      "Stage 1, continued pretraining: forked Andrej Karpathy's nanoGPT (reusing train.py, model.py, sample.py and configurator.py largely as-is) and trained a from-scratch GPT-2 (124M) on the text of all seven Harry Potter books (~5M tokens), on a Kaggle T4 x2, so it absorbed the world, characters, and voice of the series before it knew how to hold any kind of conversation.",
+      "Stage 2, supervised fine-tuning (SFT): trained the same model on 4,321 lines of question-and-answer pairs written in a fan-discussion format (`<|user|> question\\n<|assistant|> answer<|endoftext|>`), with the loss masked so it only learns from the assistant's tokens, not the question repeated back. This is what taught it to respond conversationally instead of just predicting the next sentence of a story. Loss went from ~3.47 right after switching to the chat format down to ~1.5–1.8 once it had both the HP world and the chat format down.",
+      "Stage 3, HuggingFace conversion: converted the raw nanoGPT checkpoint into a HuggingFace-format model so it could be trained with HuggingFace's TRL library. The fiddly part here was weight transposition — nanoGPT's linear layers and HuggingFace's GPT-2 `Conv1D` layers store their weight matrices transposed relative to each other, so a naive copy silently produces a broken model.",
+      "Stage 4, preference alignment with DPO: wrote a prompt template describing the fan-voice style rules (references specific scenes, ends with a follow-up question, 2–4 sentences) and used an LLM to generate 347 (prompt, chosen, rejected) triples — a strong fan-like answer paired against a deliberately flat, generic, or factually-off one for the same question. TRL's `DPOTrainer` then trained the SFT model to prefer the chosen response over the rejected one directly, no separate reward model needed, in 3 epochs / 60 steps, which took about a minute on a single RTX 3050 (6GB) — dramatically cheaper than the pretraining or SFT stages, since DPO is only nudging an existing distribution rather than teaching language from scratch.",
+      "What the model actually sounded like at each stage, taken straight from real generations logged during training rather than cherry-picked after the fact: right after pretraining, prompted only with \"Harry Potter was\", it produced fluent but rambling prose with no chat format at all — \"Harry Potter was extremely upset that she had cast the Dark Lord's curse on him. She had never really known how he could do that...\" — grammatical, on-topic-ish, but no notion of question and answer. After SFT, asked \"Who is Harry Potter?\" in the trained `<|user|>/<|assistant|>` format, it replied in-character as a fan and even ended with a follow-up: \"He's the one who stops the Ministry so Dumbledore can walk in and stop the war. Harry's biggest mistake was thinking he was protecting Hermione, but then he's actually supporting the Death Eaters. Do you think Dumbledore would have won if Harry had known?\" — the chat structure and follow-up-question habit are there, even though the actual HP facts are still shaky. DPO doesn't generate new text so much as teach the model which of two replies to prefer; one of the real training pairs it learned from: chosen — \"The Shrieking Shack reveal is such a gut punch. What kills me is that Harry almost had a real family for the first time and then Pettigrew ruins everything... Did the time-turner twist hit you hard too?\" vs. rejected — \"Prisoner of Azkaban is a great book. Sirius Black is an important character in the Harry Potter series. He was Harry's godfather... The book received positive reviews from critics.\" — a genuinely fan-toned, specific, question-ending reply against a flat Wikipedia-summary one.",
+      "A handful of Andrej Karpathy's Zero to Hero videos did most of the heavy lifting conceptually: \"Let's build GPT: from scratch, in code, spelled out\" is where the actual transformer architecture in model.py comes from; \"Let's build the GPT Tokenizer\" is what the BPE tokenization here is based on; \"Let's reproduce GPT-2 (124M)\" matches the exact model size and training regime used in this project; and \"State of GPT\" is the talk that laid out the pretrain → SFT → RLHF pipeline this whole project follows stage by stage.",
+      "Where it stands: the full four-stage pipeline above (pretrain → SFT → HF conversion → DPO) is done and working end to end on GPT-2 (124M), with checkpoints for every stage. A bigger version, swapping in a larger open base model with LoRA fine-tuning plus long-term conversation memory and a retrieval layer for book lore (shown in the architecture diagrams below), was the original stretch plan, but I decided to stay focused on doing the GPT-2 pipeline properly rather than scaling up.",
+      "One more piece of reference material worth naming: alongside nanoGPT, I also went through Karpathy's build-nanogpt (his \"Let's reproduce GPT-2\" repo, which trains a GPT-2 completely from random initialization on the FineWeb dataset) to see the from-scratch side of the picture. This project's own model wasn't trained from scratch, though — it started from pretrained GPT-2 weights and was fine-tuned from there, which is the more honest way to describe it.",
+    ],
+    diagramsIntro: "The pipeline was designed before it was built: the diagrams below are the actual planning artifacts I worked from, not after-the-fact illustrations. The dashed \"checkpoint\" lines mark exactly how far the real, working code got.",
+    diagrams: [
+      {
+        title: "The full companion architecture (as designed)",
+        image: "/projects/harry-potter-gpt/diagram1.png",
+        caption: "The end-to-end vision: a base model taken through fine-tuning and DPO alignment, then wrapped with long-term user memory and a retrieval layer over the books, serving a chat interface. The GPT-2 pipeline that actually got built and trained covers the top half of this diagram (base model through DPO alignment); the memory and retrieval layers at the bottom were part of the original stretch goal, scoped out in favor of finishing the GPT-2 pipeline properly.",
+      },
+      {
+        title: "Three-phase build plan, step by step",
+        image: "/projects/harry-potter-gpt/diagram2.png",
+        caption: "Phase 1 (steps 1–3) and Phase 2 (steps 4–6) are the parts that are actually done: nanoGPT fine-tuned on the HP books, then DPO-aligned via TRL, exactly as described above. The \"checkpoint: working GPT-2 companion\" line marks where the real, tested code stops — Phase 3 (steps 7–11, re-running the same recipe on a much larger model) was the original stretch goal but was deliberately dropped in favor of doing the GPT-2 version properly.",
+      },
+      {
+        title: "The actual dev loop",
+        image: "/projects/harry-potter-gpt/diagram3.png",
+        caption: "How the code itself got written: fork nanoGPT, write and sanity-check data prep / config changes locally on a laptop with no GPU needed, verify on a tiny slice of data (a few forward passes, loss should visibly drop within 10 steps), then push to GitHub and pull it into Kaggle/Colab only once it's known to work, so GPU time isn't spent debugging.",
+      },
+    ],
+    architectureSteps: [
+      "Token embedding — vocab size 50,257 (GPT-2 BPE tokenizer)",
+      "Positional embedding — learned, 1024-token context window",
+      "12x Transformer block — LayerNorm → causal multi-head self-attention (12 heads, 768-dim) → residual add",
+      "12x Transformer block (cont.) — LayerNorm → MLP (768 → 3072 → 768, GELU) → residual add",
+      "Final LayerNorm",
+      "Linear head — weights tied to the token embedding, projects to 50,257-way softmax over the vocabulary",
+      "124M total parameters",
     ],
   },
   {
@@ -198,34 +225,56 @@ export const projects: Project[] = [
     status: "done",
     kind: "IoT · Machine Learning",
     tags: ["Raspberry Pi", "Arduino", "XGBoost", "FastAPI", "React", "IoT"],
-    blurb: "A Raspberry Pi planted in a pot of soil that reads the plant's vitals and tells a farmer what to grow, how much water it needs, and what fertilizer to use, built with two teammates for a college social-impact program.",
+    blurb: "A Raspberry Pi planted in a pot of soil that reads the plant's vitals and tells a farmer what to grow, how much water it needs, and what fertilizer to use, built with two teammates for Electronics Service to Society (ESS), a VJTI course under Prof. Rohin Daruwala.",
     github: "https://github.com/abhijitdalal26/smart-agriculture-advisory-system",
     heroImage: "/projects/smart-agriculture-advisory-system/physical-setup.jpeg",
     screenshots: [
-      "/projects/smart-agriculture-advisory-system/architecture-diagram.jpeg",
-      "/projects/smart-agriculture-advisory-system/hardware-circuit-diagram.png",
       "/projects/smart-agriculture-advisory-system/dashboard-overview.png",
       "/projects/smart-agriculture-advisory-system/dashboard-live-sensors.png",
       "/projects/smart-agriculture-advisory-system/dashboard-ml-predictions.png",
       "/projects/smart-agriculture-advisory-system/dashboard-weather-forecast.png",
       "/projects/smart-agriculture-advisory-system/dashboard-historical-analytics.png",
       "/projects/smart-agriculture-advisory-system/dashboard-manual-input.png",
-      "/projects/smart-agriculture-advisory-system/telegram-bot-chat.jpeg",
+    ],
+    papers: [
+      { label: "Dataset: Crop Recommendation", href: "https://www.kaggle.com/datasets/atharvaingle/crop-recommendation-dataset" },
+      { label: "Dataset: Crop Yield in Indian States", href: "https://www.kaggle.com/datasets/akshatgupta7/crop-yield-in-indian-states-dataset" },
+      { label: "Dataset: Irrigation Water Requirement", href: "https://www.kaggle.com/datasets/miadul/irrigation-water-requirement-prediction-dataset" },
+      { label: "Dataset: Fertilizer Prediction", href: "https://www.kaggle.com/datasets/irakozekelly/fertilizer-prediction" },
     ],
     story: [
-      "Most farmers still decide what to plant, when to water, and what fertilizer to buy by gut feeling, passed down experience rather than data. Along with two teammates, Rugved Bhalekar and Prathamesh Thanekar, I built a system that tries to replace that guesswork with actual numbers, for a college program called ESS (Electronics Service to Society). We wired up a potted plant with real sensors, hooked it to a Raspberry Pi, and built four machine learning models that turn raw soil and weather readings into plain advice: plant this crop, water it this much, use this fertilizer, and expect this yield.",
-      "The hardware side reads six things off the plant in real time: soil moisture, soil temperature, soil pH, air temperature, humidity, and light, using an Arduino Nano and a handful of sensors wired into the Pi. That data feeds a small on-device dashboard (a 16x2 LCD and a color TFT screen) so you can walk up to the pot itself and see what it's thinking. It also drives a full web dashboard with live gauges and historical charts, plus a Telegram bot so a farmer standing in the field with just a phone can ask questions and get answers.",
+      "Most farmers still decide what to plant, when to water, and what fertilizer to buy by gut feeling, passed down experience rather than data. Along with two teammates, Rugved Bhalekar and Prathamesh Thanekar, I built a system that tries to replace that guesswork with actual numbers, for Electronics Service to Society (ESS), a VJTI course under Prof. Rohin Daruwala. We wired up a potted plant with real sensors, hooked it to a Raspberry Pi, and built four machine learning models that turn raw soil and weather readings into plain advice: plant this crop, water it this much, use this fertilizer, and expect this yield.",
+      "The hardware side reads six things off the plant in real time: soil moisture, soil temperature, soil pH, air temperature, humidity, and light, using an Arduino Uno and a handful of sensors wired into the Pi. That data feeds a small on-device dashboard (a 16x2 LCD and a color TFT screen) so you can walk up to the pot and read its live readings directly, no phone or laptop needed. It also drives a full web dashboard with live gauges and historical charts, plus a Telegram bot so a farmer away from the pot, out in the field or anywhere else with just a phone, can ask questions and get answers.",
       "The interesting engineering problem was making four separate ML models work together as one coherent advisory system: crop recommendation, yield prediction, irrigation advice, and fertilizer advice, each trained on a different Indian agricultural dataset, each an XGBoost model chosen for being fast enough to run inference directly on a Raspberry Pi with no cloud round trip. We also built a fallback for farmers who don't have lab tested soil nutrient numbers. Pick your soil's color (red, black, alluvial) from the dashboard and the system maps that to approximate nutrient levels instead of failing to work.",
       "The last piece was wiring an AI agent called OpenClaw, an agentic framework that can read sensor files and run code directly on the device, into a Telegram bot. So instead of a rigid menu of commands, a farmer can just ask a normal question and get back sensor readings, predictions, and advice in plain language. That's genuinely useful in a rural setting where a full dashboard isn't always the easiest thing to reach for.",
     ],
     howItWorks: [
-      "Sensors (DHT22 for air temp/humidity, a soil moisture probe, DS18B20 for soil temperature, BH1750 for light, plus an Arduino Nano reading soil pH) constantly report readings into a daemon running on the Raspberry Pi.",
+      "Sensors (DHT22 for air temp/humidity, a capacitive soil moisture probe, DS18B20 for soil temperature, BH1750 for light, plus a pH-4502C probe) constantly report readings into a daemon running on the Raspberry Pi, which is the system's single hub.",
+      "The Pi has no analog input pins, so the two genuinely analog sensors, soil moisture and pH, are wired into an Arduino Uno instead. The Arduino reads them over its ADC and relays the values to the Pi over serial, while everything else (the digital/I2C/1-Wire sensors, the LCD, and the ML inference) is handled directly by the Pi.",
       "Those readings are logged to a local SQLite database and pushed to a FastAPI backend, which is the single source of truth the rest of the system reads from.",
       "Four independently trained XGBoost models (crop recommendation, yield prediction, irrigation advisory, and fertilizer advisory) take the live sensor data, or manually entered values, and turn it into concrete recommendations.",
       "A React dashboard shows live sensor gauges, historical trend charts, weather forecasts pulled from a weather API, and the model outputs, built for someone checking in from a laptop or phone.",
-      "A Telegram bot, powered by the OpenClaw agent framework running on the Pi itself, lets a farmer ask questions in plain language and get sensor readings, predictions, and alerts back without opening a dashboard at all.",
-      "The full system architecture, showing how the sensor layer, backend, ML models, and interfaces connect, is in the diagram below.",
+      "OpenClaw, an agentic framework, runs directly on the Pi itself rather than in the cloud, so it has real file and shell access on the device: it reads the live sensor state and SQLite history straight off disk and can run its own Python/shell code to check on things. It's wired to a Telegram bot so a farmer can ask a plain-language question and get back live readings, predictions, and alerts, no dashboard required. An AGENTS.md file defines escalation rules it follows, for example, recognizing that a soil moisture reading stuck at exactly 0% almost always means the Arduino has been disconnected, not that the soil is actually bone dry, and reporting that distinction instead of just repeating the raw number.",
     ],
+    diagramsIntro: "The system architecture below is the real block diagram used to plan and wire the build, and the schematic is the exact circuit that was breadboarded. Together they show how every sensor, the Pi, the Arduino, and both displays are actually connected.",
+    diagrams: [
+      {
+        title: "System architecture — how every piece connects",
+        image: "/projects/smart-agriculture-advisory-system/architecture-diagram.jpeg",
+        caption: "The Raspberry Pi 4 (its quad-core Cortex-A72, green box) is the hub, powered over USB from a laptop/PC. It talks I2C directly to the BH1750 ambient light sensor and to the 16x2 LCD, and reads the DHT22 (air temp/humidity) and DS18B20 (soil temp, over 1-Wire) straight off its GPIO pins. Because the Pi itself can't read analog voltages, a USB link carries both data and 5V power down to an Arduino Uno, which exists purely to bridge the two genuinely analog sensors, a capacitive soil moisture probe and a pH-4502C probe, into digital values the rest of the system can use. That same Arduino also drives a small SPI color TFT locally, so the moisture and pH numbers are visible right at the pot without needing the web dashboard. In short: the Pi owns the digital sensors, the display, and the ML inference; the Arduino's only job is being a dedicated analog-to-digital bridge for the two sensors that need one.",
+      },
+      {
+        title: "Full wiring schematic",
+        image: "/projects/smart-agriculture-advisory-system/hardware-circuit-diagram.png",
+        caption: "The exact circuit schematic behind the block diagram above: the BH1750 and the PCF8574-backed 16x2 LCD on the Pi's I2C bus, the DHT22 on a GPIO pin, RASTX/RASRX serial lines carrying the Arduino's moisture and pH readings back to the Pi, and the Arduino's own SPI lines (MOSI/MISO/SCK/CS/DC/RST) driving the local TFT.",
+      },
+    ],
+    openclaw: {
+      title: "OpenClaw agent, live on Telegram",
+      image: "/projects/smart-agriculture-advisory-system/telegram-bot-chat.jpeg",
+      imageMaxWidth: 320,
+      caption: "The bot, KrishiMitra, running on OpenClaw directly on the Pi. Asked \"How is the farm\", it doesn't return a canned template, it pulls the actual live sensor values (air temp, humidity, soil temp, soil moisture, pH, light) at that moment, flags what's actually wrong (soil moisture reading a critical 0.0%), and reasons about the likely cause using the escalation rules in its AGENTS.md, correctly inferring the Arduino was probably disconnected rather than just reporting a scary number at face value.",
+    },
   },
   {
     slug: "projects-wiki",
