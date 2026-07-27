@@ -29,7 +29,7 @@
 
 /* ── Base ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; background: var(--bg); }
+html { background: var(--bg); }
 body {
   background: var(--bg);
   color: var(--ink);
@@ -108,12 +108,6 @@ body {
   gap: 72px;
   align-items: start;
 }
-.project-hero {
-  display: grid;
-  grid-template-columns: minmax(240px, 320px) 1fr;
-  gap: 40px;
-  align-items: start;
-}
 
 /* ── Marquee section labels ─────────────────────────── */
 .marquee-label { padding: 10px 48px 0; }
@@ -123,7 +117,6 @@ body {
   .grid-2       { grid-template-columns: 1fr; }
   .grid-2-wide  { grid-template-columns: 1fr; }
   .about-cols   { grid-template-columns: 1fr; gap: 40px; }
-  .project-hero { grid-template-columns: 1fr; }
   .marquee-label{ padding: 10px 20px 0; }
 }
 
@@ -204,7 +197,7 @@ body {
   font-weight: 600;
   font-family: var(--sans);
   background: transparent;
-  color: var(--sub);
+  color: var(--ink);
   text-decoration: none;
   border: 1px solid var(--line);
   transition: border-color 0.15s, color 0.15s, transform 0.15s;
@@ -270,7 +263,7 @@ body {
 .chip {
   font-family: var(--mono);
   font-size: 11.5px;
-  color: var(--sub);
+  color: var(--ink);
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 4px 10px;

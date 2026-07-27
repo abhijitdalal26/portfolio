@@ -1,0 +1,116 @@
+---
+title: "The Entire History of AI"
+date: "2026-02-18"
+description: "Perceptrons, backprop, CNNs, RNNs, attention, transformers, Mamba. Different names, same story: each one is a better way for machines to hold onto information."
+---
+
+I spent a while going back through the history of neural networks, not as trivia but trying to find the thread connecting all of it. Why did each architecture show up when it did, and what specifically broke that forced the next one into existence.
+
+The thread turned out to be simple: **every architecture change is a better memory mechanism.** A perceptron remembers a single set of weights. An RNN remembers a hidden state. A transformer remembers everything at once, weighted by relevance. Each era exists because the previous one hit a wall in how much it could hold onto, or how well it could access what it was holding.
+
+This is that history, era by era, told through what problem each one solved and what problem it left behind for the next.
+
+{/* Image idea: a horizontal timeline strip across the top of the post, 1943 to 2026, with one label per era (perceptron / backprop / CNN / RNN / attention / transformer / LLM systems / SSM). Simple, functions as a visual index readers can scan before diving in. */}
+
+## Era 0, Neural Foundations (1943–1985): can a machine learn at all?
+
+It starts in 1943 with McCulloch and Pitts modeling a neuron as a binary threshold gate, and Hebb's 1949 idea that "cells that fire together wire together." Then in 1958, Frank Rosenblatt builds the [**Perceptron**](https://pdfs.semanticscholar.org/865f/b2cfe6fdb7af2c663ef346ea05889f237108.pdf), an actual machine, not just math, that adjusts its own weights from examples. He called it "the first machine capable of having an original idea."
+
+It couldn't do much. A single perceptron draws one straight line through your data. In 1969, Minsky and Papert published [*Perceptrons*](https://leon.bottou.org/publications/pdf/perceptrons-2017.pdf) and proved, cleanly, that a single-layer network can't even solve XOR, a problem a five-year-old could learn. The field took that as a verdict. Funding disappeared. This was the first AI winter.
+
+{/* Image idea: a simple diagram showing a single perceptron drawing one straight decision line through 2D points, next to an XOR dataset it physically cannot separate with one line. This is the clearest way to show why XOR killed the field. */}
+
+The perceptron's memory was just a set of weights and a threshold: no depth, no hierarchy. To fix XOR you need hidden layers. But in 1969, nobody knew how to train them.
+
+## Era 1, Backpropagation (1986–2011): teaching the hidden layers
+
+The fix took 17 years. In 1986, Rumelhart, Hinton, and Williams published *Learning representations by back-propagating errors*, four pages showing how the chain rule lets you push an error signal backward through any number of layers and know exactly how much each weight contributed to the mistake.
+
+That's backpropagation, and it's still the algorithm training every network today. Suddenly multilayer perceptrons were trainable end to end, XOR became trivial, and by 1989 Yann LeCun was already applying it to convolutional layers for handwritten digit recognition.
+
+{/* Image idea: a small computational graph showing forward pass (input to output, left to right) and backward pass (gradient flowing right to left), the classic diagram every backprop explainer uses. Would make the "chain rule pushed backward through layers" idea concrete. */}
+
+But depth still had limits. Beyond five or so layers, gradients would vanish or explode on their way backward, training was slow, and neural nets kept losing to SVMs and hand-crafted features in real competitions. The theory worked, the practice didn't scale yet. What was missing was better activations, regularization, and raw compute.
+
+## Era 2, The Deep Learning Breakthrough (2012–2016): features, learned automatically
+
+In 2012, Alex Krizhevsky, Ilya Sutskever, and Geoffrey Hinton entered [**AlexNet**](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks) into the ImageNet competition, an 8-layer CNN trained on two GTX 580s, using ReLU instead of sigmoid, Dropout for regularization, and heavy data augmentation. It cut the error rate from around 26% to 15.3% in one submission and ended the era of hand-engineered features like SIFT and HOG almost overnight.
+
+What made it possible was three things landing together: ReLU fixed the vanishing gradient problem that had capped Era 1, Dropout tamed overfitting, and GPUs plus ImageNet's million-plus labeled images made training at that scale feasible for the first time. VGGNet, GoogLeNet, and then [ResNet's](https://arxiv.org/abs/1512.03385) residual connections followed fast, pushing depth past 100 layers.
+
+{/* Image idea: a CNN feature hierarchy visualization, first-layer filters that look like edge detectors, then a mid-layer showing textures/patterns, then a late-layer showing object parts. This is the single most convincing image for "deep nets learn features automatically" and is a staple of every CS231n-style course. */}
+
+The memory story here: a CNN learns a hierarchy of features by itself (edges, then textures, then object parts, then classes) instead of a human hand-coding what to look for. But CNNs are built for grids of pixels. They have no native way to hold onto information across a sequence. Text, speech, time series: none of it fit.
+
+## Era 3, Sequence Modeling, the RNN era (2013–2017): remembering what came before
+
+An RNN carries a hidden state forward through time, a running summary of everything it has seen so far in a sequence. In theory that's memory. In practice, vanilla RNNs forget almost immediately, because gradients shrink exponentially the further back you push them.
+
+The actual fix predates this era by almost two decades: Hochreiter and Schmidhuber's [1997 **LSTM**](http://www.bioinf.jku.at/publications/older/2604.pdf), with its cell state and three gates (forget, input, output) controlling exactly what gets kept, added, or dropped. It just took until the 2010s, with backprop now mature and GPUs available, for LSTMs to become practical at scale. The [**GRU**](https://arxiv.org/abs/1406.1078) (Cho et al., 2014) simplified this to two gates and got similar results with fewer parameters.
+
+{/* Image idea: an LSTM cell diagram showing the cell state running along the top and the three gates branching off it. Colah's blog has the canonical version of this; a simplified original version in your site's line-art style would work well here. */}
+
+[Karpathy's 2015 char-rnn](http://karpathy.github.io/2015/05/21/rnn-effectiveness/), training a character-level LSTM to generate Shakespeare, Linux kernel code, even LaTeX, was the moment this era's promise became visible. RNNs could learn syntax and structure from raw characters with no explicit rules.
+
+But two problems remained. RNNs process one token at a time: no parallelism, so training on long sequences is slow. And worse: seq2seq translation models were compressing an entire input sentence into one fixed-size vector before the decoder could use it. Long sentences lost information no matter how good the LSTM was. That fixed-size bottleneck is what the next era exists to remove.
+
+## Era 4, Attention, before Transformers (2014–2017): learning where to look
+
+In 2014, Bahdanau, Cho, and Bengio proposed a fix for the fixed-vector bottleneck: instead of forcing the encoder to compress the whole input into one vector, let the decoder look back at every encoder hidden state at each step, and learn how much weight to give each one. That's soft attention, an alignment score turned into a weighted sum, computed fresh at every decoding step.
+
+This is genuinely the pivotal idea. It's still recurrent, still sequential, still built on top of RNNs, but for the first time a model has **dynamic access** to its own memory rather than one static summary. Attention heatmaps became a party trick that turned out to be real interpretability: you could watch the model align "chat" with "cat" while translating French to English.
+
+{/* Image idea: an attention heatmap, a small grid with source words on one axis and target words on the other, brighter cells where the model attends more. This is a real, reproducible artifact (you can generate one from a toy seq2seq model), not just an illustration. */}
+
+[Luong's 2015 refinements](https://arxiv.org/abs/1508.04025) (dot-product scoring instead of an additive MLP) simplified this further and are a direct ancestor of the scaled dot-product attention used in transformers. By 2017, nearly every strong seq2seq model used attention. The obvious next question was: if attention is doing all the real work, why keep the recurrence at all?
+
+## Era 5, The Transformer Revolution (2017–2023): attention is the whole architecture
+
+June 2017, Vaswani et al., *Attention Is All You Need*. Remove recurrence entirely. Keep only self-attention, multi-head attention, and feedforward layers, with positional encodings standing in for the sequence order that recurrence used to provide for free. The result is fully parallelizable: every token can be processed at once instead of one at a time, and this is arguably the single most consequential architecture paper in the field's history.
+
+The next six years compress an enormous amount of progress: BERT and GPT-1 in 2018, GPT-2 and scaling experiments through 2019 to 2020, GPT-3 in 2020 showing that a large enough transformer starts doing few-shot learning just from examples in the prompt, and ChatGPT in November 2022 turning all of it into something anyone could use.
+
+{/* Image idea: the transformer block diagram (self-attention -> add & norm -> feedforward -> add & norm, stacked). Jay Alammar's "Illustrated Transformer" made this famous; a simplified original redraw would be the single highest-value diagram in this whole post. */}
+
+The memory reframing here: self-attention gives every token direct access to every other token, in one step, weighted by relevance. Global context instead of a hidden state that decays over distance. Combined with scaling laws (bigger model plus more data, in the right ratio, gives predictable gains), this is what let models jump from "good at one task" to "general-purpose."
+
+The cost is attention's O(n²) complexity: compute and memory scale with the square of sequence length, which is why early transformer context windows topped out in the low thousands of tokens. That, plus the compute cost of training frontier-scale models at all, defines the edge of this era.
+
+## Era 6, LLM Systems (2022–2024): the model becomes a system
+
+ChatGPT didn't introduce a new architecture. It repackaged GPT-3.5 with RLHF and instruction tuning, and that repackaging mattered more than any architecture paper that year, because it proved the thing was usable. What followed was less about new networks and more about wrapping the network in a system: chain-of-thought prompting, retrieval-augmented generation to ground answers in real documents instead of relying purely on memorized weights, function calling so a model could reliably call external tools, and agent loops (ReAct, AutoGPT-style plan-act-observe cycles) letting a model take multi-step actions instead of one-shot answers.
+
+This is the era where "memory" stops being purely inside the network. A vector database holding embeddings *is* memory now, external, searchable, updatable without retraining. Open models (LLaMA, Mistral) plus LoRA/QLoRA fine-tuning also meant, for the first time, that customizing a serious model didn't require training one from scratch.
+
+{/* Image idea: a simple system diagram, not a network diagram. Boxes for User -> LLM -> Tools/Retrieval/Memory -> back to LLM -> Response, showing the model as one component in a loop rather than the whole system. Contrasts nicely with the network-internals diagrams used in earlier eras. */}
+
+By late 2024 the ceiling was showing: even a "long" context window is expensive and slow relative to just looking something up, agents still fail on genuinely long or complex multi-step tasks, and inference cost multiplies fast once a model is calling tools and other models in a loop.
+
+## Era 7, Beyond Transformers (2024–2026): memory without the quadratic cost
+
+The open question right now: can you get long-context memory without paying O(n²) for it. [**Mamba**](https://arxiv.org/abs/2312.00752) (Gu et al., late 2023) answered with selective state space models, an update to the old idea of state space models where the state update itself depends on the current input, giving linear-time scaling with strong long-sequence performance. [**RWKV**](https://arxiv.org/abs/2503.14456) took a different angle: architecturally closer to an RNN at inference time (constant-size state, so context length barely matters for compute) while still training in a transformer-like parallel way.
+
+As of where things stand now, no pure architecture has actually dethroned the transformer. What's winning in production are **hybrids**, Jamba, Nemotron-H, and similar models mixing Mamba-style blocks with attention layers, getting the efficiency of linear-time state updates plus the raw quality attention still provides on general reasoning. Mixture-of-experts models (routing each token to only a subset of a much larger network) are the other efficiency lever, letting model capacity grow without every token paying the full compute cost.
+
+{/* Image idea: a compute-vs-context-length chart, roughly, transformer cost curving up quadratically, Mamba/RWKV cost rising linearly, same axes. Doesn't need to be precise data, just needs to make the O(n^2) vs O(n) difference visually obvious. */}
+
+This era is still being written. It's the first one on this list where I don't get to write "and then this settled the question," because it hasn't yet.
+
+## The shape of the whole thing
+
+Line the eras up and a pattern falls out on its own:
+
+```
+Era 0: learn a single state (weights)
+Era 1: distribute error across a hierarchy (backprop)
+Era 2: learn spatial structure automatically (CNNs)
+Era 3: carry a hidden state through time (RNN/LSTM)
+Era 4: access memory selectively, not just sequentially (attention)
+Era 5: make every token globally accessible, in parallel (transformers)
+Era 6: move memory outside the model entirely (RAG, tools, agents)
+Era 7: get that memory back without paying quadratic cost (SSMs, hybrids)
+```
+
+Optimization, to representation, to sequence memory, to selective access, to global context, to scaled systems, to efficient memory again. Each era's killer problem is exactly the gap the next era closes, and it usually opens a new one on the way in. That's not really a coincidence. It's what makes the history legible instead of just a list of paper names.
+
+If you want to go deeper on any single era, the sources that made this click for me: Karpathy's [*"Let's build GPT, from scratch, in code, spelled out"*](https://www.youtube.com/watch?v=kCc8FmEb1nY) and the [nanoGPT repo](https://github.com/karpathy/nanoGPT) for Era 5, Colah's blog [*"Understanding LSTM Networks"*](http://colah.github.io/posts/2015-08-Understanding-LSTMs/) for Era 3, Jay Alammar's [*"Illustrated Transformer"*](https://jalammar.github.io/illustrated-transformer/) for Era 5, and the original papers for Era 1 ([Rumelhart, Hinton & Williams, 1986](https://www.iro.umontreal.ca/~vincentp/ift3395/lectures/backprop_old.pdf)), Era 4 ([Bahdanau, Cho & Bengio, 2014](https://arxiv.org/abs/1409.0473)), and Era 5 ([Vaswani et al., *Attention Is All You Need*, 2017](https://arxiv.org/abs/1706.03762)). Most of them are shorter and more readable than you'd expect.

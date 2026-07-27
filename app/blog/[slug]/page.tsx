@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeExternalLinks from "rehype-external-links";
 import { getAllPosts, getPost, formatDate } from "@/lib/posts";
 import { extractHeadings } from "@/lib/toc";
 import { Toc } from "@/components/Toc";
@@ -35,9 +36,6 @@ export default async function BlogPost({ params }: Props) {
           <Toc items={headings} />
 
           <header style={{ marginBottom: 48 }}>
-            <span style={{ fontFamily: "var(--mono)", fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--faint)" }}>
-              {formatDate(post.date)}
-            </span>
             <h1
               style={{
                 fontFamily: "var(--sans)",
@@ -46,14 +44,16 @@ export default async function BlogPost({ params }: Props) {
                 lineHeight: 1.08,
                 color: "var(--ink)",
                 fontWeight: 600,
-                marginTop: 16,
                 marginBottom: 16,
               }}
             >
               {post.title}
             </h1>
+            <span style={{ fontFamily: "var(--mono)", fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--faint)", display: "block", marginBottom: 16 }}>
+              {formatDate(post.date)}
+            </span>
             {post.description && (
-              <p style={{ fontSize: 17, lineHeight: 1.65, color: "var(--sub)" }}>
+              <p style={{ fontSize: 17, lineHeight: 1.65, color: "var(--ink)" }}>
                 {post.description}
               </p>
             )}
@@ -69,6 +69,7 @@ export default async function BlogPost({ params }: Props) {
                   rehypePlugins: [
                     rehypeSlug,
                     [rehypeAutolinkHeadings, { behavior: "wrap" }],
+                    [rehypeExternalLinks, { target: "_blank", rel: ["noopener", "noreferrer"] }],
                   ],
                 },
               }}

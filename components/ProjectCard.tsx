@@ -14,7 +14,7 @@ export function ProjectCard({ project }: { project: Project }) {
     ref.current.style.setProperty("--gy", `${e.clientY - r.top}px`);
   }, []);
 
-  const thumb = project.screenshots?.[0] ?? project.heroImage;
+  const thumb = project.thumbnail ?? project.heroImage ?? project.screenshots?.[0];
 
   return (
     <Link href={`/projects/${project.slug}`} style={{ textDecoration: "none", display: "block", height: "100%" }}>
@@ -26,34 +26,39 @@ export function ProjectCard({ project }: { project: Project }) {
       >
         {project.cardPreview ? (
           <div style={{ padding: "12px 12px 0" }}>
-            <div style={{ display: "flex", height: 190, borderRadius: 8, overflow: "hidden", position: "relative" }}>
+            <div style={{ display: "flex", height: 280, borderRadius: 8, overflow: "hidden", position: "relative" }}>
               {project.cardPreview.images.map((src, i) => (
                 <div key={src} style={{ flex: 1, position: "relative", borderRight: i === 0 ? "1px solid var(--line)" : "none" }}>
                   <Image src={src} alt="" fill style={{ objectFit: "cover" }} sizes="(max-width: 720px) 50vw, 280px" />
                 </div>
               ))}
             </div>
-            <div style={{ fontFamily: "var(--mono)", fontSize: 10.5, color: "var(--faint)", textAlign: "center", padding: "8px 0 0" }}>
-              {project.cardPreview.caption}
-            </div>
           </div>
         ) : thumb && (
-          <div style={{ height: 190, padding: "12px 12px 0", position: "relative" }}>
+          <div style={{ height: 280, padding: "12px 12px 0", position: "relative" }}>
             <div style={{ width: "100%", height: "100%", borderRadius: 8, overflow: "hidden", position: "relative" }}>
               <Image src={thumb} alt={project.title} fill style={{ objectFit: "cover", objectPosition: "top" }} sizes="(max-width: 720px) 100vw, 560px" />
             </div>
           </div>
         )}
 
-        <div style={{ padding: "18px 22px 20px", display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 2 }}>
-          <div style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.2, color: "var(--ink)" }}>
-            {project.title} <span style={{ fontWeight: 400, color: "var(--sub)" }}>— {project.tagline}</span>
+        <div style={{ padding: "18px 22px 20px", position: "relative", zIndex: 2 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+            <div style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.2, color: "var(--ink)" }}>
+              {project.title} <span style={{ fontWeight: 400, color: "var(--sub)" }}>— {project.tagline}</span>
+            </div>
+            {project.status === "current" && (
+              <span style={{ fontSize: 10.5, fontWeight: 500, padding: "2px 8px", borderRadius: 999, background: "rgba(34,197,94,0.1)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.2)", fontFamily: "var(--mono)", whiteSpace: "nowrap" }}>
+                {project.stageLabel ?? "In Progress"}
+              </span>
+            )}
           </div>
-          {project.status === "current" && (
-            <span style={{ fontSize: 10.5, fontWeight: 500, padding: "2px 8px", borderRadius: 999, background: "rgba(34,197,94,0.1)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.2)", fontFamily: "var(--mono)", whiteSpace: "nowrap" }}>
-              In Progress
-            </span>
-          )}
+          <p style={{
+            fontSize: 14.5, lineHeight: 1.55, color: "var(--ink)", margin: 0,
+            display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
+          }}>
+            {project.blurb}
+          </p>
         </div>
       </div>
     </Link>

@@ -17,7 +17,7 @@ export default function Blog() {
           <h1 style={{ fontFamily: "var(--sans)", fontSize: "clamp(34px, 5.5vw, 54px)", letterSpacing: "-0.04em", lineHeight: 1.02, fontWeight: 700, marginBottom: 12 }}>
             Things I find<br />fascinating
           </h1>
-          <p style={{ fontSize: 16, color: "var(--sub)", lineHeight: 1.65, marginBottom: 48, maxWidth: 420 }}>
+          <p style={{ fontSize: 16, color: "var(--ink)", lineHeight: 1.65, marginBottom: 48, maxWidth: 420 }}>
             Mostly AI, deep learning, and history. Written to think out loud.
           </p>
 

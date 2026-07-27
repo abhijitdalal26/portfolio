@@ -86,7 +86,7 @@ export function Toc({ items }: { items: TocItem[] }) {
       {open && (
         <div
           style={{
-            position: "fixed", top: 0, left: 56, bottom: 0, zIndex: 200,
+            position: "fixed", top: 88, left: 56, bottom: 0, zIndex: 200,
             width: "min(360px, 88vw)",
             display: "flex", flexDirection: "column", justifyContent: "center",
             overflowY: "auto",
@@ -104,6 +104,13 @@ export function Toc({ items }: { items: TocItem[] }) {
                   <li key={item.id}>
                     <a
                       href={`#${item.id}`}
+                      onClick={(e) => {
+                        const el = document.getElementById(item.id);
+                        if (!el) return;
+                        e.preventDefault();
+                        el.scrollIntoView({ behavior: "smooth", block: "start" });
+                        history.pushState(null, "", `#${item.id}`);
+                      }}
                       style={{
                         fontSize: 13.5,
                         fontWeight: isActive ? 600 : 500,
@@ -111,9 +118,14 @@ export function Toc({ items }: { items: TocItem[] }) {
                         textDecoration: "none",
                         lineHeight: 1.35,
                         letterSpacing: "-0.005em",
+                        display: "block",
+                        width: "100%",
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
                       }}
                     >
-                      {i + 1}. {item.text}
+                      {i + 1}. {item.short}
                     </a>
                   </li>
                 );

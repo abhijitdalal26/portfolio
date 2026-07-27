@@ -30,7 +30,7 @@ app/
   icon.svg             # Favicon — black "A" on off-white
   page.tsx             # Home (wave hero, "Currently Working On" + timeline projects, blog list) — Server Component
   projects/page.tsx    # Full project list (current + done, from lib/projects.ts)
-  projects/[slug]/page.tsx # Project detail page (story, how it works, architecture code, links)
+  projects/[slug]/page.tsx # Project detail page (story, how it works, technical breakdown diagrams, my architecture, links/papers)
   blog/page.tsx         # Blog post list
   blog/[slug]/page.tsx  # Dynamic MDX post renderer + TOC sidebar
   about/page.tsx        # Bio + scrolling marquee strips (Areas/Stack) + links
@@ -70,7 +70,7 @@ CSS variables defined in `:root` / `.dark` in `globals.css`:
 
 Dark theme background is `#121212` (Material Design's standard near-black), not pure `#000` — avoids harsh contrast/halation against light text. Still leans warm (stone/brown), not cold/blue-tinted.
 
-Text hierarchy: headings use `--ink` (full contrast), body copy/blurbs use `--sub` (lighter) — keep these consistent; don't mix a blurb at `--ink` next to body text at `--sub`, they'll look mismatched.
+Text hierarchy (Notion-style): headings, primary reading content (story paragraphs, blurbs, `howItWorks`/diagram captions, bio text, post descriptions), and tag chips (`.chip`) all use `--ink` (full contrast) — don't fade text that's meant to be read. `--sub`/`--faint` are reserved for true meta/decorative elements: dates, small uppercase mono eyebrow labels, "Read →" links, nav text.
 
 ### Responsive breakpoints (in globals.css)
 - `max-width: 1024px` — tablet: 32px side padding
@@ -80,7 +80,7 @@ Text hierarchy: headings use `--ink` (full contrast), body copy/blurbs use `--su
 - `max-width: 400px` — 16px side padding
 
 ### Key utility classes
-`.page-wrap`, `.grid-2`, `.grid-2-wide`, `.about-cols`, `.project-hero`, `.blog-row`, `.hero-content`, `.hero-avatar`, `.about-photo`, `.btn-primary`, `.btn-ghost`, `.chip`, `.prose`, `.pulse-dot`, `.s-pt-80`, `.s-pt-64`, `.s-pb-88`
+`.page-wrap`, `.grid-2`, `.grid-2-wide`, `.about-cols`, `.blog-row`, `.hero-content`, `.hero-avatar`, `.about-photo`, `.btn-primary`, `.btn-ghost`, `.chip`, `.prose`, `.pulse-dot`, `.s-pt-80`, `.s-pt-64`, `.s-pb-88`
 
 `.prose h2`/`h3` have `scroll-margin-top: 160px` so jumping to a TOC anchor leaves the tail of the previous section visible instead of snapping the heading flush to the viewport top.
 
@@ -110,9 +110,20 @@ Posts are sorted newest-first. The filename becomes the URL slug. The homepage "
 
 ## Adding Projects
 
-Add an entry to the `projects` array in `lib/projects.ts` (see the `pawvision` entry for the full shape: `blurb`, `tagline`, `story`, `howItWorks`, `architecture` code blocks, `cardPreview` images, links, etc). `status: "current"` shows it in "Currently Working On"; `status: "done"` puts it in the Timeline. The detail page at `/projects/<slug>` (`app/projects/[slug]/page.tsx`) is a single shared template driven entirely by this data — no per-project page files to create.
+Add an entry to the `projects` array in `lib/projects.ts`. `status: "current"` shows it in "Currently Working On"; `status: "done"` puts it in the Timeline. Cards and the timeline sort newest-first (`getProjectsByStatus` sorts by `order` descending), so higher `order` = more recent. The detail page at `/projects/<slug>` (`app/projects/[slug]/page.tsx`) is a single shared template driven entirely by this data — no per-project page files to create.
 
-Project media (screenshots/video/logo) go in `public/projects/<slug>/`.
+**Content shape** (each project's write-up is split into two halves, written for two audiences at once — a casual reader who wants the cool factor, and a recruiter evaluating actual skill):
+- `story` — the "what is this and why is it cool" hook. Casual-reader-facing.
+- `howItWorks` — the technical explanation: what tech was used and how it actually works. No code blocks — GitHub already has the real code; this is prose.
+- `diagramsIntro` + `diagrams` (`{ title, image, caption }[]`) — optional "Technical Breakdown" section: real diagrams/plots/screenshots (training curves, pipeline flowcharts, architecture diagrams) each with a caption explaining what it shows, replacing what would otherwise be a code dump.
+- `architectureSteps` (`string[]`) — optional "My Architecture" section: an exact, numbered layer-by-layer model spec (e.g. `"Conv2D — 32 filters, 3×3, ReLU"`), rendered as a monospace stepped list. Pull real values from the actual model file/notebook when available (e.g. a TF.js `model.json`) rather than reconstructing from memory.
+- `links` (`ProjectLink[]`) — action buttons at the bottom (Kaggle notebook, live demo, APK download, YouTube playlist). Rendered as `.btn-ghost` pill buttons.
+- `papers` (`ProjectLink[]`) — research paper citations. Rendered as plain underlined text links, not buttons, distinct from `links`.
+- `thumbnail` — optional, overrides what shows on the homepage/listing `ProjectCard`. Falls back to `heroImage` if unset. Use this when the best homepage-card image (e.g. an explainer diagram) differs from the best detail-page hero image (e.g. an actual demo screenshot).
+
+The GitHub button always renders with the actual GitHub logo icon (`GitHubIcon` in `page.tsx`), not just text.
+
+**Assets**: project media (screenshots/video/logo/diagrams) go straight in `public/projects/<slug>/` — there is no separate staging/assets directory, drop files directly there.
 
 ## Deployment
 
@@ -123,15 +134,14 @@ Project media (screenshots/video/logo) go in `public/projects/<slug>/`.
 
 ## Project Content Status
 
-Projects to feature on the site, in the order worked on (from `abhijitdalal26` GitHub, timeline-sorted). Only PawVision is fully written up so far — the rest still need real content (description, screenshots/video, "what I learned") gathered one at a time before adding to `lib/projects.ts`.
+Projects to feature on the site, in the order worked on (from `abhijitdalal26` GitHub, timeline-sorted). Being finished off one at a time, oldest first — each pass adds real screenshots/diagrams (dropped in `public/projects/<slug>/`), a proper `story`/`howItWorks` write-up, and a `diagrams`/`architectureSteps`/`papers` section where it makes sense.
 
 **Done:**
-- [x] PawVision (`cats-vs-dogs-android-app`) — cat vs dog Android classifier
+- [x] PawVision (`cats-vs-dogs-android-app`) — cat vs dog Android classifier. Has `diagrams` (training/inference pipeline SVGs, loss curves, validation grid) + `architectureSteps`.
+- [x] `ml-projects` — MNIST digit recognizer. `thumbnail` (neural-net intro diagram) differs from `heroImage` (actual demo screenshot). Has `diagrams` (real CNN architecture image) + `architectureSteps` (exact Conv2D/Dense layer spec pulled from the live `model.json` on GitHub).
+- [x] `movie-vector-galaxy` — has `papers` (Sentence-BERT, UMAP, Multilingual SBERT).
 
-**Remaining — Timeline (status: "done"):**
-- [ ] `ml-projects` — ML learning projects
-- [ ] `finance-calculator`
-- [ ] `movie-vector-galaxy` — content recommendation site
+**Remaining — Timeline (status: "done"), oldest first:**
 - [ ] `harry-potter-gpt` — nanoGPT from scratch
 - [ ] `smart-agriculture-advisory-system` — Raspberry Pi IoT + XGBoost
 - [ ] `projects-wiki`
@@ -139,6 +149,7 @@ Projects to feature on the site, in the order worked on (from `abhijitdalal26` G
 - [ ] `play-store-app-analysis`
 
 **Remaining — Currently Working On (status: "current"):**
-- [ ] `Footlog` — Kotlin/Compose walk/run tracker
 - [ ] `MCP-Audit` — MCP server security audit tool
 - [ ] `bookscroller` — TikTok-style book discovery
+
+When picking up the next one: ask what images/diagrams the user has ready in `public/projects/<slug>/` (or check what's already there), write `story` + `howItWorks` following the two-audience split above, and check if a real model/architecture file exists in the project's own GitHub repo before writing any specifics — pull exact values (layer configs, hyperparameters) from there rather than guessing.

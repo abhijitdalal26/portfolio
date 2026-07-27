@@ -89,7 +89,7 @@ export default function About() {
                 <span style={{ color: "var(--sub)" }}>indie developer</span>
               </h1>
 
-              <div style={{ fontSize: 16, lineHeight: 1.8, color: "var(--sub)", display: "flex", flexDirection: "column", gap: 18, marginBottom: 44 }}>
+              <div style={{ fontSize: 16, lineHeight: 1.8, color: "var(--ink)", display: "flex", flexDirection: "column", gap: 18, marginBottom: 44 }}>
                 <p>Electronics &amp; Telecom student from Mumbai. Fascinated by machine intelligence — not just using AI but understanding how it actually works from the math up.</p>
                 <p>I follow Karpathy&apos;s philosophy: learn by building. Built nanoGPT from scratch, trained RL agents in simulated environments, analyzed the Android market with data. Every project starts with <em style={{ color: "var(--ink)", fontStyle: "normal", fontWeight: 500 }}>&ldquo;I want to understand this.&rdquo;</em></p>
                 <p>Right now I&apos;m building Android apps and exploring what&apos;s possible with large language models. The blog is where I think out loud — AI history, things I&apos;m learning, what I&apos;m shipping.</p>

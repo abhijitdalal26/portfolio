@@ -11,32 +11,30 @@ export default function Projects() {
   return (
     <div style={{ background: "var(--bg)", minHeight: "100vh" }}>
       <div className="page-wrap" style={{ paddingTop: 60, paddingBottom: 88 }}>
-        <div style={{ maxWidth: 780, margin: "0 auto" }}>
-
-          <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 10 }}>All Work</div>
+        <div style={{ maxWidth: 780, marginBottom: 48 }}>
           <h1 style={{ fontFamily: "var(--sans)", fontSize: "clamp(34px, 5.5vw, 54px)", letterSpacing: "-0.04em", lineHeight: 1.02, fontWeight: 700, marginBottom: 12 }}>Projects</h1>
-          <p style={{ fontSize: 16, color: "var(--sub)", maxWidth: 480, lineHeight: 1.65, marginBottom: 48 }}>Things I build to learn. Every project starts with curiosity.</p>
+          <p style={{ fontSize: 16, color: "var(--ink)", maxWidth: 480, lineHeight: 1.65, margin: 0 }}>Things I build to learn. Every project starts with curiosity.</p>
+        </div>
 
+        {current.length > 0 && (
+          <div style={{ marginBottom: 48 }}>
+            <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 16 }}>
+              Currently Working On
+            </div>
+            <div className="grid-2">
+              {current.map((p) => <ProjectCard key={p.slug} project={p} />)}
+            </div>
+          </div>
+        )}
+
+        <div>
           {current.length > 0 && (
-            <div style={{ marginBottom: 48 }}>
-              <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 16 }}>
-                Currently Working On
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                {current.map((p) => <ProjectCard key={p.slug} project={p} />)}
-              </div>
+            <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 16 }}>
+              Past Work
             </div>
           )}
-
-          <div>
-            {current.length > 0 && (
-              <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 16 }}>
-                Past Work
-              </div>
-            )}
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              {done.map((p) => <ProjectCard key={p.slug} project={p} />)}
-            </div>
+          <div className="grid-2">
+            {done.map((p) => <ProjectCard key={p.slug} project={p} />)}
           </div>
         </div>
       </div>
