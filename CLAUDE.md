@@ -140,12 +140,12 @@ Projects to feature on the site, in the order worked on (from `abhijitdalal26` G
 - [x] PawVision (`cats-vs-dogs-android-app`) — cat vs dog Android classifier. Has `diagrams` (training/inference pipeline SVGs, loss curves, validation grid) + `architectureSteps`.
 - [x] `ml-projects` — MNIST digit recognizer. `thumbnail` (neural-net intro diagram) differs from `heroImage` (actual demo screenshot). Has `diagrams` (real CNN architecture image) + `architectureSteps` (exact Conv2D/Dense layer spec pulled from the live `model.json` on GitHub).
 - [x] `movie-vector-galaxy` — has `papers` (Sentence-BERT, UMAP, Multilingual SBERT).
+- [x] `smart-agriculture-advisory-system` — Raspberry Pi IoT + XGBoost + OpenClaw. Has `openclaw` section (live Telegram bot screenshot).
+- [x] `autonomous-racing-using-rl` — RL agents (PPO). `heroVideo` (real Unity kart recording, not a static hero image). Has `diagrams` (Gymnasium checkpoint progression triptych + reward/entropy curves + real Unity Editor/console/profiling captures, all pulled from the project's own `images/` dir, not generic screenshots) + `architectureSteps` (exact PPO hyperparams from the repo's `kart_config.yaml`) + `papers` (PPO, Unity ML-Agents).
 
 **Remaining — Timeline (status: "done"), oldest first:**
 - [ ] `harry-potter-gpt` — nanoGPT from scratch
-- [ ] `smart-agriculture-advisory-system` — Raspberry Pi IoT + XGBoost
 - [ ] `projects-wiki`
-- [ ] `autonomous-racing-using-rl` — RL agents (PPO)
 - [ ] `play-store-app-analysis`
 
 **Remaining — Currently Working On (status: "current"):**
