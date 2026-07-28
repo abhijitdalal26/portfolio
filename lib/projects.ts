@@ -14,6 +14,7 @@ export type Project = {
   papers?: ProjectLink[];
   heroImage?: string;
   heroVideo?: string;
+  heroVideoPortrait?: boolean;
   thumbnail?: string;
   screenshots?: string[];
   logo?: string;
@@ -43,6 +44,7 @@ export const projects: Project[] = [
       { label: "Download APK", href: "https://github.com/abhijitdalal26/cats-vs-dogs-android-app/blob/main/PawVision.zip" },
     ],
     heroVideo: "/projects/pawvision/detecting-cat.mp4",
+    heroVideoPortrait: true,
     logo: "/projects/pawvision/logo.png",
     cardPreview: {
       images: ["/projects/pawvision/cat.jpg", "/projects/pawvision/dog.jpg"],
@@ -278,7 +280,7 @@ export const projects: Project[] = [
   },
   {
     slug: "autonomous-racing-using-rl",
-    title: "Autonomous Racing (RL)",
+    title: "Autonomous Racing using Reinforcement Learning",
     tagline: "Teaching a Car to Drive Itself",
     order: 7,
     status: "done",
@@ -287,11 +289,11 @@ export const projects: Project[] = [
     blurb: "A car that learned to drive by crashing into walls thousands of times and slowly figuring out how not to. No lines of steering code, just trial, error, and a reward signal, first in 2D, then scaled up into a real Unity go-kart.",
     github: "https://github.com/abhijitdalal26/autonomous-racing-using-rl",
     heroVideo: "/projects/autonomous-racing-using-rl/demo.mp4",
+    thumbnail: "/projects/autonomous-racing-using-rl/hero.png",
     story: [
-      "This project is a car that learned to drive without a single line of steering logic being written for it. No \"if wall, then turn\" rules, just a track, a reward for staying on the road, a penalty for crashing, and reinforcement learning, the same family of technique behind things like AlphaGo, figuring out the rest on its own through thousands of attempts.",
+      "This project builds a driving policy using reinforcement learning instead of writing any explicit steering logic, in two stages: first a 2D agent trained in Gymnasium's CarRacing-v3 environment, then a 3D agent trained inside a Unity go-kart simulation with real physics. Both are trained with PPO (Proximal Policy Optimization), learning purely from a reward for staying on track and a penalty for crashing, no hand-coded rules for when to turn or brake.",
       "It started small and 2D. Using Gymnasium's CarRacing-v3 environment, the car begins as a blank slate that only sees a top-down camera view of the track and has no idea what steering or gas even means. Early on it just spins in circles and drives off the road within seconds. Using an algorithm called PPO (Proximal Policy Optimization), it tries thousands of small variations of its own driving, keeps whatever recently scored higher, and slowly tightens up its behavior over roughly a million and a half timesteps until it's taking corners cleanly and holding the track. That's phase one, worked all the way through: reward, watch, retrain, repeat.",
       "From there the idea scaled up into 3D using Unity and a toolkit called ML-Agents: a flat top-down image swapped for an actual go-kart racing around a modeled track, with real physics, lap checkpoints, and five raycast \"whiskers\" standing in for the car's eyes instead of pixels. Four karts trained in parallel on identical copies of the same track, all pooling their experience back into one shared PPO brain, which pushed through a full million training steps in a single run instead of four separate ones. The trained brain was exported as a standalone Windows build, so the kart drives itself with no Unity Editor or Python process running behind it.",
-      "A good chunk of the intuition behind why any of this works, how a neural network turns raw sensor input into a decision, why gradients update weights the way they do, came from working through Andrew Ng's Deep Learning Specialization on Coursera. This project was really where those ideas stopped being slides and started being something I could watch drive around a track and occasionally faceplant into a wall.",
     ],
     howItWorks: [
       "Phase one trains in Gymnasium's CarRacing-v3, a 2D top-down racing simulator, using a CNN policy (Stable-Baselines3's CnnPolicy) that reads a stack of 4 grayscale frames and outputs continuous steering, gas, and brake values. Frame-stacking exists because a single image can't encode motion, stacking 4 in a row gives the network enough short-term context to infer how fast and in what direction the car is already moving.",
@@ -382,26 +384,68 @@ export const projects: Project[] = [
     ],
     heroImage: "/projects/play-store-app-analysis/logo.png",
     story: [
-      "What actually separates an app that takes off from the millions that quietly go nowhere? This project pulls a historical dataset of 3.45 million Play Store apps and pairs it with a fresh 2026 snapshot, scraped from scratch across ten countries: the US, India, Brazil, Indonesia, Mexico, the UK, Germany, Japan, South Korea and the Philippines.",
-      "The first number that stopped me was this one: out of 3.45 million apps, only 2.89% ever crossed 100,000 installs while holding a rating above 4.0. Almost everything published on the Play Store just never gets found. And 96.89% of all apps are free, so free is really the default, not a choice.",
-      "Going paid makes that climb even steeper. Only 1.13% of paid apps broke through, compared to 6.16% of free ones. But how you monetize inside the free tier matters a lot too. Apps that combined ads with in-app purchases hit a 20% success rate, while apps with neither ads nor purchases barely cleared 0.88%.",
-      "Category choice tells its own story. Casino, card games, weather and role playing games scored highest on opportunity historically, meaning solid demand without brutal competition. Meanwhile categories like business, food and drink, and shopping looked busy on the surface but were the most oversaturated, plenty of demand buried under too many apps chasing it. What mattered more than the category label was how sharply the app was positioned. Phone cleaner and security tools succeeded around 10% of the time and photo or video tools around 8%, while vague do everything apps succeeded barely 1.68% of the time.",
-      "The fresh 2026 data showed the same pattern in the current market. Finance had 843 apps analyzed with a median of a million installs, Education had 753 apps at a 500k median, and Productivity and Tools weren't far behind. These are still the categories where people show up looking for something specific and useful.",
-      "Keywords told me just as much as categories did. Searches like gpay and zepto converted to successful apps around 97 to 98% of the time, and localized terms mattered enormously: searches like photo editor hindi in India or Portuguese language variants in Brazil consistently outperformed their English equivalents. If you want to be found in these markets, speaking the local language in your listing isn't optional.",
+      "The core of this project is a dataset I built myself: 11,193 real, live Play Store listings, scraped directly through a Postgres-backed pipeline across ten genuinely different markets, the US, India, Brazil, Indonesia, Mexico, the UK, Germany, Japan, South Korea and the Philippines, rather than pulled from an existing Kaggle CSV. Coverage came out almost perfectly even, roughly 7,500 apps per country, so no single market dominates the picture.",
+      "Spreading the scrape across ten countries instead of one paid off immediately once I looked at what actually converts locally. Keyword searches in the local language, \"photo editor gratis\" in Indonesia, \"futebol\" in Brazil, \"short drama app hindi\" in India, \"kredit online\" in Indonesia, saved a 100k+ install app 94 to 100% of the time, well above what the English equivalents of the same searches returned.",
+      "Inside that fresh 11k-app snapshot, the categories that showed up most weren't games or novelties, they were utilities: Finance (1,215 apps), Education (1,104), Productivity (987) and Tools (899), all clustered around a 100k-install median. People come to these categories already looking for something specific, not to browse.",
+      "To know whether any of that was signal or noise, I paired the fresh scrape with a public historical dataset of 3.45 million Play Store apps as a baseline, a much smaller supporting piece, but useful for sanity-checking the fresh numbers against the long-run shape of the store. The headline number there: only 2.89% of all 3.45 million apps ever crossed 100,000 installs while holding a rating above 4.0, and 96.89% of everything published is free, so free is the default, not a strategic choice.",
+      "That historical baseline sharpened a few more things. Paid apps break through at 1.13% versus 6.16% for free ones, and inside the free tier, combining ads with in-app purchases hits a 20% success rate versus 0.88% for apps with neither. Positioning also mattered more than the category label: focused tools, phone cleaner/security apps, photo and video editors, succeeded 5 to 6 times more often than vague, do-everything apps, and even household names like Tinder, eFootball 2022 and Google Classroom show up with 100M+ installs sitting on a sub-3.0 rating, proof that downloads alone don't mean the product actually satisfied anyone.",
     ],
     howItWorks: [
-      "Built a direct connection scraper that pulls live app metadata from the Play Store across the ten focus countries and stores it in a PostgreSQL database.",
-      "Paired that fresh 2026 snapshot with a public historical dataset of 3.45 million apps to compare how the market has shifted over time.",
-      "Ran an 11 step analysis pipeline in a Jupyter notebook covering ratings, categories, installs, survival rates, pricing and keyword yield, and exported the results as a set of CSVs.",
-      "Published the cleaned 2026 dataset and the full analysis notebook on Kaggle so anyone can explore the numbers themselves.",
+      "Built a direct connection scraper that pulls live app metadata from the Play Store across the ten focus countries and stores it in a PostgreSQL database, no proxies, direct connection, tuned for 8 parallel threads.",
+      "Ran discovery across charts, categories and keyword searches to queue app IDs, then extracted full metadata and multi-country install/rating stats for all 11,193 of them.",
+      "Paired that fresh 2026 dataset with a public historical dataset of 3.45 million apps, run through an 11-step analysis pipeline in a Jupyter notebook covering ratings, categories, installs, survival rates, pricing and keyword yield, to check the fresh numbers against a long-run baseline.",
+      "Exported both sets of results as CSVs, and published the cleaned 2026 dataset plus the full analysis notebook on Kaggle so anyone can explore the numbers themselves.",
+    ],
+    diagramsIntro: "Eight charts pulled straight from the analysis output, not staged: first the fresh 11k-app dataset collected across 10 diverse markets, then the smaller historical-baseline section used to sanity-check it.",
+    diagrams: [
+      {
+        title: "11,193 apps, scraped live across 10 markets",
+        image: "/projects/play-store-app-analysis/chart-country-footprint.png",
+        caption: "Coverage came out almost perfectly even, roughly 7,500 apps per country, so no single market's app count is skewing the picture.",
+      },
+      {
+        title: "Local-language keywords convert at near 100%",
+        image: "/projects/play-store-app-analysis/chart-keyword-localization.png",
+        caption: "Searches in the local language, not English, saved 100k+ install apps 94-100% of the time in this scrape. Speaking the market's language in the listing is not optional.",
+      },
+      {
+        title: "Utility, not novelty, dominates the fresh scrape",
+        image: "/projects/play-store-app-analysis/chart-2026-snapshot.png",
+        caption: "By app count, Finance, Education, Productivity and Tools lead the fresh 11k-app dataset, all clustered around a 100k-install median: people arrive already looking for something specific.",
+      },
+      {
+        title: "Winner-takes-most (historical baseline)",
+        image: "/projects/play-store-app-analysis/chart-install-concentration.png",
+        caption: "In the 3.45 million-app historical pool used as a sanity check, just 1% of apps (about 34,500) capture nearly 90% of every install on the Play Store.",
+      },
+      {
+        title: "Where demand beats competition (historical baseline)",
+        image: "/projects/play-store-app-analysis/chart-opportunity-score.png",
+        caption: "An opportunity score combining demand, competition and user happiness, ranked by genre. Casino, card games and weather sit at the top: enough searches to matter, without a graveyard of competitors already there.",
+      },
+      {
+        title: "Monetization inside the free tier (historical baseline)",
+        image: "/projects/play-store-app-analysis/chart-monetization.png",
+        caption: "Free apps clear 100k installs over 5x more often than paid ones. Inside the free tier, combining ads with in-app purchases outperforms either alone, and dwarfs apps that monetize with neither.",
+      },
+      {
+        title: "Focus beats scope (historical baseline)",
+        image: "/projects/play-store-app-analysis/chart-archetype-success.png",
+        caption: "Apps built around one specific job, phone cleanup, weather, photo editing, succeed 5-6x more often than vague, do-everything apps labeled 'Other / broad app', which barely clear 1.68%.",
+      },
+      {
+        title: "Downloaded at scale, still rejected",
+        image: "/projects/play-store-app-analysis/chart-rejected-despite-downloads.png",
+        caption: "Even recognizable names aren't immune: Tinder, eFootball 2022 and Google Classroom all sit on 100M+ installs with a rating under 3.0. Downloads and satisfaction are not the same thing.",
+      },
     ],
   },
   {
     slug: "mcp-audit",
     title: "MCPAudit",
     tagline: "Security Auditor for AI Tool Configs",
-    order: 9,
-    status: "current",
+    order: 0,
+    status: "done",
     kind: "Security · Tools",
     tags: ["Python", "FastAPI", "Go", "Next.js", "Security", "CI/CD"],
     blurb: "A security scanner for MCP server configs, the files that decide which tools an AI assistant like Claude or Cursor is allowed to touch on your machine. Paste your config in and get a full risk report, mapped to the OWASP MCP Top 10.",

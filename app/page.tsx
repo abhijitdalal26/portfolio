@@ -50,6 +50,9 @@ export default function Home() {
             <a href="mailto:abhijitdalal7462@gmail.com" aria-label="Email" className="social-icon">
               <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 7 10-7"/></svg>
             </a>
+            <a href="mailto:agdalal_b23@el.vjti.ac.in" aria-label="College Email" className="social-icon">
+              <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 10L12 4 2 10l10 6 10-6z"/><path d="M6 12.5V17c0 1 2.5 3 6 3s6-2 6-3v-4.5"/></svg>
+            </a>
           </div>
         </div>
 
@@ -84,15 +87,10 @@ export default function Home() {
         {current.length > 0 && (
           <>
             <FadeUp>
-              <div style={{ marginBottom: 32 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-                  <span className="pulse-dot" />
-                  <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)" }}>
-                    Currently Working On
-                  </div>
-                </div>
+              <div style={{ marginBottom: 32, display: "flex", alignItems: "center", gap: 14 }}>
+                <span className="pulse-dot" />
                 <h2 style={{ fontFamily: "var(--sans)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
-                  In the Lab
+                  Currently Working On
                 </h2>
               </div>
             </FadeUp>

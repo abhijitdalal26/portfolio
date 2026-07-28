@@ -65,21 +65,36 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
           </FadeUp>
 
           {project.heroVideo ? (
-            <>
+            project.heroVideoPortrait ? (
               <FadeUp>
-                <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 40 }}>
-                  <video src={project.heroVideo} controls autoPlay loop muted playsInline style={{ width: "100%", display: "block" }} />
+                <div className="hero-video-portrait" style={{ display: "flex", gap: 32, marginBottom: 40, alignItems: "flex-start" }}>
+                  <div style={{ flex: "0 0 240px", maxWidth: 240, borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)" }}>
+                    <video src={project.heroVideo} controls autoPlay loop muted playsInline style={{ width: "100%", display: "block" }} />
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 18, flex: 1, minWidth: 0 }}>
+                    {project.story.map((p, i) => (
+                      <p key={i} style={{ fontSize: 16, lineHeight: 1.75, color: "var(--ink)" }}>{p}</p>
+                    ))}
+                  </div>
                 </div>
               </FadeUp>
+            ) : (
+              <>
+                <FadeUp>
+                  <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 40 }}>
+                    <video src={project.heroVideo} controls autoPlay loop muted playsInline style={{ width: "100%", display: "block" }} />
+                  </div>
+                </FadeUp>
 
-              <FadeUp>
-                <div style={{ display: "flex", flexDirection: "column", gap: 18, marginBottom: 40 }}>
-                  {project.story.map((p, i) => (
-                    <p key={i} style={{ fontSize: 16, lineHeight: 1.75, color: "var(--ink)" }}>{p}</p>
-                  ))}
-                </div>
-              </FadeUp>
-            </>
+                <FadeUp>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 18, marginBottom: 40 }}>
+                    {project.story.map((p, i) => (
+                      <p key={i} style={{ fontSize: 16, lineHeight: 1.75, color: "var(--ink)" }}>{p}</p>
+                    ))}
+                  </div>
+                </FadeUp>
+              </>
+            )
           ) : (
             <>
               {project.heroImage && (
@@ -104,11 +119,11 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             <FadeUp>
               <div style={{ marginBottom: 40 }}>
                 <h2 style={{ fontFamily: "var(--sans)", fontSize: 24, fontWeight: 600, marginBottom: 16 }}>How it works</h2>
-                <ul style={{ display: "flex", flexDirection: "column", gap: 10, paddingLeft: 20 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {project.howItWorks.map((s, i) => (
-                    <li key={i} style={{ fontSize: 15.5, lineHeight: 1.65, color: "var(--ink)" }}>{s}</li>
+                    <p key={i} style={{ fontSize: 15.5, lineHeight: 1.65, color: "var(--ink)" }}>{s}</p>
                   ))}
-                </ul>
+                </div>
               </div>
             </FadeUp>
           )}
