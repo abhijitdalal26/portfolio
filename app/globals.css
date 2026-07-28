@@ -584,15 +584,15 @@ body {
 }
 
 .hero-avatar {
-  width: 112px;
-  height: 112px;
+  width: 148px;
+  height: 148px;
   border-radius: 50%;
   overflow: hidden;
   margin: 0 auto 32px;
   border: 2px solid rgba(0,0,0,0.1);
 }
 @media (max-width: 480px) {
-  .hero-avatar { width: 80px; height: 80px; margin-bottom: 24px; }
+  .hero-avatar { width: 108px; height: 108px; margin-bottom: 24px; }
 }
 
 /* ── Blog list row ──────────────────────────────────────── */
