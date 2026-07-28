@@ -166,6 +166,7 @@ export const projects: Project[] = [
     blurb: "A language model built layer by layer from scratch and trained to chat like a Harry Potter fan, taken through the same three stages real chatbots go through: pretraining, fine-tuning, and preference alignment.",
     github: "https://github.com/abhijitdalal26/harry-potter-gpt",
     links: [
+      { label: "Live Demo (chat with it)", href: "/projects/harry-potter-gpt/chat" },
       { label: "YouTube Playlist (Karpathy: Zero to Hero)", href: "https://youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ&si=vv6Jb2jBhjD3pDEq" },
     ],
     papers: [
