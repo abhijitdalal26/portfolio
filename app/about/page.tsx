@@ -85,12 +85,12 @@ export default function About() {
             <div>
               <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 10 }}>About</div>
               <h1 style={{ fontFamily: "var(--sans)", fontSize: "clamp(34px, 5.5vw, 54px)", letterSpacing: "-0.04em", lineHeight: 1.02, fontWeight: 700, marginBottom: 28 }}>
-                Electronics student,<br />
-                <span style={{ color: "var(--sub)" }}>indie developer</span>
+                B.Tech student at VJTI,<br />
+                <span style={{ color: "var(--sub)" }}>machine learning enthusiast</span>
               </h1>
 
               <div style={{ fontSize: 16, lineHeight: 1.8, color: "var(--ink)", display: "flex", flexDirection: "column", gap: 18, marginBottom: 44 }}>
-                <p>I&apos;m an Electronics Engineering student at VJTI in Mumbai, though most of what actually keeps me up at night is machine learning, not circuits. Somewhere in the middle of coursework I got pulled into embeddings, transformers, and reinforcement learning, and never really stopped.</p>
+                <p>I&apos;m based in Mumbai, though most of what actually keeps me up at night is machine learning, not coursework. Somewhere in the middle of it I got pulled into embeddings, transformers, and reinforcement learning, and never really stopped.</p>
                 <p>I like taking an idea apart until I understand it well enough to rebuild myself, that&apos;s usually what turns into a project. It&apos;s slower than just reading about it, but it&apos;s the only way I actually trust that I understand something.</p>
                 <p>Right now I&apos;m building Skrolla, a book discovery app that scrolls like a feed but recommends with embeddings instead of guesswork. The blog is where I write about whatever I&apos;m learning along the way.</p>
               </div>
@@ -113,15 +113,17 @@ export default function About() {
                 <a href="https://www.instagram.com/abhijitdalal.26/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-icon">
                   <svg width={18} height={18} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                 </a>
-                <a href="mailto:agdalal_b23@el.vjti.ac.in" aria-label="College Email" className="social-icon">
-                  <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 10L12 4 2 10l10 6 10-6z"/><path d="M6 12.5V17c0 1 2.5 3 6 3s6-2 6-3v-4.5"/></svg>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=agdalal_b23@el.vjti.ac.in" target="_blank" rel="noopener noreferrer" aria-label="College Email" className="social-icon">
+                  <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 7 10-7"/></svg>
                 </a>
                 <a
-                  href="/projects/resume/resume.pdf"
-                  download="Abhijit_Dalal_Resume.pdf"
-                  style={{ display: "inline-flex", alignItems: "center", height: 44, fontSize: 14, fontWeight: 600, color: "var(--ink)", textDecoration: "underline", textUnderlineOffset: 3 }}
+                  href="/projects/resume/Abhijit-Dalal-CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="CV"
+                  className="social-icon"
                 >
-                  CV
+                  <span style={{ fontFamily: "var(--mono)", fontSize: 12, fontWeight: 700, letterSpacing: "0.2px" }}>CV</span>
                 </a>
               </div>
 
