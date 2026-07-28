@@ -73,7 +73,7 @@ export default function Home() {
       </div>
 
       {/* ── Projects ─────────────────────────────────────── */}
-      <div className="page-wrap s-pt-80 s-pb-20">
+      <div className="page-wrap s-pt-80 s-pb-20 home-intro-wrap">
 
         <FadeUp>
           <div style={{ marginBottom: 72, maxWidth: 600, position: "relative", paddingLeft: 28, borderLeft: "3px solid var(--accent)" }}>

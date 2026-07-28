@@ -575,12 +575,16 @@ body {
 @media (max-width: 720px) {
   /* Keep enough height for the wave background to read as a hero, without
      forcing a full 100vh (which felt like dead space on short content). */
-  .hero-wrap    { min-height: min(88svh, 640px) !important; }
-  .hero-content { padding: 40px 20px 32px; justify-content: center; }
+  .hero-wrap    { min-height: min(80svh, 600px) !important; }
+  .hero-content { padding: 32px 20px 28px; justify-content: center; }
 }
 
 @media (max-width: 480px) {
-  .hero-wrap    { min-height: min(82svh, 560px) !important; }
+  .hero-wrap    { min-height: min(70svh, 520px) !important; }
+}
+
+@media (max-width: 720px) {
+  .home-intro-wrap { padding-top: 28px !important; }
 }
 
 .hero-avatar {
