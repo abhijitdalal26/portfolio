@@ -20,8 +20,8 @@ export default function Home() {
 
         <div className="hero-content">
           <div className="hero-avatar">
-            <Image src="/Abhjit-2.jpeg" alt="Abhijit Dalal" width={148} height={148} priority
-              style={{ objectFit: "cover", width: "100%", height: "100%", transform: "scale(1.4)", transformOrigin: "52% 38%" }} />
+            <Image src="/Abhjit-2.jpeg" alt="Abhijit Dalal" width={112} height={112} priority
+              style={{ objectFit: "cover", objectPosition: "center top", width: "100%", height: "100%" }} />
           </div>
 
           <h1 style={{ fontFamily: "var(--sans)", fontSize: "clamp(38px, 9vw, 88px)", lineHeight: 1.0, fontWeight: 800, letterSpacing: "-0.03em", margin: "0 0 24px", color: "var(--ink)" }}>
