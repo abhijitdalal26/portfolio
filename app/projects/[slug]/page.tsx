@@ -42,7 +42,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
 
           <FadeUp>
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "10px 14px", marginBottom: 16 }}>
               {project.logo && (
                 <div style={{ width: 44, height: 44, borderRadius: 12, overflow: "hidden", flexShrink: 0, border: "1px solid var(--line)" }}>
                   <Image src={project.logo} alt="" width={44} height={44} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
@@ -67,11 +67,11 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
           {project.heroVideo ? (
             project.heroVideoPortrait ? (
               <FadeUp>
-                <div className="hero-video-portrait" style={{ display: "flex", gap: 32, marginBottom: 40, alignItems: "flex-start" }}>
-                  <div style={{ flex: "0 0 240px", maxWidth: 240, borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)" }}>
+                <div className="hero-video-portrait" style={{ display: "flex", flexWrap: "wrap", gap: 32, marginBottom: 40, alignItems: "flex-start" }}>
+                  <div className="hero-video-portrait-media" style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)" }}>
                     <video src={project.heroVideo} controls autoPlay loop muted playsInline style={{ width: "100%", display: "block" }} />
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 18, flex: 1, minWidth: 0 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 18, flex: "1 1 240px", minWidth: 0 }}>
                     {project.story.map((p, i) => (
                       <p key={i} style={{ fontSize: 16, lineHeight: 1.75, color: "var(--ink)" }}>{p}</p>
                     ))}

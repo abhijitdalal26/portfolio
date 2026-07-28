@@ -24,6 +24,15 @@ function HamburgerIcon({ progress }: { progress: number }) {
   );
 }
 
+function CloseIcon() {
+  return (
+    <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="var(--ink)" strokeWidth="2.2" strokeLinecap="round">
+      <line x1="5" y1="5" x2="19" y2="19" />
+      <line x1="19" y1="5" x2="5" y2="19" />
+    </svg>
+  );
+}
+
 export function Toc({ items }: { items: TocItem[] }) {
   const [open, setOpen] = useState(true);
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -64,6 +73,19 @@ export function Toc({ items }: { items: TocItem[] }) {
     };
   }, []);
 
+  // On small screens the panel becomes a full-screen drawer — lock body
+  // scroll while it's open so the post content behind it doesn't scroll.
+  useEffect(() => {
+    if (!open) return;
+    const mq = window.matchMedia("(max-width: 720px)");
+    if (!mq.matches) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   if (items.length === 0) return null;
 
   return (
@@ -71,68 +93,52 @@ export function Toc({ items }: { items: TocItem[] }) {
       <button
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close contents" : "Open contents"}
-        style={{
-          position: "fixed", top: "50%", left: 24, zIndex: 210,
-          transform: "translateY(-50%)",
-          display: "inline-flex", alignItems: "center", justifyContent: "center",
-          width: 36, height: 36, padding: 0,
-          background: "none", border: "none", color: "var(--ink)",
-          cursor: "pointer",
-        }}
+        className="toc-toggle"
       >
         <HamburgerIcon progress={scrollProgress} />
       </button>
 
       {open && (
-        <div
-          style={{
-            position: "fixed", top: 88, left: 56, bottom: 0, zIndex: 200,
-            width: "min(360px, 88vw)",
-            display: "flex", flexDirection: "column", justifyContent: "center",
-            overflowY: "auto",
-          }}
-        >
-          <div style={{ padding: "48px 32px" }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: "var(--faint)", marginBottom: 16, letterSpacing: 1, textTransform: "uppercase" }}>
-              Contents
-            </div>
+        <>
+          <div className="toc-backdrop" onClick={() => setOpen(false)} aria-hidden="true" />
+          <div className="toc-panel">
+            <button
+              onClick={() => setOpen(false)}
+              aria-label="Close contents"
+              className="toc-close"
+            >
+              <CloseIcon />
+            </button>
 
-            <ul style={{ display: "flex", flexDirection: "column", gap: 13, listStyle: "none" }}>
-              {items.map((item, i) => {
-                const isActive = activeId === item.id;
-                return (
-                  <li key={item.id}>
-                    <a
-                      href={`#${item.id}`}
-                      onClick={(e) => {
-                        const el = document.getElementById(item.id);
-                        if (!el) return;
-                        e.preventDefault();
-                        el.scrollIntoView({ behavior: "smooth", block: "start" });
-                        history.pushState(null, "", `#${item.id}`);
-                      }}
-                      style={{
-                        fontSize: 13.5,
-                        fontWeight: isActive ? 600 : 500,
-                        color: isActive ? "var(--ink)" : "var(--sub)",
-                        textDecoration: "none",
-                        lineHeight: 1.35,
-                        letterSpacing: "-0.005em",
-                        display: "block",
-                        width: "100%",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {i + 1}. {item.short}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
+            <div className="toc-panel-inner">
+              <div className="toc-eyebrow">Contents</div>
+
+              <ul className="toc-list">
+                {items.map((item, i) => {
+                  const isActive = activeId === item.id;
+                  return (
+                    <li key={item.id}>
+                      <a
+                        href={`#${item.id}`}
+                        onClick={(e) => {
+                          const el = document.getElementById(item.id);
+                          if (!el) return;
+                          e.preventDefault();
+                          el.scrollIntoView({ behavior: "smooth", block: "start" });
+                          history.pushState(null, "", `#${item.id}`);
+                          setOpen((v) => (window.matchMedia("(max-width: 720px)").matches ? false : v));
+                        }}
+                        className={`toc-link${isActive ? " toc-link-active" : ""}`}
+                      >
+                        {i + 1}. {item.short}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );

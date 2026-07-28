@@ -25,13 +25,13 @@ export function Nav() {
         background: isHome ? "transparent" : "var(--bg)",
         borderBottom: isHome ? "none" : "1px solid var(--line)",
       }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "1.5rem 2rem" }}>
-          <Link href="/" style={{ textDecoration: "none", color: "var(--ink)", display: "flex", alignItems: "center" }}>
+        <div className="nav-bar">
+          <Link href="/" style={{ textDecoration: "none", color: "var(--ink)", display: "flex", alignItems: "center", flexShrink: 0 }}>
             <AnimatedSignature />
           </Link>
 
           {/* Desktop */}
-          <div className="nav-links" style={{ alignItems: "center", gap: "1.2rem" }}>
+          <div className="nav-links">
             {links.map(({ href, label }) => {
               const isActive = pathname === href || pathname.startsWith(href + "/");
               return (
@@ -44,7 +44,7 @@ export function Nav() {
           </div>
 
           {/* Mobile */}
-          <div className="nav-hamburger" style={{ gap: "1.2rem" }}>
+          <div className="nav-hamburger">
             <ThemeToggle />
             <button
               onClick={() => setMenuOpen(o => !o)}

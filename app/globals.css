@@ -109,6 +109,12 @@ body {
   align-items: start;
 }
 
+/* ── About page hero spacing ───────────────────────────── */
+.about-main { padding-top: 60px; padding-bottom: 64px; }
+
+/* ── About page social/CV row ──────────────────────────── */
+.about-social { flex-wrap: wrap; }
+
 /* ── Marquee section labels ─────────────────────────── */
 .marquee-label { padding: 10px 48px 0; }
 
@@ -118,6 +124,8 @@ body {
   .grid-2-wide  { grid-template-columns: 1fr; }
   .about-cols   { grid-template-columns: 1fr; gap: 40px; }
   .marquee-label{ padding: 10px 20px 0; }
+  .about-main   { padding-top: 40px; padding-bottom: 40px; }
+  .about-social { justify-content: center; }
 }
 
 /* ── Hover helpers (CSS-only, usable from Server Components) ── */
@@ -357,6 +365,12 @@ body {
   .shot-nav { opacity: 1; }
 }
 
+/* ── Project detail: portrait hero video row ───────────── */
+.hero-video-portrait-media { flex: 0 0 240px; max-width: 240px; }
+@media (max-width: 640px) {
+  .hero-video-portrait-media { flex: 1 1 100%; max-width: 320px; margin: 0 auto; }
+}
+
 /* ── Aurora background animations ─────────────────────── */
 @keyframes aurora-1 {
   0%   { transform: translate(0,    0)    scale(1);    }
@@ -427,8 +441,16 @@ body {
   text-decoration: none;
 }
 
-.nav-links     { display: flex; align-items: center; }
-.nav-hamburger { display: none; align-items: center; }
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  gap: 12px;
+}
+
+.nav-links     { display: flex; align-items: center; gap: 1.2rem; }
+.nav-hamburger { display: none; align-items: center; gap: 1.2rem; }
 
 .nav-link {
   position: relative;
@@ -477,8 +499,16 @@ body {
 .nav-icon-btn:hover { opacity: 1; }
 
 @media (max-width: 720px) {
+  .nav-bar       { padding: 1.1rem 20px; }
   .nav-links     { display: none; }
   .nav-hamburger { display: flex; }
+  /* 44px minimum touch target on mobile (WCAG 2.5.5) */
+  .nav-icon-btn  { width: 44px; height: 44px; }
+}
+
+@media (max-width: 400px) {
+  .nav-bar       { padding: 1rem 16px; gap: 6px; }
+  .nav-hamburger { gap: 0.4rem; }
 }
 
 /* ── Nav mobile dropdown ────────────────────────────────── */
@@ -493,6 +523,8 @@ body {
   padding: 8px 20px 16px;
   display: flex;
   flex-direction: column;
+  max-height: calc(100svh - 72px);
+  overflow-y: auto;
 }
 
 .nav-mobile-link {
@@ -500,7 +532,10 @@ body {
   font-weight: 400;
   color: var(--sub);
   text-decoration: none;
-  padding: 12px 10px;
+  padding: 14px 10px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
   border-radius: 8px;
   transition: color 0.15s;
 }
@@ -538,8 +573,14 @@ body {
   padding: 72px 24px 48px;
 }
 @media (max-width: 720px) {
-  .hero-wrap    { min-height: auto !important; }
-  .hero-content { padding: 24px 20px 32px; justify-content: flex-start; }
+  /* Keep enough height for the wave background to read as a hero, without
+     forcing a full 100vh (which felt like dead space on short content). */
+  .hero-wrap    { min-height: min(88svh, 640px) !important; }
+  .hero-content { padding: 40px 20px 32px; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .hero-wrap    { min-height: min(82svh, 560px) !important; }
 }
 
 .hero-avatar {
@@ -567,6 +608,23 @@ body {
 @media (max-width: 560px) {
   .blog-row             { flex-direction: column; gap: 4px; padding: 20px 14px; }
   .blog-row-meta        { text-align: left; padding-top: 0; }
+}
+
+/* ── Footer ─────────────────────────────────────────────── */
+.footer-row {
+  padding-top: 24px;
+  padding-bottom: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.footer-social-icon { width: 36px; height: 36px; }
+@media (max-width: 720px) {
+  .footer-row          { flex-direction: column; align-items: flex-start; gap: 16px; padding-bottom: 28px; }
+  /* 44px minimum touch target on mobile (WCAG 2.5.5) */
+  .footer-social-icon  { width: 44px; height: 44px; }
 }
 
 /* ── About photo ────────────────────────────────────────── */
@@ -599,6 +657,146 @@ body {
   .prose pre      { padding: 14px; }
   .prose h2       { font-size: 22px; }
   .prose h3       { font-size: 18px; }
+  .prose code     { overflow-wrap: break-word; word-break: break-word; }
+  .prose blockquote { padding-left: 1em; margin: 1.4em 0; }
+  .prose ul, .prose ol { padding-left: 1.25em; }
+}
+
+/* ── Blog TOC ───────────────────────────────────────────── */
+/* Desktop/tablet: fixed toggle in the left margin, opens a narrow
+   left-side panel that floats over the gutter without covering content. */
+.toc-toggle {
+  position: fixed;
+  top: 50%;
+  left: 24px;
+  z-index: 210;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.toc-backdrop { display: none; }
+
+.toc-panel {
+  position: fixed;
+  top: 88px;
+  left: 56px;
+  bottom: 0;
+  z-index: 200;
+  width: min(360px, 88vw);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+.toc-panel-inner { padding: 48px 32px; }
+
+.toc-eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--faint);
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.toc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-link {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--sub);
+  text-decoration: none;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.toc-link-active { font-weight: 600; color: var(--ink); }
+
+.toc-close { display: none; }
+
+/* Mobile: the narrow side panel would crush the 680px-wide post column,
+   so under 720px it becomes a full-screen drawer with a dismissible
+   backdrop, a dedicated close button, and a bottom-corner FAB toggle
+   that stays clear of the title/content instead of floating mid-page. */
+@media (max-width: 720px) {
+  .toc-toggle {
+    top: auto;
+    bottom: 20px;
+    left: 16px;
+    transform: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  }
+
+  .toc-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 199;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  .toc-panel {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background: var(--bg);
+    justify-content: flex-start;
+  }
+
+  .toc-panel-inner { padding: 88px 24px 40px; }
+
+  .toc-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 20px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    z-index: 201;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .toc-list { gap: 4px; }
+
+  .toc-link {
+    font-size: 16px;
+    padding: 12px 4px;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
 }
 
 /* ── Theme toggle view transition ───────────────────────── */
