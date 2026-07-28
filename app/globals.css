@@ -585,6 +585,7 @@ body {
 
 @media (max-width: 720px) {
   .home-intro-wrap { padding-top: 28px !important; }
+  .hero-roles      { margin-bottom: 24px !important; }
 }
 
 .hero-avatar {

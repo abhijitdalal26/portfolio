@@ -28,7 +28,7 @@ export default function Home() {
             Abhijit Dalal
           </h1>
 
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 12, marginBottom: 48, fontSize: 15, fontWeight: 500, color: "var(--sub)", flexWrap: "wrap" }}>
+          <div className="hero-roles" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 12, marginBottom: 48, fontSize: 15, fontWeight: 500, color: "var(--sub)", flexWrap: "wrap" }}>
             {["Student", "Builder", "Engineer"].map((r, i) => (
               <span key={r} style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 {i > 0 && <span style={{ width: 4, height: 4, borderRadius: 999, background: "var(--faint)", display: "inline-block" }} />}
