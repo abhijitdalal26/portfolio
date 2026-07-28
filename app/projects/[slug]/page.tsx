@@ -59,9 +59,15 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             </div>
             <p style={{ fontSize: 16, color: "var(--ink)", maxWidth: 560, lineHeight: 1.65, marginBottom: 24 }}>{project.blurb}</p>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 40 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: project.liveDemo ? 20 : 40 }}>
               {project.tags.map((t) => <span key={t} className="chip">{t}</span>)}
             </div>
+
+            {project.liveDemo && (
+              <a href={project.liveDemo} className="btn-primary" style={{ marginBottom: 40 }}>
+                Try it — chat with the model <ArrowUpRight />
+              </a>
+            )}
           </FadeUp>
 
           {project.heroVideo ? (
