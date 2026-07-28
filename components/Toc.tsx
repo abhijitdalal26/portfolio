@@ -34,9 +34,18 @@ function CloseIcon() {
 }
 
 export function Toc({ items }: { items: TocItem[] }) {
-  const [open, setOpen] = useState(true);
+  // Starts closed so the post is visible immediately on every screen size.
+  // On desktop/tablet (where the panel floats in the gutter without
+  // covering the article) we open it automatically once mounted; on mobile
+  // it stays closed until the user taps the toggle, since there the panel
+  // overlays the content.
+  const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    if (window.matchMedia("(min-width: 721px)").matches) setOpen(true);
+  }, []);
 
   useEffect(() => {
     if (items.length === 0) return;
@@ -93,7 +102,7 @@ export function Toc({ items }: { items: TocItem[] }) {
       <button
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close contents" : "Open contents"}
-        className="toc-toggle"
+        className={`toc-toggle${open ? " toc-toggle-open" : ""}`}
       >
         <HamburgerIcon progress={scrollProgress} />
       </button>

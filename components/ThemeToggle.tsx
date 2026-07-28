@@ -15,7 +15,13 @@ export function ThemeToggle() {
 
   const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
     const next = isDark ? "light" : "dark";
-    const { clientX: x, clientY: y } = e;
+    // Use the button's own center rather than the click/tap coordinates —
+    // on mobile, synthesized touch clicks and keyboard activation can report
+    // clientX/clientY as 0,0, which made the circle appear to expand from
+    // the top-left/top-center of the screen instead of the toggle button.
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
 
     if (
       !("startViewTransition" in document) ||

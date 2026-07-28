@@ -736,9 +736,11 @@ body {
 .toc-close { display: none; }
 
 /* Mobile: the narrow side panel would crush the 680px-wide post column,
-   so under 720px it becomes a full-screen drawer with a dismissible
-   backdrop, a dedicated close button, and a bottom-corner FAB toggle
-   that stays clear of the title/content instead of floating mid-page. */
+   so under 720px it becomes a bottom sheet (capped height, not full-screen,
+   so the post stays visibly peeking behind the dimmed backdrop) with a
+   dismissible backdrop, a dedicated close button, and a bottom-corner FAB
+   toggle that stays clear of the title/content. It starts closed on mobile
+   (see Toc.tsx) so the post is never blocked on first load. */
 @media (max-width: 720px) {
   .toc-toggle {
     top: auto;
@@ -752,6 +754,9 @@ body {
     border: 1px solid var(--line);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
   }
+  /* Hidden while the sheet is open — the close button/backdrop handle
+     dismissal, and the FAB would otherwise sit awkwardly under the sheet. */
+  .toc-toggle-open { display: none; }
 
   .toc-backdrop {
     display: block;
@@ -762,24 +767,29 @@ body {
   }
 
   .toc-panel {
-    top: 0;
+    top: auto;
     left: 0;
     right: 0;
     bottom: 0;
     width: 100%;
+    max-height: min(65vh, 480px);
     background: var(--bg);
+    border-top: 1px solid var(--line);
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    box-shadow: 0 -12px 32px rgba(0, 0, 0, 0.22);
     justify-content: flex-start;
   }
 
-  .toc-panel-inner { padding: 88px 24px 40px; }
+  .toc-panel-inner { padding: 20px 24px 32px; }
 
   .toc-close {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    position: fixed;
-    top: 20px;
-    right: 16px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
     width: 44px;
     height: 44px;
     z-index: 201;
