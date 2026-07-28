@@ -90,9 +90,9 @@ export default function About() {
               </h1>
 
               <div style={{ fontSize: 16, lineHeight: 1.8, color: "var(--ink)", display: "flex", flexDirection: "column", gap: 18, marginBottom: 44 }}>
-                <p>I&apos;m based in Mumbai, though most of what actually keeps me up at night is machine learning, not coursework. Somewhere in the middle of it I got pulled into embeddings, transformers, and reinforcement learning, and never really stopped.</p>
-                <p>I like taking an idea apart until I understand it well enough to rebuild myself, that&apos;s usually what turns into a project. It&apos;s slower than just reading about it, but it&apos;s the only way I actually trust that I understand something.</p>
-                <p>Right now I&apos;m building Skrolla, a book discovery app that scrolls like a feed but recommends with embeddings instead of guesswork. The blog is where I write about whatever I&apos;m learning along the way.</p>
+                <p>I&apos;m an Electronics &amp; Telecom student at VJTI in Mumbai, but most of my actual hours go into machine learning projects that have nothing to do with the syllabus.</p>
+                <p>I don&apos;t trust that I understand something until I&apos;ve rebuilt it myself. That&apos;s why I followed Karpathy&apos;s Zero to Hero series and wrote a GPT from scratch to generate Harry Potter text instead of just fine-tuning one, and why I trained PPO agents in Unity ML-Agents to drive a kart around a track instead of reading about reinforcement learning. Same reason PawVision and the MNIST recognizer exist, both problems a pretrained model would&apos;ve solved in five minutes.</p>
+                <p>Right now I&apos;m building Skrolla, a book discovery app that scrolls like a feed but recommends with embeddings instead of tags. The blog is where I write about whatever breaks while I&apos;m building any of this.</p>
               </div>
             </div>
 

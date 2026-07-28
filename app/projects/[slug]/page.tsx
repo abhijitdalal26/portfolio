@@ -65,7 +65,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
 
             {project.liveDemo && (
               <a href={project.liveDemo} className="btn-primary" style={{ marginBottom: 40 }}>
-                Try it — chat with the model <ArrowUpRight />
+                {project.liveDemoLabel ?? "Try it — chat with the model"} <ArrowUpRight />
               </a>
             )}
           </FadeUp>

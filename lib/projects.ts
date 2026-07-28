@@ -27,6 +27,7 @@ export type Project = {
   openclaw?: { title: string; image: string; caption: string; imageMaxWidth?: number };
   architectureSteps?: string[];
   liveDemo?: string;
+  liveDemoLabel?: string;
 };
 
 export const projects: Project[] = [
@@ -89,9 +90,8 @@ export const projects: Project[] = [
     tags: ["TensorFlow.js", "Keras", "Python", "GitHub Pages"],
     blurb: "A handwritten digit recognizer. Draw a number on the canvas and a CNN predicts it in real time, running entirely in your browser.",
     github: "https://github.com/abhijitdalal26/ml-projects",
-    links: [
-      { label: "Live Demo", href: "https://abhijitdalal26.github.io/ml-projects/MNIST/" },
-    ],
+    liveDemo: "https://abhijitdalal26.github.io/ml-projects/MNIST/",
+    liveDemoLabel: "Try the Live Demo",
     heroImage: "/projects/ml-projects/mnist-demo.png",
     thumbnail: "/projects/ml-projects/intro.png",
     story: [
@@ -484,18 +484,12 @@ export const projects: Project[] = [
     status: "current",
     stageLabel: "Closed Testing",
     kind: "Mobile · Recommendation Systems",
-    tags: ["Kotlin", "Jetpack Compose", "CLIP", "Supabase", "Android"],
+    tags: ["Kotlin", "Jetpack Compose", "CLIP", "Supabase", "Docker", "Android"],
     blurb: "A book discovery app that scrolls like TikTok but is built to do the opposite of what TikTok does. Swipe through book covers, get hooked on one, and it points you at the actual book instead of trying to keep you scrolling.",
     github: "",
+    liveDemo: "https://skrolla.vercel.app/",
+    liveDemoLabel: "Visit Skrolla",
     heroImage: "/projects/bookscroller/logo.png",
-    screenshots: [
-      "/projects/bookscroller/home-feed.jpg",
-      "/projects/bookscroller/fyp.jpg",
-      "/projects/bookscroller/chat-interface.jpg",
-      "/projects/bookscroller/story-card.jpg",
-      "/projects/bookscroller/book-detail.jpg",
-      "/projects/bookscroller/library.jpg",
-    ],
     story: [
       "A lot of people want to read more but never actually pick a book. They wait for something to grab them and it never does, because nothing is putting new books in front of their eyes the way a feed puts new videos in front of their eyes. Skrolla flips that. It looks like a short-form video feed and scrolls the same way, but instead of clips it's book covers, and instead of trying to hold your attention forever, its whole job is to spark enough curiosity that you go read the actual book.",
       "You scroll a feed of covers the way you'd scroll Reels or Shorts. Something catches your eye, you tap in, and you land in a chat with an AI about that book, spoiler free by default so it only gives you enough to get you curious, not enough to ruin the ending. If you want more, you can turn spoiler mode on and go as deep as you want. From there you can turn the conversation into a small saved card, a compact summary you can come back to later without rereading the whole chat.",
