@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer style={{ borderTop: "1px solid var(--line)" }}>
+    <footer id="site-footer" style={{ borderTop: "1px solid var(--line)" }}>
       <div className="page-wrap footer-row">
         <div>
           <Link

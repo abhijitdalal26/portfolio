@@ -42,6 +42,7 @@ export function Toc({ items }: { items: TocItem[] }) {
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [nearFooter, setNearFooter] = useState(false);
 
   useEffect(() => {
     if (window.matchMedia("(min-width: 721px)").matches) setOpen(true);
@@ -82,6 +83,20 @@ export function Toc({ items }: { items: TocItem[] }) {
     };
   }, []);
 
+  // The toggle is fixed to the viewport, so without this it floats on top of
+  // the footer's own social icons once they scroll into view at the end of
+  // the post. Hide it before it ever reaches that space.
+  useEffect(() => {
+    const footer = document.getElementById("site-footer");
+    if (!footer) return;
+    const observer = new IntersectionObserver(
+      (entries) => setNearFooter(entries[0].isIntersecting),
+      { rootMargin: "0px 0px -20px 0px" }
+    );
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, []);
+
   // On small screens the panel becomes a full-screen drawer — lock body
   // scroll while it's open so the post content behind it doesn't scroll.
   useEffect(() => {
@@ -102,7 +117,7 @@ export function Toc({ items }: { items: TocItem[] }) {
       <button
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close contents" : "Open contents"}
-        className={`toc-toggle${open ? " toc-toggle-open" : ""}`}
+        className={`toc-toggle${open ? " toc-toggle-open" : ""}${nearFooter ? " toc-toggle-hidden" : ""}`}
       >
         <HamburgerIcon progress={scrollProgress} />
       </button>

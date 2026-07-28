@@ -681,6 +681,12 @@ body {
   border: none;
   color: var(--ink);
   cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.toc-toggle-hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .toc-backdrop { display: none; }
