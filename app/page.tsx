@@ -78,8 +78,9 @@ export default function Home() {
         <FadeUp>
           <div style={{ marginBottom: 72, maxWidth: 600, position: "relative", paddingLeft: 28, borderLeft: "3px solid var(--accent)" }}>
             <p style={{ fontFamily: "var(--sans)", fontSize: "clamp(19px, 2.2vw, 24px)", lineHeight: 1.65, color: "var(--ink)", margin: 0, position: "relative" }}>
-              A final year student at VJTI, Mumbai. I love working with neural
-              networks, training models, and picking apart how AI actually works.
+              Hello, I&apos;m a final year B.Tech student at VJTI, Mumbai. I love
+              working with neural networks, training models, and solving
+              real world problems.
             </p>
           </div>
         </FadeUp>
@@ -107,9 +108,6 @@ export default function Home() {
 
         <FadeUp>
           <div style={{ marginBottom: 32 }}>
-            <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "var(--faint)", marginBottom: 8 }}>
-              Timeline
-            </div>
             <h2 style={{ fontFamily: "var(--sans)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
               Projects
             </h2>

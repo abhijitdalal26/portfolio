@@ -45,7 +45,7 @@ export function ProjectCard({ project }: { project: Project }) {
         <div style={{ padding: "18px 22px 20px", position: "relative", zIndex: 2 }}>
           <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "4px 8px", marginBottom: 8 }}>
             <div style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.2, color: "var(--ink)", minWidth: 0, wordBreak: "break-word" }}>
-              {project.title} <span style={{ fontWeight: 400, color: "var(--sub)" }}>— {project.tagline}</span>
+              {project.title}<span style={{ fontWeight: 400, color: "var(--sub)" }}>: {project.tagline}</span>
             </div>
             {project.status === "current" && (
               <span style={{ fontSize: 10.5, fontWeight: 500, padding: "2px 8px", borderRadius: 999, background: "rgba(34,197,94,0.1)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.2)", fontFamily: "var(--mono)", whiteSpace: "nowrap" }}>
