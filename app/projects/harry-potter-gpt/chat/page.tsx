@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { HarryPotterChat } from "@/components/HarryPotterChat";
+import { StageComparison } from "@/components/StageComparison";
 
 export const metadata: Metadata = {
   title: "Chat — Harry Potter GPT",
@@ -27,6 +28,17 @@ export default function HarryPotterChatPage() {
             confidently wrong lore and the occasional derail.
           </p>
           <HarryPotterChat />
+
+          <div style={{ marginTop: 56 }}>
+            <h2 style={{ fontFamily: "var(--sans)", fontSize: 22, fontWeight: 600, marginBottom: 8 }}>
+              How the model evolved
+            </h2>
+            <p style={{ fontSize: 14.5, color: "var(--sub)", lineHeight: 1.6, marginBottom: 20 }}>
+              The same questions, asked at each of the three training stages — pretraining, SFT, and DPO —
+              all from the same final run, not cherry-picked. Click a question to expand.
+            </p>
+            <StageComparison />
+          </div>
         </div>
       </div>
     </div>
