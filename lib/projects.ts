@@ -15,6 +15,7 @@ export type Project = {
   heroImage?: string;
   heroVideo?: string;
   heroVideoPortrait?: boolean;
+  heroEmbed?: string;
   thumbnail?: string;
   screenshots?: string[];
   logo?: string;
@@ -482,14 +483,15 @@ export const projects: Project[] = [
     tagline: "A TikTok Feed for Your Next Book",
     order: 10,
     status: "current",
-    stageLabel: "Closed Testing",
     kind: "Mobile · Recommendation Systems",
     tags: ["Kotlin", "Jetpack Compose", "CLIP", "Supabase", "Docker", "Android"],
     blurb: "A book discovery app that scrolls like TikTok but is built to do the opposite of what TikTok does. Swipe through book covers, get hooked on one, and it points you at the actual book instead of trying to keep you scrolling.",
     github: "",
     liveDemo: "https://skrolla.vercel.app/",
     liveDemoLabel: "Visit Skrolla",
-    heroImage: "/projects/bookscroller/logo.png",
+    logo: "/projects/bookscroller/logo.png",
+    thumbnail: "/projects/bookscroller/logo.png",
+    heroVideo: "/projects/bookscroller/demo.mp4",
     story: [
       "A lot of people want to read more but never actually pick a book. They wait for something to grab them and it never does, because nothing is putting new books in front of their eyes the way a feed puts new videos in front of their eyes. Skrolla flips that. It looks like a short-form video feed and scrolls the same way, but instead of clips it's book covers, and instead of trying to hold your attention forever, its whole job is to spark enough curiosity that you go read the actual book.",
       "You scroll a feed of covers the way you'd scroll Reels or Shorts. Something catches your eye, you tap in, and you land in a chat with an AI about that book, spoiler free by default so it only gives you enough to get you curious, not enough to ruin the ending. If you want more, you can turn spoiler mode on and go as deep as you want. From there you can turn the conversation into a small saved card, a compact summary you can come back to later without rereading the whole chat.",
@@ -502,6 +504,36 @@ export const projects: Project[] = [
       "A nearest-neighbor search against that taste vector, run through Supabase's pgvector, pulls back the next batch of books to show you, refreshed in the background as you keep scrolling.",
       "Tapping into a book opens a chat with an AI, spoiler free by default, that you can use to learn about the book, ask questions, or turn the conversation into a saved summary card.",
       "The app itself is native Android, built with Kotlin and Jetpack Compose in an MVVM architecture.",
+    ],
+  },
+  {
+    slug: "skydrift",
+    title: "Skydrift",
+    tagline: "Meet Strangers While Flying",
+    order: 11,
+    status: "current",
+    kind: "Web Game · Multiplayer",
+    tags: ["Three.js", "Colyseus", "Node.js", "WebSocket", "JavaScript", "Firebase"],
+    blurb: "A relaxing browser flying sim where you steer a bird over an open ocean through day, night, and storms — and if a real stranger happens to be nearby, you can choose to say hello. Built on top of the open-source birds.cafe prototype, with a full real-time multiplayer social layer added on top.",
+    github: "https://github.com/abhijitdalal26/skydrift",
+    liveDemo: "https://skydrift-e9e.pages.dev",
+    liveDemoLabel: "Fly Skydrift",
+    links: [
+      { label: "birds.cafe (original)", href: "https://github.com/kanavtwtgg/birds.cafe" },
+    ],
+    heroEmbed: "https://skydrift-e9e.pages.dev",
+    thumbnail: "/projects/skydrift/start-screen.png",
+    story: [
+      "Skydrift is a small, quiet game about flying. You steer a bird in V-formation across an open ocean through day, night, and storms, and if another real person happens to be nearby, you can choose to say hello. Nothing about it is forced — a soft prompt appears for both of you, and only if you both agree does a private chat open between your two birds. Either side can drift away at any point, no explanation needed.",
+      "It's built on top of birds.cafe, a lovely little open-source solo bird sim by kanavtwtgg — a click-and-relax toy with no missions, no scores, just wind and ocean. I used that flying feel as the starting point and spent most of my time on the layer that wasn't there before: real other players sharing the same sky, a proximity-based double opt-in handshake modeled on Sky: Children of the Light's \"holding hands\" mechanic, and an ephemeral, moderated chat that closes the moment you fly apart.",
+      "For a recruiter reading this: what I actually built is a real-time multiplayer layer on top of a static, buildless client — a Colyseus room server that only broadcasts nearby players' positions instead of the whole world's state, a server-authoritative double opt-in gate so the handshake can't be spoofed from the client, server-side moderation scanning on every chat message, and six hand-built island biomes (volcanic, sakura, arctic, desert, tropical, stargazer), each with its own terrain, wildlife, and atmosphere layered on top of the original's flat, uniform ocean.",
+    ],
+    howItWorks: [
+      "The client keeps the same stack birds.cafe shipped with — vanilla JS, Three.js, ES modules loaded straight from a CDN import map, no bundler — for the flight physics, weather system, and V-formation flock renderer, extended rather than replaced.",
+      "A Colyseus (Node.js) room server, hosted on Render, is the new piece underneath it: every connected client gets an anonymous session and broadcasts its position into a shared room, and the server only relays nearby players' transforms back to each client (interest management), so cost stays flat as more people join instead of broadcasting the whole world to everyone.",
+      "When two birds fly close, both clients get a soft approach prompt at the same moment. Neither side's chat opens until both confirm, and that gate is enforced server-side, not just in the UI, so it can't be bypassed. Confirming opens a scoped, ephemeral WebSocket chat channel between just that pair, which auto-closes about 10-15 seconds after either bird drifts back out of range.",
+      "Every message passes through a server-side moderation scan before delivery, alongside mute, block, and report controls reachable directly from the chat panel — nothing is stored past the session.",
+      "Islands are scattered procedurally the way the original did it, but each one now belongs to one of six biome presets that override its palette, weather bias, wildlife, and music layer within an invisible influence radius around the island, while the open ocean between them keeps the original's calm weather system untouched.",
     ],
   },
 ];

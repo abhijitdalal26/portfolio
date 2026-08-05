@@ -51,11 +51,21 @@ export function Toc({ items }: { items: TocItem[] }) {
   useEffect(() => {
     if (items.length === 0) return;
 
+    // A fast scroll can cross several headings' intersection band in a single
+    // callback batch, and entries arrive in change order, not document order —
+    // naively taking "the last entry in this batch" can leave activeId stuck
+    // on a heading that isn't actually the topmost one in view. Track every
+    // currently-intersecting heading and always resolve to the first one in
+    // document order instead.
+    const visibleIds = new Set<string>();
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveId(entry.target.id);
+          if (entry.isIntersecting) visibleIds.add(entry.target.id);
+          else visibleIds.delete(entry.target.id);
         });
+        const topVisible = items.find((item) => visibleIds.has(item.id));
+        if (topVisible) setActiveId(topVisible.id);
       },
       { rootMargin: "-160px 0px -70% 0px", threshold: 0 }
     );

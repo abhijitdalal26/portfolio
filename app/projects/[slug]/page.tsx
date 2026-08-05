@@ -70,7 +70,32 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             )}
           </FadeUp>
 
-          {project.heroVideo ? (
+          {project.heroEmbed ? (
+            <FadeUp>
+              <a
+                href={project.heroEmbed}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Open ${project.title} — click to play`}
+                style={{ display: "block", position: "relative", borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 40, aspectRatio: "16/9" }}
+              >
+                <iframe
+                  src={project.heroEmbed}
+                  title={`${project.title} live preview`}
+                  loading="lazy"
+                  style={{ width: "100%", height: "100%", border: "none", display: "block", pointerEvents: "none" }}
+                />
+                <div style={{ position: "absolute", right: 12, bottom: 12, display: "flex", alignItems: "center", gap: 6, padding: "6px 12px", borderRadius: 999, background: "rgba(0,0,0,0.6)", color: "#fff", fontSize: 12.5, fontFamily: "var(--mono)" }}>
+                  Click to play <ArrowUpRight />
+                </div>
+              </a>
+              <div style={{ display: "flex", flexDirection: "column", gap: 18, marginBottom: 40 }}>
+                {project.story.map((p, i) => (
+                  <p key={i} style={{ fontSize: 16, lineHeight: 1.75, color: "var(--ink)" }}>{p}</p>
+                ))}
+              </div>
+            </FadeUp>
+          ) : project.heroVideo ? (
             project.heroVideoPortrait ? (
               <FadeUp>
                 <div className="hero-video-portrait" style={{ display: "flex", flexWrap: "wrap", gap: 32, marginBottom: 40, alignItems: "flex-start" }}>

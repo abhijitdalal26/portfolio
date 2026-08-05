@@ -120,6 +120,7 @@ Add an entry to the `projects` array in `lib/projects.ts`. `status: "current"` s
 - `links` (`ProjectLink[]`) — action buttons at the bottom (Kaggle notebook, live demo, APK download, YouTube playlist). Rendered as `.btn-ghost` pill buttons.
 - `papers` (`ProjectLink[]`) — research paper citations. Rendered as plain underlined text links, not buttons, distinct from `links`.
 - `thumbnail` — optional, overrides what shows on the homepage/listing `ProjectCard`. Falls back to `heroImage` if unset. Use this when the best homepage-card image (e.g. an explainer diagram) differs from the best detail-page hero image (e.g. an actual demo screenshot).
+- `heroEmbed` — optional, takes priority over `heroImage`/`heroVideo`. Renders the live site in a clickable `<iframe>` (pointer-events disabled on the iframe itself, wrapped in a link so any click opens the real URL in a new tab) instead of a static screenshot — use when the project has a live, presentable homepage (e.g. a live game). Since `ProjectCard` on the homepage can't embed an iframe, always pair with an explicit `thumbnail` for the card.
 
 The GitHub button always renders with the actual GitHub logo icon (`GitHubIcon` in `page.tsx`), not just text.
 
@@ -142,14 +143,13 @@ Projects to feature on the site, in the order worked on (from `abhijitdalal26` G
 - [x] `movie-vector-galaxy` — has `papers` (Sentence-BERT, UMAP, Multilingual SBERT).
 - [x] `smart-agriculture-advisory-system` — Raspberry Pi IoT + XGBoost + OpenClaw. Has `openclaw` section (live Telegram bot screenshot).
 - [x] `autonomous-racing-using-rl` — RL agents (PPO). `heroVideo` (real Unity kart recording, not a static hero image). Has `diagrams` (Gymnasium checkpoint progression triptych + reward/entropy curves + real Unity Editor/console/profiling captures, all pulled from the project's own `images/` dir, not generic screenshots) + `architectureSteps` (exact PPO hyperparams from the repo's `kart_config.yaml`) + `papers` (PPO, Unity ML-Agents).
+- [x] `mcp-audit` — MCP server security audit tool.
+- [x] `bookscroller` (Skrolla) — TikTok-style book discovery. `heroVideo` is a real device screen recording (`public/projects/bookscroller/demo.mp4`, re-encoded to constant 30fps + faststart with ffmpeg — the raw iPhone screen recording was variable-frame-rate and stalled indefinitely in Chrome's `<video>` element); `logo`/`thumbnail` both point at the app icon since the hero slot is now the video, not the icon.
+- [x] `skydrift` — multiplayer flying sim built on top of the open-source `birds.cafe` (github.com/kanavtwtgg/birds.cafe), credited via a `links` entry. Uses `heroEmbed` (first project to do so) pointed at the live Cloudflare Pages deployment instead of a static hero image/video.
 
 **Remaining — Timeline (status: "done"), oldest first:**
 - [ ] `harry-potter-gpt` — nanoGPT from scratch
 - [ ] `projects-wiki`
 - [ ] `play-store-app-analysis`
-
-**Remaining — Currently Working On (status: "current"):**
-- [ ] `MCP-Audit` — MCP server security audit tool
-- [ ] `bookscroller` — TikTok-style book discovery
 
 When picking up the next one: ask what images/diagrams the user has ready in `public/projects/<slug>/` (or check what's already there), write `story` + `howItWorks` following the two-audience split above, and check if a real model/architecture file exists in the project's own GitHub repo before writing any specifics — pull exact values (layer configs, hyperparameters) from there rather than guessing.
