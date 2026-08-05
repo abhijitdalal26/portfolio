@@ -145,11 +145,13 @@ Projects to feature on the site, in the order worked on (from `abhijitdalal26` G
 - [x] `autonomous-racing-using-rl` — RL agents (PPO). `heroVideo` (real Unity kart recording, not a static hero image). Has `diagrams` (Gymnasium checkpoint progression triptych + reward/entropy curves + real Unity Editor/console/profiling captures, all pulled from the project's own `images/` dir, not generic screenshots) + `architectureSteps` (exact PPO hyperparams from the repo's `kart_config.yaml`) + `papers` (PPO, Unity ML-Agents).
 - [x] `mcp-audit` — MCP server security audit tool.
 - [x] `bookscroller` (Skrolla) — TikTok-style book discovery. `heroVideo` is a real device screen recording (`public/projects/bookscroller/demo.mp4`, re-encoded to constant 30fps + faststart with ffmpeg — the raw iPhone screen recording was variable-frame-rate and stalled indefinitely in Chrome's `<video>` element); `logo`/`thumbnail` both point at the app icon since the hero slot is now the video, not the icon.
-- [x] `skydrift` — multiplayer flying sim built on top of the open-source `birds.cafe` (github.com/kanavtwtgg/birds.cafe), credited via a `links` entry. Uses `heroEmbed` (first project to do so) pointed at the live Cloudflare Pages deployment instead of a static hero image/video.
+- [x] `skydrift` — multiplayer flying sim built on top of the open-source `birds.cafe` (github.com/kanavtwtgg/birds.cafe), credited via a `links` entry. Uses `heroEmbed` (first project to do so) pointed at the live Cloudflare Pages deployment instead of a static hero image/video. `status: "done"` (not actively being worked on).
 
 **Remaining — Timeline (status: "done"), oldest first:**
 - [ ] `harry-potter-gpt` — nanoGPT from scratch
 - [ ] `projects-wiki`
 - [ ] `play-store-app-analysis`
+
+Note: `bookscroller` (Skrolla) is the only remaining `status: "current"` project.
 
 When picking up the next one: ask what images/diagrams the user has ready in `public/projects/<slug>/` (or check what's already there), write `story` + `howItWorks` following the two-audience split above, and check if a real model/architecture file exists in the project's own GitHub repo before writing any specifics — pull exact values (layer configs, hyperparameters) from there rather than guessing.

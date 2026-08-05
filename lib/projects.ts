@@ -492,6 +492,7 @@ export const projects: Project[] = [
     logo: "/projects/bookscroller/logo.png",
     thumbnail: "/projects/bookscroller/logo.png",
     heroVideo: "/projects/bookscroller/demo.mp4",
+    heroVideoPortrait: true,
     story: [
       "A lot of people want to read more but never actually pick a book. They wait for something to grab them and it never does, because nothing is putting new books in front of their eyes the way a feed puts new videos in front of their eyes. Skrolla flips that. It looks like a short-form video feed and scrolls the same way, but instead of clips it's book covers, and instead of trying to hold your attention forever, its whole job is to spark enough curiosity that you go read the actual book.",
       "You scroll a feed of covers the way you'd scroll Reels or Shorts. Something catches your eye, you tap in, and you land in a chat with an AI about that book, spoiler free by default so it only gives you enough to get you curious, not enough to ruin the ending. If you want more, you can turn spoiler mode on and go as deep as you want. From there you can turn the conversation into a small saved card, a compact summary you can come back to later without rereading the whole chat.",
@@ -510,8 +511,8 @@ export const projects: Project[] = [
     slug: "skydrift",
     title: "Skydrift",
     tagline: "Meet Strangers While Flying",
-    order: 11,
-    status: "current",
+    order: 9,
+    status: "done",
     kind: "Web Game · Multiplayer",
     tags: ["Three.js", "Colyseus", "Node.js", "WebSocket", "JavaScript", "Firebase"],
     blurb: "A relaxing browser flying sim where you steer a bird over an open ocean through day, night, and storms — and if a real stranger happens to be nearby, you can choose to say hello. Built on top of the open-source birds.cafe prototype, with a full real-time multiplayer social layer added on top.",
