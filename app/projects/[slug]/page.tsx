@@ -100,7 +100,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
               <FadeUp>
                 <div className="hero-video-portrait" style={{ display: "flex", flexWrap: "wrap", gap: 32, marginBottom: 40, alignItems: "flex-start" }}>
                   <div className="hero-video-portrait-media" style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)" }}>
-                    <video src={project.heroVideo} controls autoPlay loop muted playsInline style={{ width: "100%", display: "block" }} />
+                    <video src={project.heroVideo} controls playsInline style={{ width: "100%", display: "block" }} />
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 18, flex: "1 1 240px", minWidth: 0 }}>
                     {project.story.map((p, i) => (
