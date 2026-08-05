@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { RESUME_URL } from "@/lib/resume";
 
 export const metadata: Metadata = { title: "About" };
 
@@ -117,7 +118,7 @@ export default function About() {
                   <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 7 10-7"/></svg>
                 </a>
                 <a
-                  href="/projects/resume/Abhijit-Dalal-CV.pdf"
+                  href={RESUME_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="CV"

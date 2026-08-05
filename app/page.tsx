@@ -5,6 +5,7 @@ import { FadeUp } from "@/components/FadeUp";
 import { ProjectCard } from "@/components/ProjectCard";
 import { getProjectsByStatus } from "@/lib/projects";
 import { getAllPosts, formatDate } from "@/lib/posts";
+import { RESUME_URL } from "@/lib/resume";
 
 export default function Home() {
   const current = getProjectsByStatus("current");
@@ -50,7 +51,7 @@ export default function Home() {
             <a href="https://mail.google.com/mail/?view=cm&fs=1&to=agdalal_b23@el.vjti.ac.in" target="_blank" rel="noopener noreferrer" aria-label="College Email" className="social-icon">
               <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 7 10-7"/></svg>
             </a>
-            <a href="/projects/resume/Abhijit-Dalal-CV.pdf" target="_blank" rel="noopener noreferrer" aria-label="CV" className="social-icon">
+            <a href={RESUME_URL} target="_blank" rel="noopener noreferrer" aria-label="CV" className="social-icon">
               <span style={{ fontFamily: "var(--mono)", fontSize: 12, fontWeight: 700, letterSpacing: "0.2px" }}>CV</span>
             </a>
           </div>
