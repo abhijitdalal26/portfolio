@@ -137,7 +137,6 @@ export default function Home() {
           <div style={{ display: "flex", flexDirection: "column" }}>
             {posts.map((post, i) => (
               <FadeUp key={post.slug} delay={(i % 2) * 90}>
-                {i > 0 && <div style={{ height: 1, background: "var(--line)" }} />}
                 <Link href={`/blog/${post.slug}`} className="blog-row" style={{ textUnderlineOffset: 3 }}>
                   <span style={{ fontSize: 17, fontWeight: 400, color: "var(--ink)", letterSpacing: "-0.02em" }}>{post.title}</span>
                   <span style={{ fontSize: 12, color: "var(--faint)", fontFamily: "var(--mono)", flexShrink: 0, whiteSpace: "nowrap" }}>{formatDate(post.date)}</span>
