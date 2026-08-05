@@ -45,7 +45,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "10px 14px", marginBottom: 16 }}>
               {project.logo && (
                 <div style={{ width: 44, height: 44, borderRadius: 12, overflow: "hidden", flexShrink: 0, border: "1px solid var(--line)" }}>
-                  <Image src={project.logo} alt="" width={44} height={44} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
+                  <Image src={project.logo} alt="" width={44} height={44} priority style={{ objectFit: "cover", width: "100%", height: "100%" }} />
                 </div>
               )}
               <h1 style={{ fontFamily: "var(--sans)", fontSize: "clamp(34px, 5.5vw, 54px)", letterSpacing: "-0.04em", lineHeight: 1.02, fontWeight: 700, margin: 0 }}>
@@ -131,7 +131,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
               {project.heroImage && (
                 <FadeUp>
                   <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", marginBottom: 40, position: "relative", aspectRatio: "16/9" }}>
-                    <Image src={project.heroImage} alt={project.title} fill style={{ objectFit: "cover" }} />
+                    <Image src={project.heroImage} alt={project.title} fill priority style={{ objectFit: "cover" }} />
                   </div>
                 </FadeUp>
               )}
