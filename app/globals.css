@@ -69,7 +69,15 @@ body {
   transition:
     opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
+  /* Deliberately no will-change here. It looked like the right call for a
+     scroll-reveal (promote to a compositor layer right before animating),
+     but it reproducibly caused a worse bug: the promoted layer would
+     occasionally never get its first real paint, leaving content stuck
+     invisible until something external (a resize, a scroll) forced a
+     re-layout. Confirmed by removing it: the stuck-paint case disappeared
+     over repeated hard reloads. The animation is cheap enough on its own
+     that the extra compositor hint isn't worth that risk.
+  */
 }
 .reveal-in {
   opacity: 1;
