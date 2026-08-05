@@ -113,7 +113,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
               <>
                 <FadeUp>
                   <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 40 }}>
-                    <video src={project.heroVideo} controls autoPlay loop muted playsInline style={{ width: "100%", display: "block" }} />
+                    <video src={project.heroVideo} controls playsInline style={{ width: "100%", display: "block" }} />
                   </div>
                 </FadeUp>
 
