@@ -4,7 +4,7 @@ import { HarryPotterChat } from "@/components/HarryPotterChat";
 import { StageComparison } from "@/components/StageComparison";
 
 export const metadata: Metadata = {
-  title: "Chat — Harry Potter GPT",
+  title: "Chat: Harry Potter GPT",
   description: "Chat with the DPO-aligned Harry Potter GPT model, running entirely in your browser.",
 };
 
@@ -23,7 +23,7 @@ export default function HarryPotterChatPage() {
             Chat with Harry Potter GPT
           </h1>
           <p style={{ fontSize: 15.5, color: "var(--sub)", lineHeight: 1.65, marginBottom: 32 }}>
-            The final, DPO-aligned stage of the model, running fully client-side — nothing you type
+            The final, DPO-aligned stage of the model, running fully client-side: nothing you type
             leaves your browser. It&apos;s a 124M-parameter model trained on a hobby budget, so expect
             confidently wrong lore and the occasional derail.
           </p>
@@ -34,7 +34,7 @@ export default function HarryPotterChatPage() {
               How the model evolved
             </h2>
             <p style={{ fontSize: 14.5, color: "var(--sub)", lineHeight: 1.6, marginBottom: 20 }}>
-              The same questions, asked at each of the three training stages — pretraining, SFT, and DPO —
+              The same questions, asked at each of the three training stages (pretraining, SFT, and DPO),
               all from the same final run, not cherry-picked. Click a question to expand.
             </p>
             <StageComparison />

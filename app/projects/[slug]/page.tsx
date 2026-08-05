@@ -65,7 +65,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
 
             {project.liveDemo && (
               <a href={project.liveDemo} className="btn-primary" style={{ marginBottom: 40 }}>
-                {project.liveDemoLabel ?? "Try it — chat with the model"} <ArrowUpRight />
+                {project.liveDemoLabel ?? "Try it: chat with the model"} <ArrowUpRight />
               </a>
             )}
           </FadeUp>
@@ -76,7 +76,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                 href={project.heroEmbed}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Open ${project.title} — click to play`}
+                aria-label={`Open ${project.title}, click to play`}
                 style={{ display: "block", position: "relative", borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 40, aspectRatio: "16/9" }}
               >
                 <iframe

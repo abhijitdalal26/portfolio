@@ -44,7 +44,7 @@ export function HarryPotterChat() {
       setStatus("ready");
     } catch (e) {
       console.error(e);
-      setError("Couldn't load the model. Your browser may not support WebAssembly/WebGPU, or the download was interrupted — try reloading.");
+      setError("Couldn't load the model. Your browser may not support WebAssembly/WebGPU, or the download was interrupted, try reloading.");
       setStatus("error");
     }
   }
@@ -71,7 +71,7 @@ export function HarryPotterChat() {
       setMessages((m) => [...m, { role: "assistant", content: text || "…" }]);
     } catch (e) {
       console.error(e);
-      setMessages((m) => [...m, { role: "assistant", content: "(generation failed — try again)" }]);
+      setMessages((m) => [...m, { role: "assistant", content: "(generation failed, try again)" }]);
     }
     setStatus("ready");
   }
@@ -81,7 +81,7 @@ export function HarryPotterChat() {
       {status === "idle" && (
         <div style={{ padding: "48px 24px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
           <p style={{ fontSize: 15, color: "var(--sub)", maxWidth: 440, lineHeight: 1.6, margin: 0 }}>
-            This runs entirely in your browser — nothing is sent to a server. The DPO-aligned model
+            This runs entirely in your browser, nothing is sent to a server. The DPO-aligned model
             (~164MB, quantized) downloads once and is cached by your browser afterward.
           </p>
           <button onClick={loadModel} className="btn-primary" style={{ border: "none", cursor: "pointer" }}>
