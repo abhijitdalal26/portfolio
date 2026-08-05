@@ -24,7 +24,7 @@ export type Project = {
   story: string[];
   howItWorks?: string[];
   diagramsIntro?: string;
-  diagrams?: { title: string; image: string; caption: string; imageMaxWidth?: number }[];
+  diagrams?: { title: string; image?: string; embed?: string; embedHeight?: number; caption: string; imageMaxWidth?: number }[];
   openclaw?: { title: string; image: string; caption: string; imageMaxWidth?: number };
   architectureSteps?: string[];
   liveDemo?: string;
@@ -385,8 +385,9 @@ export const projects: Project[] = [
     blurb: "What actually makes an app succeed on the Play Store? I combined a 3.45 million app historical archive with a fresh 2026 scrape across 10 countries, then rebuilt the whole analysis as plain Python scripts instead of a notebook, with an eye for where the numbers were quietly lying to me.",
     github: "https://github.com/abhijitdalal26/play-store-app-analysis",
     links: [
-      { label: "Kaggle Dataset", href: "https://www.kaggle.com/datasets/abhijitdalal26/google-play-store-app-dataset-2026/data" },
+      { label: "Kaggle Dataset (2026 scrape)", href: "https://www.kaggle.com/datasets/abhijitdalal26/google-play-store-app-dataset-2026/data" },
       { label: "Kaggle Notebook", href: "https://www.kaggle.com/code/abhijitdalal26/google-play-store-app-data-analysis-2026" },
+      { label: "Kaggle Dataset (2022 archive, 3.45M apps)", href: "https://www.kaggle.com/datasets/tapive/google-play-apps-and-games" },
     ],
     heroImage: "/projects/play-store-app-analysis/logo.png",
     story: [
@@ -404,7 +405,7 @@ export const projects: Project[] = [
       "Every chart is deliberately either static (matplotlib/seaborn) or interactive (Plotly), chosen per chart based on whether hovering for an exact value actually helps, e.g. dense scatters and Lorenz curves are interactive with legend-based show/hide toggles for the big-tech-vs-indie comparison, while clean category rankings stay static.",
       "Country-level storefront data (same ~11k apps, ten localized storefronts) surfaced a real localization effect: identical apps get rated differently by country, and curated top-grossing/top-selling charts favor some categories far more than raw app count alone would predict.",
     ],
-    diagramsIntro: "Eleven charts pulled straight from the analysis pipeline's output, not staged: category landscape and the big-tech distortion inside it, how the store's business model shifted from 2022 to 2026, ratings and monetization patterns, and where publishers are (and aren't) actively competing.",
+    diagramsIntro: "Nineteen charts pulled straight from the analysis pipeline's output, not staged. A mix of static charts and interactive ones (hover for exact values, and where noted, click the legend to toggle between views), covering category landscape, the big-tech distortion inside it, how the store changed from 2022 to 2026, ratings, monetization, developer concentration, freshness, geography, and discoverability.",
     diagrams: [
       {
         title: "A store of 3.45 million apps, run by a handful of categories",
@@ -414,17 +415,40 @@ export const projects: Project[] = [
       {
         title: "Where big tech already owns the category",
         image: "/projects/play-store-app-analysis/chart-bigtech-dominance.png",
-        caption: "In Travel & Local, big tech and pre-installed publishers alone hold 78.6% of all installs, one or two players with a structural head start, not a crowded market. This is the reason every competition metric in the analysis excludes them.",
+        caption: "In Travel & Local, big tech and pre-installed publishers alone hold 78.6% of all installs: one or two players with a structural head start, not a crowded market. This is the reason every competition metric in the analysis excludes them.",
+      },
+      {
+        title: "The opportunity matrix: competition vs. demand vs. monopoly",
+        embed: "/projects/play-store-app-analysis/interactive/opportunity-matrix.html",
+        embedHeight: 620,
+        caption: "Every category plotted on three axes at once: how many apps compete for attention, how much demand exists per app, and how much of that demand the top 3 apps already own (bubble size). Defaults to every publisher; click \"Indie developers only\" in the legend to swap in the big-tech-excluded view.",
       },
       {
         title: "Four years on: category momentum is shifting",
         image: "/projects/play-store-app-analysis/chart-category-shift.png",
-        caption: "Comparing each category's share of indie listings in 2022 against 2026 isolates where independent publishing activity is actually moving, a momentum signal, not an installs one.",
+        caption: "Comparing each category's share of indie listings in 2022 against 2026 isolates where independent publishing activity is actually moving: a momentum signal, not an installs one.",
       },
       {
         title: "The business model changed underneath the store",
         image: "/projects/play-store-app-analysis/chart-business-model-shift.png",
         caption: "Free, ad-supported, and in-app-purchase shares all crept up from 2022 to 2026. Pure paid apps are now a rounding error at 2.3% of the catalogue.",
+      },
+      {
+        title: "Rating distribution: 2022 vs. 2026",
+        embed: "/projects/play-store-app-analysis/interactive/rating-distribution.html",
+        caption: "Normalized star-rating distributions for both eras, hover to compare bin heights directly. Read this as \"what's competitive on the store today\" rather than \"apps got better\": the 2026 scrape is biased toward live, currently-ranking survivors.",
+      },
+      {
+        title: "Every app in the 2026 catalogue, hover for the real name",
+        embed: "/projects/play-store-app-analysis/interactive/app-explorer.html",
+        embedHeight: 650,
+        caption: "All 11,176 apps, one dot each, positioned by installs and rating. Nothing is text-labeled on the chart itself so all of them stay visible; hover any dot for the real app name, developer, and category. Amber diamonds are big tech: 1.6% of the apps, 64% of the installs.",
+      },
+      {
+        title: "Popularity doesn't buy love",
+        embed: "/projects/play-store-app-analysis/interactive/ratings-vs-score.html",
+        embedHeight: 600,
+        caption: "Every app's rating count plotted against its star score. There's close to no correlation: apps with a handful of reviews are just as likely to sit at 4.5 stars as apps with millions. Rating volume is not a proxy for quality.",
       },
       {
         title: "Best and worst rated categories",
@@ -434,7 +458,7 @@ export const projects: Project[] = [
       {
         title: "Content rating skews heavily toward 'Everyone'",
         image: "/projects/play-store-app-analysis/chart-content-rating.png",
-        caption: "84.2% of the live 2026 catalogue is rated Everyone, with Teen a distant second at 9.0%, the store's center of gravity is mass-market, not niche or mature content.",
+        caption: "84.2% of the live 2026 catalogue is rated Everyone, with Teen a distant second at 9.0%: the store's center of gravity is mass-market, not niche or mature content.",
       },
       {
         title: "Revenue architecture across the biggest categories",
@@ -447,9 +471,26 @@ export const projects: Project[] = [
         caption: "Median price for paid apps nearly doubled, $1.99 in 2022 to $3.50 in 2026, even as the share of apps charging anything at all kept shrinking. The paid tier that survives looks like a deliberate niche, not a dying default.",
       },
       {
+        title: "Big tech holds 64% of 2026 installs, and it's still winner-take-most without them",
+        embed: "/projects/play-store-app-analysis/interactive/developer-lorenz.html",
+        embedHeight: 560,
+        caption: "Install inequality among developers. Grey is every developer, green is indie-only (click the legend to toggle). Strip big tech out and the Gini coefficient barely moves, 0.99 to 0.92 in 2026: a real indie winner-take-most dynamic, not just a big-tech artifact.",
+      },
+      {
+        title: "Top developers by total installs",
+        embed: "/projects/play-store-app-analysis/interactive/top-developers.html",
+        embedHeight: 600,
+        caption: "The largest publishers on the 2026 catalogue. Buttons in the top-right switch between the full publisher list and indie-only, since most developers aren't competing with the giants: 86% of indie developers have shipped exactly one app.",
+      },
+      {
         title: "A decade of publishing, cohort by cohort",
         image: "/projects/play-store-app-analysis/chart-release-trend.png",
-        caption: "Release volume and average rating by year, 2010–2021, from the 2022 archive. Publishing activity peaked years before the archive was collected and has been tapering in the most recent cohorts since.",
+        caption: "Release volume and average rating by year, 2010 to 2021, from the 2022 archive. Publishing activity peaked years before the archive was collected and has been tapering in the most recent cohorts since.",
+      },
+      {
+        title: "How recently have live apps been updated?",
+        embed: "/projects/play-store-app-analysis/interactive/update-recency.html",
+        caption: "Time since last update across the current live catalogue. 54% were touched within the last month; only 7% haven't been updated in over a year. An app still shipping updates is, at minimum, still worth someone's time.",
       },
       {
         title: "Same apps, different verdicts by country",
@@ -459,7 +500,13 @@ export const projects: Project[] = [
       {
         title: "Which categories dominate the curated charts",
         image: "/projects/play-store-app-analysis/chart-visibility.png",
-        caption: "Travel & Local, Education, and Games show up most often across every tracked top-grossing/top-selling chart position, outsized editorial placement independent of raw category size.",
+        caption: "Travel & Local, Education, and Games show up most often across every tracked top-grossing/top-selling chart position: outsized editorial placement independent of raw category size.",
+      },
+      {
+        title: "Keyword competitiveness: search volume vs. result crowding",
+        embed: "/projects/play-store-app-analysis/interactive/keyword-competitiveness.html",
+        embedHeight: 600,
+        caption: "Bubble size is the number of distinct apps competing for a search keyword; lower on the y-axis means buried deeper in results. Broad terms bury any one result under hundreds of competitors; narrow, intent-specific terms surface a much smaller field.",
       },
     ],
   },

@@ -170,10 +170,21 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                   {project.diagrams.map((d) => (
                     <div key={d.title}>
                       <h3 style={{ fontFamily: "var(--sans)", fontSize: 18, fontWeight: 600, color: "var(--ink)", marginBottom: 10 }}>{d.title}</h3>
-                      <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 18, position: "relative", maxWidth: d.imageMaxWidth ?? "none", marginInline: d.imageMaxWidth ? "auto" : undefined }}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={d.image} alt={d.title} style={{ width: "100%", display: "block" }} />
-                      </div>
+                      {d.embed ? (
+                        <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 18 }}>
+                          <iframe
+                            src={d.embed}
+                            title={d.title}
+                            loading="lazy"
+                            style={{ width: "100%", height: d.embedHeight ?? 560, border: "none", display: "block" }}
+                          />
+                        </div>
+                      ) : (
+                        <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 18, position: "relative", maxWidth: d.imageMaxWidth ?? "none", marginInline: d.imageMaxWidth ? "auto" : undefined }}>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={d.image} alt={d.title} style={{ width: "100%", display: "block" }} />
+                        </div>
+                      )}
                       <p style={{ fontSize: 15.5, color: "var(--ink)", lineHeight: 1.65, margin: 0 }}>{d.caption}</p>
                     </div>
                   ))}
