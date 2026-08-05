@@ -607,11 +607,11 @@ body {
   align-items: flex-start;
   justify-content: space-between;
   gap: 32px;
-  padding: 26px 14px;
+  padding: 12px 14px;
   margin: 0 -14px;
 }
 @media (max-width: 560px) {
-  .blog-row             { flex-direction: column; gap: 4px; padding: 20px 14px; }
+  .blog-row             { flex-direction: column; gap: 4px; padding: 10px 14px; }
   .blog-row-meta        { text-align: left; padding-top: 0; }
 }
 
