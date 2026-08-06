@@ -44,6 +44,7 @@ components/
   ProjectCard.tsx      # "use client" — homepage/listing card: image (or cat/dog-style split cardPreview) + title/tagline, whole card links to detail page
   Toc.tsx              # "use client" — blog post table of contents: fixed toggle button in the post's own header (not the global nav), opens a left-side panel (not full-screen), stays open until explicitly closed
   WaveBg.tsx           # "use client" — Three.js particle wave background, used on homepage hero only
+  JuliaHero.tsx        # "use client" — full-bleed canvas Julia-set fractal, absolutely positioned background behind the /blog hero title; cursor x maps across curated waypoint constants (rabbit, spiral, frost, filament, sparkle), idles through them when untouched
   FadeUp.tsx           # "use client" — IntersectionObserver scroll-reveal wrapper
   AnimatedSignature.tsx # Nav logo ("Ad" cursive signature)
 content/blog/          # MDX source files (frontmatter: title, date, description)
@@ -67,6 +68,9 @@ CSS variables defined in `:root` / `.dark` in `globals.css`:
 | `--faint`  | `#a09e9a`   | `#57534e`   |
 | `--line`   | `rgba(0,0,0,0.09)` | `rgba(255,255,255,0.09)` |
 | `--accent` | `#2563eb`   | `#3b82f6`   |
+| `--panel-glass` | `rgba(250,250,249,0.82)` | `rgba(26,25,24,0.72)` |
+
+`--panel-glass` is a translucent, `backdrop-filter: blur(...)`-paired variant of `--panel` for frosted-glass overlays sitting on top of busy/animated backgrounds (e.g. the text scrim on the `/blog` hero over `JuliaHero`).
 
 Dark theme background is `#121212` (Material Design's standard near-black), not pure `#000` — avoids harsh contrast/halation against light text. Still leans warm (stone/brown), not cold/blue-tinted.
 

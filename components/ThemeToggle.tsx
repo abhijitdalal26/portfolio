@@ -64,6 +64,11 @@ export function ThemeToggle() {
           { duration: 400, easing: "ease-in", pseudoElement: "::view-transition-old(root)", fill: "forwards" }
         );
       }
+    }).catch(() => {
+      // `ready` rejects if the browser aborts the transition (e.g. content
+      // mutating during capture, such as the blog page's animated canvas
+      // hero) — the circle-wipe animation just gets skipped; `finished`
+      // below still resolves/rejects independently and applies the theme.
     });
 
     // Sync next-themes and clean up the direction attribute after animation completes.
