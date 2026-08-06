@@ -147,15 +147,13 @@ Projects to feature on the site, in the order worked on (from `abhijitdalal26` G
 - [x] `movie-vector-galaxy` — has `papers` (Sentence-BERT, UMAP, Multilingual SBERT).
 - [x] `smart-agriculture-advisory-system` — Raspberry Pi IoT + XGBoost + OpenClaw. Has `openclaw` section (live Telegram bot screenshot).
 - [x] `autonomous-racing-using-rl` — RL agents (PPO). `heroVideo` (real Unity kart recording, not a static hero image). Has `diagrams` (Gymnasium checkpoint progression triptych + reward/entropy curves + real Unity Editor/console/profiling captures, all pulled from the project's own `images/` dir, not generic screenshots) + `architectureSteps` (exact PPO hyperparams from the repo's `kart_config.yaml`) + `papers` (PPO, Unity ML-Agents).
+- [x] `harry-potter-gpt` — nanoGPT-from-scratch GPT-2, taken through pretraining/SFT/DPO. Has `diagrams` (design/build-plan images) + `architectureSteps` (exact transformer spec) + `papers` (Attention Is All You Need, InstructGPT, DPO).
 - [x] `mcp-audit` — MCP server security audit tool.
 - [x] `bookscroller` (Skrolla) — TikTok-style book discovery. `heroVideo` is a real device screen recording (`public/projects/bookscroller/demo.mp4`, re-encoded to constant 30fps + faststart with ffmpeg — the raw iPhone screen recording was variable-frame-rate and stalled indefinitely in Chrome's `<video>` element); `logo`/`thumbnail` both point at the app icon since the hero slot is now the video, not the icon.
 - [x] `skydrift` — solo flying sim built on top of the open-source `birds.cafe` (github.com/kanavtwtgg/birds.cafe), credited via a `links` entry. Uses `heroEmbed` (first project to do so) pointed at the live Cloudflare Pages deployment instead of a static hero image/video. `status: "done"` (not actively being worked on). Copy deliberately only covers what's live in v1 (solo flight + island biomes) — the repo also has a real-time multiplayer/stranger-chat layer, but it's disabled for the v1 launch, so it's left out of the write-up rather than describing an unshipped feature.
+- [x] `play-store-app-analysis` — Play Store market research (2022 archive + fresh 2026 scrape). Has 19 real `diagrams` (static + interactive Plotly embeds) + `papers`/`links` to the Kaggle datasets/notebook.
+- [x] `projects-wiki` — markdown-based persistent memory/wiki system for working with LLMs across sessions (`RICKPRIME.md`/`MORTY.md`/`portal` command catalog). `order: 6`, no `diagrams`/`architectureSteps` (nothing to benchmark or diagram — it's pure workflow/docs tooling), just `story`/`howItWorks`.
 
-**Remaining — Timeline (status: "done"), oldest first:**
-- [ ] `harry-potter-gpt` — nanoGPT from scratch
-- [ ] `projects-wiki`
-- [ ] `play-store-app-analysis`
-
-Note: `bookscroller` (Skrolla) is the only remaining `status: "current"` project.
+Every project currently in `lib/projects.ts` has a full write-up. `bookscroller` (Skrolla) is the only remaining `status: "current"` project (still being built out, not yet at final content).
 
 When picking up the next one: ask what images/diagrams the user has ready in `public/projects/<slug>/` (or check what's already there), write `story` + `howItWorks` following the two-audience split above, and check if a real model/architecture file exists in the project's own GitHub repo before writing any specifics — pull exact values (layer configs, hyperparameters) from there rather than guessing.
