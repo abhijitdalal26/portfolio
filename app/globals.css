@@ -128,6 +128,10 @@ body {
 /* ── Marquee section labels ─────────────────────────── */
 .marquee-label { padding: 10px 48px 0; }
 
+/* ── Blog hero (JuliaHero background + title panel) ──────── */
+.blog-hero       { min-height: clamp(360px, 52vh, 520px); }
+.blog-hero-inner { padding-top: 120px; padding-bottom: 44px; }
+
 @media (max-width: 720px) {
   .page-wrap    { padding: 0 20px; }
   .grid-2       { grid-template-columns: 1fr; }
@@ -136,6 +140,8 @@ body {
   .marquee-label{ padding: 10px 20px 0; }
   .about-main   { padding-top: 40px; padding-bottom: 40px; }
   .about-social { justify-content: center; }
+  .blog-hero       { min-height: clamp(220px, 32vh, 300px); }
+  .blog-hero-inner { padding-top: 44px; padding-bottom: 24px; }
 }
 
 /* ── Hover helpers (CSS-only, usable from Server Components) ── */

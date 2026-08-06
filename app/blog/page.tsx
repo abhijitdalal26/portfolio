@@ -17,14 +17,13 @@ export default function Blog() {
         style={{
           position: "relative",
           overflow: "hidden",
-          minHeight: "clamp(360px, 52vh, 520px)",
           display: "flex",
           alignItems: "flex-end",
         }}
       >
         <JuliaHero />
 
-        <div className="page-wrap" style={{ position: "relative", zIndex: 1, width: "100%", paddingBottom: 44, paddingTop: 120 }}>
+        <div className="page-wrap blog-hero-inner" style={{ position: "relative", zIndex: 1, width: "100%" }}>
           <div
             className="blog-hero-scrim"
             style={{
