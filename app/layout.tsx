@@ -6,11 +6,37 @@ import { Providers } from "@/components/Providers";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
+const title = { template: "%s | Abhijit Dalal", default: "Abhijit Dalal" };
+const description = "I build apps and study how intelligence works. Engineer from India.";
+const siteUrl = "https://abhijitdalal.vercel.app";
+
 export const metadata: Metadata = {
-  title: { template: "%s | Abhijit Dalal", default: "Abhijit Dalal" },
-  description: "I build apps and study how intelligence works. Engineer from India.",
-  metadataBase: new URL("https://abhijitdalal.vercel.app"),
-  twitter: { card: "summary_large_image", creator: "@abhijitdalal_" },
+  title,
+  description,
+  metadataBase: new URL(siteUrl),
+  openGraph: {
+    title: "Abhijit Dalal",
+    description,
+    url: siteUrl,
+    siteName: "Abhijit Dalal",
+    images: [
+      {
+        url: `${siteUrl}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "Abhijit Dalal — Student, Builder, Engineer",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    creator: "@abhijitdalal_",
+    title: "Abhijit Dalal",
+    description,
+    images: [`${siteUrl}/og-image.png`],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
