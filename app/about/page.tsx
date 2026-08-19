@@ -100,7 +100,7 @@ export default function About() {
             {/* Right — photo, links, stack */}
             <div>
               <div className="about-photo" style={{ borderRadius: 16, overflow: "hidden", marginBottom: 20, border: "1px solid var(--line)", aspectRatio: "1/1" }}>
-                <Image src="/avatar-1.jpg" alt="Abhijit Dalal" width={240} height={240} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+                <Image src="/avatar-1.webp" alt="Abhijit Dalal" width={240} height={240} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
               </div>
 
               {/* Links — right below photo, same social-icon style as the homepage */}

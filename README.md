@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/readme/hero.jpg" alt="Abhijit Dalal — portfolio homepage" width="100%" />
+  <img src="public/readme/hero.webp" alt="Abhijit Dalal — portfolio homepage" width="100%" />
 </p>
 
 <h1 align="center">abhijit dalal / portfolio</h1>

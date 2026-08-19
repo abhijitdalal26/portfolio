@@ -48,9 +48,9 @@ export const projects: Project[] = [
     ],
     heroVideo: "/projects/pawvision/detecting-cat.mp4",
     heroVideoPortrait: true,
-    logo: "/projects/pawvision/logo.png",
+    logo: "/projects/pawvision/logo.webp",
     cardPreview: {
-      images: ["/projects/pawvision/cat.jpg", "/projects/pawvision/dog.jpg"],
+      images: ["/projects/pawvision/cat.webp", "/projects/pawvision/dog.webp"],
     },
     story: [
       "PawVision started as a classifier trained on the classic Kaggle Dogs vs Cats dataset and turned into a real Android app, the kind of project that shows what it actually takes to ship a model as something people can install and use, not just a notebook. It's also my first Android app, the project that got me into mobile development in the first place.",
@@ -71,12 +71,12 @@ export const projects: Project[] = [
       },
       {
         title: "Training and validation loss",
-        image: "/projects/pawvision/training-loss-curves.png",
+        image: "/projects/pawvision/training-loss-curves.webp",
         caption: "Training loss and validation loss (top and bottom rows) fall together and stay close the whole way through 50 epochs. If validation loss had started climbing back up while training loss kept dropping, that's the classic sign of overfitting, the model memorizing training images instead of learning the general pattern. Precision, recall, and mAP, the model's actual detection accuracy scores, all climb past 98% over the same run.",
       },
       {
         title: "Detections on unseen validation images",
-        image: "/projects/pawvision/validation-detections-grid.jpg",
+        image: "/projects/pawvision/validation-detections-grid.webp",
         caption: "A batch of real validation photos the model never saw during training, with its own predicted boxes and confidence scores drawn on top by the model itself. Almost every box lands in the 0.8–1.0 confidence range, including on trickier cases like partially visible pets and odd angles, which is what actually generalizing to new photos looks like, not just a number in a metrics table.",
       },
     ],
@@ -93,8 +93,8 @@ export const projects: Project[] = [
     github: "https://github.com/abhijitdalal26/ml-projects",
     liveDemo: "https://abhijitdalal26.github.io/ml-projects/MNIST/",
     liveDemoLabel: "Try the Live Demo",
-    heroImage: "/projects/ml-projects/mnist-demo.png",
-    thumbnail: "/projects/ml-projects/intro.png",
+    heroImage: "/projects/ml-projects/mnist-demo.webp",
+    thumbnail: "/projects/ml-projects/intro.webp",
     story: [
       "Draw a digit on the canvas and a CNN trained on MNIST predicts it in real time, running entirely on your device via TensorFlow.js. The model was trained in Keras and converted to a browser-friendly format, so there's no server involved. The same weights that ran in the notebook are doing inference right in your tab.",
     ],
@@ -108,7 +108,7 @@ export const projects: Project[] = [
     diagrams: [
       {
         title: "The MNIST CNN architecture",
-        image: "/projects/ml-projects/MNIST-arcitecture.jpg",
+        image: "/projects/ml-projects/MNIST-arcitecture.webp",
         caption: "The general shape: convolution + max-pooling blocks that shrink the image down while learning visual patterns, followed by fully-connected layers that make the final call. The real model follows the same shape, with two 32-filter convolutions before the first pooling step and a 64-filter convolution before the second, dropout after each pooling step so it can't just memorize the training set, then a 128-unit fully-connected layer feeding a final layer of 10 numbers, one confidence score per digit, that's read off as the predicted digit.",
       },
     ],
@@ -143,7 +143,7 @@ export const projects: Project[] = [
       { label: "Multilingual SBERT Paper", href: "https://arxiv.org/abs/2004.09813" },
     ],
     heroVideo: "/projects/movie-vector-galaxy/demo.mp4",
-    heroImage: "/projects/movie-vector-galaxy/intro.png",
+    heroImage: "/projects/movie-vector-galaxy/intro.webp",
     story: [
       "Most recommendation engines just show you \"other people who liked X also liked Y.\" Movie Vector Galaxy takes a more visual, more honest approach to why two movies are actually similar: every movie is a glowing point in 3D space, and the distance between two points is a direct measure of how similar their stories are. Fly through it and you can watch entire genres cluster into their own regions, a Bollywood cluster here, an anime cluster there, a knot of dark psychological thrillers off on its own, without a single one of them being labeled by hand.",
       "The trick behind it is something called an embedding. An AI language model reads each movie's plot, cast, director and genres and converts all of that into a single list of numbers, a coordinate. Movies about similar things end up with similar coordinates, the same way \"king\" and \"queen\" end up near each other in a language model's vocabulary. Those coordinates then get compressed down to three dimensions so they can be rendered as an actual point in space, and that's what turns into the galaxy you see in the video above.",
@@ -176,7 +176,7 @@ export const projects: Project[] = [
       { label: "InstructGPT Paper", href: "https://arxiv.org/abs/2203.02155" },
       { label: "DPO Paper", href: "https://arxiv.org/abs/2305.18290" },
     ],
-    heroImage: "/projects/harry-potter-gpt/hero.png",
+    heroImage: "/projects/harry-potter-gpt/hero.webp",
     story: [
       "Harry Potter GPT started less as \"let's build a Harry Potter chatbot\" and more as a question I kept getting stuck on: what actually happens, mechanically, between typing a question and getting an answer out of something like ChatGPT? The Harry Potter books were really just the excuse, training data that's fun to sample from while learning how a modern language model actually gets built, stage by stage, starting from a network that knows nothing and ending at something aligned to a preference.",
       "The original idea behind picking Harry Potter specifically was wanting an AI that talks about the books the way a genuinely into-it fan would: not roleplaying as a specific character, but an outside voice that knows the story well enough to ask questions back, notice details you missed, and keep a conversation going instead of just answering and going quiet.",
@@ -201,17 +201,17 @@ export const projects: Project[] = [
     diagrams: [
       {
         title: "The full companion architecture (as designed)",
-        image: "/projects/harry-potter-gpt/diagram1.png",
+        image: "/projects/harry-potter-gpt/diagram1.webp",
         caption: "The end-to-end vision: a base model taken through fine-tuning and DPO alignment, then wrapped with long-term user memory and a retrieval layer over the books, serving a chat interface. The GPT-2 pipeline that actually got built and trained covers the top half of this diagram (base model through DPO alignment); the memory and retrieval layers at the bottom were part of the original stretch goal, scoped out in favor of finishing the GPT-2 pipeline properly.",
       },
       {
         title: "Three-phase build plan, step by step",
-        image: "/projects/harry-potter-gpt/diagram2.png",
+        image: "/projects/harry-potter-gpt/diagram2.webp",
         caption: "Phase 1 (steps 1–3) and Phase 2 (steps 4–6) are the parts that are actually done: nanoGPT fine-tuned on the HP books, then DPO-aligned via TRL, exactly as described above. The \"checkpoint: working GPT-2 companion\" line marks where the real, tested code stops. Phase 3 (steps 7–11, re-running the same recipe on a much larger model) was the original stretch goal but was deliberately dropped in favor of doing the GPT-2 version properly.",
       },
       {
         title: "The actual dev loop",
-        image: "/projects/harry-potter-gpt/diagram3.png",
+        image: "/projects/harry-potter-gpt/diagram3.webp",
         caption: "How the code itself got written: fork nanoGPT, write and sanity-check data prep / config changes locally on a laptop with no GPU needed, verify on a tiny slice of data (a few forward passes, loss should visibly drop within 10 steps), then push to GitHub and pull it into Kaggle/Colab only once it's known to work, so GPU time isn't spent debugging.",
       },
     ],
@@ -235,14 +235,14 @@ export const projects: Project[] = [
     tags: ["Raspberry Pi", "Arduino", "XGBoost", "FastAPI", "React", "IoT"],
     blurb: "A Raspberry Pi planted in a pot of soil that reads the plant's vitals and tells a farmer what to grow, how much water it needs, and what fertilizer to use, built with two teammates for Electronics Service to Society (ESS), a VJTI course under Prof. Rohin Daruwala.",
     github: "https://github.com/abhijitdalal26/smart-agriculture-advisory-system",
-    heroImage: "/projects/smart-agriculture-advisory-system/physical-setup.jpeg",
+    heroImage: "/projects/smart-agriculture-advisory-system/physical-setup.webp",
     screenshots: [
-      "/projects/smart-agriculture-advisory-system/dashboard-overview.png",
-      "/projects/smart-agriculture-advisory-system/dashboard-live-sensors.png",
-      "/projects/smart-agriculture-advisory-system/dashboard-ml-predictions.png",
-      "/projects/smart-agriculture-advisory-system/dashboard-weather-forecast.png",
-      "/projects/smart-agriculture-advisory-system/dashboard-historical-analytics.png",
-      "/projects/smart-agriculture-advisory-system/dashboard-manual-input.png",
+      "/projects/smart-agriculture-advisory-system/dashboard-overview.webp",
+      "/projects/smart-agriculture-advisory-system/dashboard-live-sensors.webp",
+      "/projects/smart-agriculture-advisory-system/dashboard-ml-predictions.webp",
+      "/projects/smart-agriculture-advisory-system/dashboard-weather-forecast.webp",
+      "/projects/smart-agriculture-advisory-system/dashboard-historical-analytics.webp",
+      "/projects/smart-agriculture-advisory-system/dashboard-manual-input.webp",
     ],
     papers: [
       { label: "Dataset: Crop Recommendation", href: "https://www.kaggle.com/datasets/atharvaingle/crop-recommendation-dataset" },
@@ -268,18 +268,18 @@ export const projects: Project[] = [
     diagrams: [
       {
         title: "System architecture: how every piece connects",
-        image: "/projects/smart-agriculture-advisory-system/architecture-diagram.jpeg",
+        image: "/projects/smart-agriculture-advisory-system/architecture-diagram.webp",
         caption: "The Raspberry Pi 4 (its quad-core Cortex-A72, green box) is the hub, powered over USB from a laptop/PC. It talks I2C directly to the BH1750 ambient light sensor and to the 16x2 LCD, and reads the DHT22 (air temp/humidity) and DS18B20 (soil temp, over 1-Wire) straight off its GPIO pins. Because the Pi itself can't read analog voltages, a USB link carries both data and 5V power down to an Arduino Uno, which exists purely to bridge the two genuinely analog sensors, a capacitive soil moisture probe and a pH-4502C probe, into digital values the rest of the system can use. That same Arduino also drives a small SPI color TFT locally, so the moisture and pH numbers are visible right at the pot without needing the web dashboard. In short: the Pi owns the digital sensors, the display, and the ML inference; the Arduino's only job is being a dedicated analog-to-digital bridge for the two sensors that need one.",
       },
       {
         title: "Full wiring schematic",
-        image: "/projects/smart-agriculture-advisory-system/hardware-circuit-diagram.png",
+        image: "/projects/smart-agriculture-advisory-system/hardware-circuit-diagram.webp",
         caption: "The exact circuit schematic behind the block diagram above: the BH1750 and the PCF8574-backed 16x2 LCD on the Pi's I2C bus, the DHT22 on a GPIO pin, RASTX/RASRX serial lines carrying the Arduino's moisture and pH readings back to the Pi, and the Arduino's own SPI lines (MOSI/MISO/SCK/CS/DC/RST) driving the local TFT.",
       },
     ],
     openclaw: {
       title: "OpenClaw agent, live on Telegram",
-      image: "/projects/smart-agriculture-advisory-system/telegram-bot-chat.jpeg",
+      image: "/projects/smart-agriculture-advisory-system/telegram-bot-chat.webp",
       imageMaxWidth: 320,
       caption: "The bot, KrishiMitra, running on OpenClaw directly on the Pi. Asked \"How is the farm\", it doesn't return a canned template, it pulls the actual live sensor values (air temp, humidity, soil temp, soil moisture, pH, light) at that moment, flags what's actually wrong (soil moisture reading a critical 0.0%), and reasons about the likely cause using the escalation rules in its AGENTS.md, correctly inferring the Arduino was probably disconnected rather than just reporting a scary number at face value.",
     },
@@ -294,7 +294,7 @@ export const projects: Project[] = [
     tags: ["Markdown", "Obsidian", "LLM Tooling", "CLI"],
     blurb: "A docs-first workspace that turns messy notes into a maintained project wiki an LLM can actually keep up to date, so you stop re-explaining the same project from scratch every new chat.",
     github: "https://github.com/abhijitdalal26/projects-wiki",
-    heroImage: "/projects/projects-wiki/screenshot.png",
+    heroImage: "/projects/projects-wiki/screenshot.webp",
     story: [
       "Every long-running project with an LLM eventually runs into the same wall: the chat forgets everything the moment it ends, so you re-explain the same background, the same decisions, the same half-finished plans, over and over. Projects Wiki is my answer to that problem, a plain folder of markdown files that acts as a maintained \"project brain\" instead of disposable chat history.",
       "The idea is to treat context like a codebase instead of a conversation. You dump raw material, notes, screenshots, transcripts, half-formed ideas, into a `raw/` folder for a project, and an LLM's job is to read that material and distill it into clean, current wiki pages, the same way you'd refactor messy code into a clean module. The next session doesn't start from zero; it starts by reading the wiki.",
@@ -320,7 +320,7 @@ export const projects: Project[] = [
     blurb: "A car that learned to drive by crashing into walls thousands of times and slowly figuring out how not to. No lines of steering code, just trial, error, and a reward signal, first in 2D, then scaled up into a real Unity go-kart.",
     github: "https://github.com/abhijitdalal26/autonomous-racing-using-rl",
     heroVideo: "/projects/autonomous-racing-using-rl/demo.mp4",
-    thumbnail: "/projects/autonomous-racing-using-rl/hero.png",
+    thumbnail: "/projects/autonomous-racing-using-rl/hero.webp",
     story: [
       "This project builds a driving policy using reinforcement learning instead of writing any explicit steering logic, in two stages: first a 2D agent trained in Gymnasium's CarRacing-v3 environment, then a 3D agent trained inside a Unity go-kart simulation with real physics. Both are trained with PPO (Proximal Policy Optimization), learning purely from a reward for staying on track and a penalty for crashing, no hand-coded rules for when to turn or brake.",
       "It started small and 2D. Using Gymnasium's CarRacing-v3 environment, the car begins as a blank slate that only sees a top-down camera view of the track and has no idea what steering or gas even means. Early on it just spins in circles and drives off the road within seconds. Using an algorithm called PPO (Proximal Policy Optimization), it tries thousands of small variations of its own driving, keeps whatever recently scored higher, and slowly tightens up its behavior over roughly a million and a half timesteps until it's taking corners cleanly and holding the track. That's phase one, worked all the way through: reward, watch, retrain, repeat.",
@@ -337,35 +337,35 @@ export const projects: Project[] = [
     diagrams: [
       {
         title: "Phase 1, checkpoint 0032: driving blind",
-        image: "/projects/autonomous-racing-using-rl/gym-early.jpg",
+        image: "/projects/autonomous-racing-using-rl/gym-early.webp",
         caption: "An early PPO checkpoint on CarRacing-v3. At this point the policy has barely started training, so it drifts off the asphalt almost immediately and has no real notion of \"steer toward the road.\"",
         imageMaxWidth: 480,
       },
       {
         title: "Phase 1, checkpoint 0142: learning to correct",
-        image: "/projects/autonomous-racing-using-rl/gym-mid.jpg",
+        image: "/projects/autonomous-racing-using-rl/gym-mid.webp",
         caption: "A mid-training checkpoint. The faint arcs behind the car are its own recent trajectory, and it's now visibly overcorrecting through a turn rather than driving straight off, evidence the reward signal for staying on-track is starting to shape its steering.",
         imageMaxWidth: 480,
       },
       {
         title: "Phase 1, checkpoint 0273: holding the line",
-        image: "/projects/autonomous-racing-using-rl/gym-solved.jpg",
+        image: "/projects/autonomous-racing-using-rl/gym-solved.webp",
         caption: "A late checkpoint, tracking straight down the center of the road into an upcoming corner. This is the same policy architecture as the first image, just a lot more PPO updates later, going from spinning out on straightaways to holding a clean racing line.",
         imageMaxWidth: 480,
       },
       {
         title: "Gymnasium: mean episode reward",
-        image: "/projects/autonomous-racing-using-rl/reward-curve.png",
+        image: "/projects/autonomous-racing-using-rl/reward-curve.webp",
         caption: "Mean reward per episode over 1.5M training steps. It climbs from around -50 to roughly 800 by step 600K, dips during a stretch where PPO's exploration bonus temporarily pushes it to try riskier lines, then recovers and peaks above 800 again by the end of training, more or less what a healthy (if slightly noisy) PPO run is supposed to look like.",
       },
       {
         title: "Gymnasium: entropy loss",
-        image: "/projects/autonomous-racing-using-rl/entropy-loss.png",
+        image: "/projects/autonomous-racing-using-rl/entropy-loss.webp",
         caption: "Entropy measures how random the policy's action choices still are. It rises early on as PPO's entropy bonus deliberately encourages exploring different driving lines, then falls steadily for the rest of training as the car commits more and more confidently to specific steering decisions instead of guessing.",
       },
       {
         title: "Unity: four karts training in parallel",
-        image: "/projects/autonomous-racing-using-rl/hero.png",
+        image: "/projects/autonomous-racing-using-rl/hero.webp",
         caption: "The actual Unity Editor scene mid-training: four karts (Kart_AI through Kart_AI (3)) running identical copies of the same oval track at once, each firing its own fan of raycasts (the white lines) out to sense the road edge. Every kart's experience feeds into one shared PPO policy, which is what let a single 1M-step run do the work of four separate ones.",
       },
       {
@@ -375,12 +375,12 @@ export const projects: Project[] = [
       },
       {
         title: "Unity: reward across saved checkpoints",
-        image: "/projects/autonomous-racing-using-rl/checkpoint-rewards.png",
+        image: "/projects/autonomous-racing-using-rl/checkpoint-rewards.webp",
         caption: "Reward at the three ONNX checkpoints exported during the run (250K, 500K, and 750K steps). It isn't a clean monotonic climb, it peaks around the 500K-step checkpoint and dips slightly by 750K, a reminder that PPO training isn't guaranteed to improve step over step, which is exactly why checkpointing and picking the best snapshot afterward matters.",
       },
       {
         title: "Unity: where the training time actually went",
-        image: "/projects/autonomous-racing-using-rl/runtime-breakdown.png",
+        image: "/projects/autonomous-racing-using-rl/runtime-breakdown.webp",
         caption: "A profile of the 1M-step run's wall-clock time. Stepping the Unity environment itself (env_step, physics + rendering four karts) ate roughly 3,000 of the run's ~3,400 seconds, versus about 411 seconds spent actually advancing the PPO trainer (the gradient updates). The bottleneck was Unity simulating the world, not the neural network learning from it.",
       },
     ],
@@ -414,7 +414,7 @@ export const projects: Project[] = [
       { label: "Kaggle Notebook", href: "https://www.kaggle.com/code/abhijitdalal26/google-play-store-app-data-analysis-2026" },
       { label: "Kaggle Dataset (2022 archive, 3.45M apps)", href: "https://www.kaggle.com/datasets/tapive/google-play-apps-and-games" },
     ],
-    heroImage: "/projects/play-store-app-analysis/logo.png",
+    heroImage: "/projects/play-store-app-analysis/logo.webp",
     story: [
       "This project sits on two datasets at very different scales: a public 2022 archive of 3.45 million Play Store apps from 1.14 million developers, used as the long-run baseline, and a fresh 2026 snapshot I scraped myself, 11,176 live apps across ten genuinely different storefronts (US, India, Brazil, Indonesia, Mexico, the UK, Germany, Japan, South Korea, the Philippines). The genre taxonomy matches almost exactly between the two, which is what makes a real 2022-to-2026 comparison possible instead of just two disconnected snapshots.",
       "Everything below is grouped so the chart and the finding it supports sit together: skim the titles, read the caption under whichever one catches your eye.",
@@ -430,12 +430,12 @@ export const projects: Project[] = [
     diagrams: [
       {
         title: "A store of 3.45 million apps, run by a handful of categories",
-        image: "/projects/play-store-app-analysis/chart-category-volume-2022.png",
+        image: "/projects/play-store-app-analysis/chart-category-volume-2022.webp",
         caption: "Education alone carries 386,518 apps in the 2022 archive. The top handful of categories (Education, Business, Tools, Music & Audio, Entertainment) absorb a disproportionate share of everything ever published.",
       },
       {
         title: "Where big tech already owns the category",
-        image: "/projects/play-store-app-analysis/chart-bigtech-dominance.png",
+        image: "/projects/play-store-app-analysis/chart-bigtech-dominance.webp",
         caption: "In Travel & Local, big tech and pre-installed publishers alone hold 78.6% of all installs: one or two players with a structural head start, not a crowded market. This is the reason every competition metric in the analysis excludes them.",
       },
       {
@@ -446,12 +446,12 @@ export const projects: Project[] = [
       },
       {
         title: "Four years on: category momentum is shifting",
-        image: "/projects/play-store-app-analysis/chart-category-shift.png",
+        image: "/projects/play-store-app-analysis/chart-category-shift.webp",
         caption: "Comparing each category's share of indie listings in 2022 against 2026 isolates where independent publishing activity is actually moving: a momentum signal, not an installs one.",
       },
       {
         title: "The business model changed underneath the store",
-        image: "/projects/play-store-app-analysis/chart-business-model-shift.png",
+        image: "/projects/play-store-app-analysis/chart-business-model-shift.webp",
         caption: "Free apps went from 96.9% to 97.7% of the catalogue, and pure paid apps are now a rounding error at 2.3%. Purely free is a minority strategy today (29.7%): hybrid ads-plus-in-app-purchases (29.2%) and IAP-only (24.1%) between them define how most current apps actually make money.",
       },
       {
@@ -473,22 +473,22 @@ export const projects: Project[] = [
       },
       {
         title: "Best and worst rated categories",
-        image: "/projects/play-store-app-analysis/chart-best-worst-rated.png",
+        image: "/projects/play-store-app-analysis/chart-best-worst-rated.webp",
         caption: "Word (4.49★ average) sits at the top of the 2026 catalogue, Beauty (2.81★) at the bottom, minimum 15 apps each. Utility-first categories tend to out-rate categories where user expectations are harder to meet consistently.",
       },
       {
         title: "Content rating skews heavily toward 'Everyone'",
-        image: "/projects/play-store-app-analysis/chart-content-rating.png",
+        image: "/projects/play-store-app-analysis/chart-content-rating.webp",
         caption: "84.2% of the live 2026 catalogue is rated Everyone, with Teen a distant second at 9.0%: the store's center of gravity is mass-market, not niche or mature content.",
       },
       {
         title: "Revenue architecture across the biggest categories",
-        image: "/projects/play-store-app-analysis/chart-monetization-mix.png",
+        image: "/projects/play-store-app-analysis/chart-monetization-mix.webp",
         caption: "Monetization model share (purely free, ads-only, IAP-only, hybrid, paid) across the ten largest 2026 categories. Games and entertainment lean hard into hybrid ads-plus-IAP; utilities skew toward ads-only or IAP-only.",
       },
       {
         title: "What's left of paid apps costs more now",
-        image: "/projects/play-store-app-analysis/chart-price-distribution.png",
+        image: "/projects/play-store-app-analysis/chart-price-distribution.webp",
         caption: "Median price for paid apps nearly doubled, $1.99 in 2022 to $3.50 in 2026, even as the share of apps charging anything at all kept shrinking. The paid tier that survives looks like a deliberate niche, not a dying default.",
       },
       {
@@ -505,7 +505,7 @@ export const projects: Project[] = [
       },
       {
         title: "A decade of publishing, cohort by cohort",
-        image: "/projects/play-store-app-analysis/chart-release-trend.png",
+        image: "/projects/play-store-app-analysis/chart-release-trend.webp",
         caption: "Release volume and average rating by year, 2010 to 2021, from the 2022 archive. Publishing activity peaked years before the archive was collected and has been tapering in the most recent cohorts since.",
       },
       {
@@ -515,12 +515,12 @@ export const projects: Project[] = [
       },
       {
         title: "Same apps, different verdicts by country",
-        image: "/projects/play-store-app-analysis/chart-score-by-country.png",
+        image: "/projects/play-store-app-analysis/chart-score-by-country.webp",
         caption: "The identical 2026 catalogue, scored across ten localized storefronts: US users rate most generously (3.80★ average), Japan the toughest (3.16★), a pure localization effect worth remembering before treating any single region's rating as universal.",
       },
       {
         title: "Which categories dominate the curated charts",
-        image: "/projects/play-store-app-analysis/chart-visibility.png",
+        image: "/projects/play-store-app-analysis/chart-visibility.webp",
         caption: "Travel & Local, Education, and Games show up most often across every tracked top-grossing/top-selling chart position: outsized editorial placement independent of raw category size.",
       },
       {
@@ -545,7 +545,7 @@ export const projects: Project[] = [
       { label: "Indirect Prompt Injection Paper", href: "https://arxiv.org/abs/2302.12173" },
       { label: "Prompt Injection Taxonomy Paper", href: "https://arxiv.org/abs/2306.05499" },
     ],
-    heroImage: "/projects/mcp-audit/face.png",
+    heroImage: "/projects/mcp-audit/face.webp",
     screenshots: ["/projects/mcp-audit/diagram.svg"],
     story: [
       "When you connect an AI assistant like Claude Desktop or Cursor to a tool through MCP (Model Context Protocol), you're handing that tool a key to your machine. It might get access to your filesystem, your shell, your browser, or your API keys. Most people copy a config snippet from a GitHub README, paste it in, and never look at it again. MCPAudit exists to show what's actually hiding in those configs.",
@@ -574,8 +574,8 @@ export const projects: Project[] = [
     github: "",
     liveDemo: "https://skrolla.vercel.app/",
     liveDemoLabel: "Visit Skrolla",
-    logo: "/projects/bookscroller/logo.png",
-    thumbnail: "/projects/bookscroller/logo.png",
+    logo: "/projects/bookscroller/logo.webp",
+    thumbnail: "/projects/bookscroller/logo.webp",
     heroVideo: "/projects/bookscroller/demo.mp4",
     heroVideoPortrait: true,
     story: [
@@ -608,7 +608,7 @@ export const projects: Project[] = [
       { label: "birds.cafe (original)", href: "https://github.com/kanavtwtgg/birds.cafe" },
     ],
     heroEmbed: "https://skydrift-e9e.pages.dev",
-    thumbnail: "/projects/skydrift/start-screen.png",
+    thumbnail: "/projects/skydrift/start-screen.webp",
     story: [
       "Skydrift is a small, quiet game about flying. You steer a bird in V-formation across an open ocean, watching the sky shift through day, night, and storm, with nothing to chase and no score to beat.",
       "It's built on top of birds.cafe, a lovely little open-source solo bird sim by kanavtwtgg, a click-and-relax toy with no missions, no scores, just wind and ocean. I used that flying feel as the starting point and spent most of my time on what wasn't there before: six hand-built island biomes worth actually flying toward and landing on, since the original just scattered uniform, decorative islands with no identity of their own.",

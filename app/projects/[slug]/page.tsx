@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { projects, getProject } from "@/lib/projects";
 import { FadeUp } from "@/components/FadeUp";
 import { ScreenshotCarousel } from "@/components/ScreenshotCarousel";
+import { ProjectVideo } from "@/components/ProjectVideo";
 
 function ArrowUpRight() {
   return (
@@ -100,7 +101,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
               <FadeUp>
                 <div className="hero-video-portrait" style={{ display: "flex", flexWrap: "wrap", gap: 32, marginBottom: 40, alignItems: "flex-start" }}>
                   <div className="hero-video-portrait-media" style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)" }}>
-                    <video src={project.heroVideo} controls playsInline style={{ width: "100%", display: "block" }} />
+                    <ProjectVideo src={project.heroVideo} poster={project.heroImage ?? project.thumbnail} />
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 18, flex: "1 1 240px", minWidth: 0 }}>
                     {project.story.map((p, i) => (
@@ -113,7 +114,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
               <>
                 <FadeUp>
                   <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 40 }}>
-                    <video src={project.heroVideo} controls playsInline style={{ width: "100%", display: "block" }} />
+                    <ProjectVideo src={project.heroVideo} poster={project.heroImage ?? project.thumbnail} />
                   </div>
                 </FadeUp>
 

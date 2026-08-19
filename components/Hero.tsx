@@ -86,7 +86,7 @@ export function Hero() {
                 }}
               >
                 <Image
-                  src="/abhijit.jpg"
+                  src="/abhijit.webp"
                   alt="Abhijit Dalal"
                   width={56}
                   height={56}

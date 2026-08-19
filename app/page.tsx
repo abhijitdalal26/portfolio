@@ -21,7 +21,7 @@ export default function Home() {
 
         <div className="hero-content">
           <div className="hero-avatar">
-            <Image src="/avatar-1.jpg" alt="Abhijit Dalal" width={112} height={112} priority
+            <Image src="/avatar-1.webp" alt="Abhijit Dalal" width={112} height={112} priority
               style={{ objectFit: "cover", objectPosition: "center top", width: "100%", height: "100%" }} />
           </div>
 
