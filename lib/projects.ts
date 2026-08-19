@@ -29,6 +29,7 @@ export type Project = {
   architectureSteps?: string[];
   liveDemo?: string;
   liveDemoLabel?: string;
+  playStore?: string;
 };
 
 export const projects: Project[] = [
@@ -574,6 +575,7 @@ export const projects: Project[] = [
     github: "",
     liveDemo: "https://skrolla.vercel.app/",
     liveDemoLabel: "Visit Skrolla",
+    playStore: "https://play.google.com/store/apps/details?id=com.skrolla.app",
     logo: "/projects/bookscroller/logo.webp",
     thumbnail: "/projects/bookscroller/logo.webp",
     heroVideo: "/projects/bookscroller/demo.mp4",
@@ -581,8 +583,8 @@ export const projects: Project[] = [
     story: [
       "A lot of people want to read more but never actually pick a book. They wait for something to grab them and it never does, because nothing is putting new books in front of their eyes the way a feed puts new videos in front of their eyes. Skrolla flips that. It looks like a short-form video feed and scrolls the same way, but instead of clips it's book covers, and instead of trying to hold your attention forever, its whole job is to spark enough curiosity that you go read the actual book.",
       "You scroll a feed of covers the way you'd scroll Reels or Shorts. Something catches your eye, you tap in, and you land in a chat with an AI about that book, spoiler free by default so it only gives you enough to get you curious, not enough to ruin the ending. If you want more, you can turn spoiler mode on and go as deep as you want. From there you can turn the conversation into a small saved card, a compact summary you can come back to later without rereading the whole chat.",
-      "The recommendation engine is the part I'm proudest of, since it's the piece with actual machine learning behind it rather than a simple genre filter. Every one of the roughly 106,000 titles in the catalog, pulled from Goodreads, NYT bestseller lists, and AniList for manga, gets turned into a 1152-dimensional vector: a CLIP model reads the cover art for visual style and genre, and a sentence transformer reads the title, author, and description for tone and theme, and the two get combined into one embedding per book. As you scroll and dwell, save, or skip titles, the app quietly updates a taste vector in that same space, and a Supabase pgvector search pulls back the next batch of books that are close to it. The feed is built to explore first and personalize second, so it keeps surfacing books outside what you already like instead of narrowing down to a small loop of the same five genres.",
-      "Right now Skrolla is in closed testing on Android. All nine screens, from onboarding to the For You feed to the chat and library, are built and working, and I'm in the middle of wiring the app over from bundled sample data to the real Supabase backend so the recommendations run on live data instead of a fixed local set.",
+      "The recommendation engine is the part I'm proudest of, since it's the piece with actual machine learning behind it rather than a simple genre filter. Every one of the roughly 106,000 titles in the catalog gets turned into a 1152-dimensional vector: a CLIP model reads the cover art for visual style and genre, and a sentence transformer reads the title, author, and description for tone and theme, and the two get combined into one embedding per book. As you scroll and dwell, save, or skip titles, the app quietly updates a taste vector in that same space, and a Supabase pgvector search pulls back the next batch of books that are close to it. The feed is built to explore first and personalize second, so it keeps surfacing books outside what you already like instead of narrowing down to a small loop of the same five genres.",
+      "Right now Skrolla is available on the Google Play Store for anyone to try. All nine screens, from onboarding to the For You feed to the chat and library, are built and working, and I'm in the middle of wiring the app over from bundled sample data to the real Supabase backend so the recommendations run on live data instead of a fixed local set.",
     ],
     howItWorks: [
       "Every book in the catalog gets embedded twice: a CLIP vision model reads the cover for visual style and genre, and a sentence transformer reads the title, author, genres, and description for theme and tone. The two embeddings are combined into one 1152-dimensional vector per book.",
@@ -602,12 +604,13 @@ export const projects: Project[] = [
     tags: ["Three.js", "JavaScript", "WebGL", "Procedural Generation"],
     blurb: "A relaxing browser flying sim where you steer a bird in V-formation over an open ocean through day, night, and storms. Built on top of the open-source birds.cafe prototype, with six new hand-built island biomes added to actually fly toward and land on.",
     github: "https://github.com/abhijitdalal26/skydrift",
-    liveDemo: "https://skydrift-e9e.pages.dev",
+    liveDemo: "https://skydrift-omega.vercel.app",
     liveDemoLabel: "Fly Skydrift",
     links: [
+      { label: "Play on Cloudflare (mirror)", href: "https://skydrift-e9e.pages.dev" },
       { label: "birds.cafe (original)", href: "https://github.com/kanavtwtgg/birds.cafe" },
     ],
-    heroEmbed: "https://skydrift-e9e.pages.dev",
+    heroImage: "/projects/skydrift/final-game.webp",
     thumbnail: "/projects/skydrift/start-screen.webp",
     story: [
       "Skydrift is a small, quiet game about flying. You steer a bird in V-formation across an open ocean, watching the sky shift through day, night, and storm, with nothing to chase and no score to beat.",
