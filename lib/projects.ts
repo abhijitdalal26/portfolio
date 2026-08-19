@@ -607,7 +607,6 @@ export const projects: Project[] = [
     liveDemo: "https://skydrift-omega.vercel.app",
     liveDemoLabel: "Fly Skydrift",
     links: [
-      { label: "Play on Cloudflare (mirror)", href: "https://skydrift-e9e.pages.dev" },
       { label: "birds.cafe (original)", href: "https://github.com/kanavtwtgg/birds.cafe" },
     ],
     heroImage: "/projects/skydrift/final-game.webp",
