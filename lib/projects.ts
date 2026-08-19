@@ -609,8 +609,9 @@ slug: "smart-agriculture-advisory-system",
     links: [
       { label: "birds.cafe (original)", href: "https://github.com/kanavtwtgg/birds.cafe" },
     ],
+    heroEmbed: "https://skydrift-omega.vercel.app",
     heroImage: "/projects/skydrift/final-game.webp",
-    thumbnail: "/projects/skydrift/start-screen.webp",
+    thumbnail: "/projects/skydrift/final-game.webp",
     story: [
       "Skydrift is a small, quiet game about flying. You steer a bird in V-formation across an open ocean, watching the sky shift through day, night, and storm, with nothing to chase and no score to beat.",
       "It's built on top of birds.cafe, a lovely little open-source solo bird sim by kanavtwtgg, a click-and-relax toy with no missions, no scores, just wind and ocean. I used that flying feel as the starting point and spent most of my time on what wasn't there before: six hand-built island biomes worth actually flying toward and landing on, since the original just scattered uniform, decorative islands with no identity of their own.",
