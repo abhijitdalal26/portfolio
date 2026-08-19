@@ -78,7 +78,6 @@ function buildLUT(iter: number, stops: Stop[]) {
 }
 
 const MAX_ITER = 130;
-const RENDER_W = 640;
 
 /**
  * Full-bleed animated background (sibling pattern to WaveBg) — the parent
@@ -109,6 +108,7 @@ export function JuliaHero() {
     if (!ctx) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = window.innerWidth <= 720;
 
     let aspect = 2;
     let lastW = 0, lastH = 0;
@@ -121,8 +121,13 @@ export function JuliaHero() {
       if (Math.abs(w - lastW) < 4 && Math.abs(h - lastH) < 4 && lastW !== 0) return;
       lastW = w; lastH = h;
       aspect = w / Math.max(1, h);
-      canvas!.width = RENDER_W;
-      canvas!.height = Math.round(RENDER_W / aspect);
+      // Render at a capped, viewport-proportional resolution — the canvas is
+      // CSS-scaled up anyway, and on mobile a full 640px-wide CPU fractal per
+      // frame is pure waste. Desktop: up to 720 wide. Mobile: ~75%.
+      const scale = isMobile ? 0.75 : 0.95;
+      const renderW = Math.round(Math.min(720, Math.max(300, w * scale)));
+      canvas!.width = renderW;
+      canvas!.height = Math.round(renderW / aspect);
     }
     resize();
     window.addEventListener("resize", resize);
@@ -155,11 +160,16 @@ export function JuliaHero() {
       return { x: lerp(a[0], b[0], lt), y: lerp(a[1], b[1], lt) };
     }
 
-    const start = waypointAt(0);
-    const current = { x: start.x, y: start.y };
+    const startWaypoint = waypointAt(0);
+    const current = { x: startWaypoint.x, y: startWaypoint.y };
     let idleT = 0;
-    let animId = 0;
+    let rafId = 0;
     let running = true;
+    // Mobile renders at a lower cadence (~25fps): the morph waypoints still
+    // advance every frame, so the animation plays at the same speed while the
+    // expensive per-pixel fractal recompute happens half as often.
+    const FRAME_MS = isMobile ? 40 : 16;
+    let lastFrame = 0;
 
     function render() {
       if (themeRef.current !== lutTheme) {
@@ -207,27 +217,61 @@ export function JuliaHero() {
       ctx!.putImageData(img, 0, 0);
     }
 
-    function tick() {
+    function frame(t = 0) {
+      rafId = 0;
       if (!running) return;
 
-      if (!reduceMotion) {
-        idleT += 0.00025;
-        const p = waypointAt(idleT);
-        current.x = p.x;
-        current.y = p.y;
+      if (reduceMotion) {
+        render();
+        return;
       }
 
-      render();
-      if (!reduceMotion) {
-        animId = requestAnimationFrame(tick);
+      idleT += 0.00025;
+      const p = waypointAt(idleT);
+      current.x = p.x;
+      current.y = p.y;
+
+      if (t - lastFrame >= FRAME_MS) {
+        lastFrame = t;
+        render();
       }
+      rafId = requestAnimationFrame(frame);
     }
 
-    tick();
+    function start() {
+      if (running) return;
+      running = true;
+      lastFrame = 0;
+      rafId = requestAnimationFrame(frame);
+    }
+    function stop() {
+      running = false;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+
+    rafId = requestAnimationFrame(frame);
+
+    // Pause the loop when the hero scrolls out of view or the tab is hidden —
+    // the heaviest thing on the blog page, especially on mobile.
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting && !document.hidden) start();
+        else stop();
+      }
+    }, { threshold: 0 });
+    io.observe(wrap);
+
+    function onVisibility() {
+      if (document.hidden) stop();
+      else start();
+    }
+    document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
-      running = false;
-      cancelAnimationFrame(animId);
+      stop();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("resize", resize);
     };
   }, []);

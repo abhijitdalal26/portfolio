@@ -16,13 +16,15 @@ export function WaveBg() {
     const container = containerRef.current;
     if (!container) return;
 
-    let animId: number;
     let cleanupFn: (() => void) | undefined;
 
     import("three").then((THREE) => {
       if (!containerRef.current) return;
 
-      const SEPARATION = 60, AMOUNTX = 70, AMOUNTY = 70;
+      const SEPARATION = 60;
+      const isMobile = window.innerWidth <= 720;
+      const AMOUNTX = isMobile ? 44 : 70;
+      const AMOUNTY = isMobile ? 44 : 70;
       let count = 0;
       let mouseX = 0, mouseY = 0;
       let halfW = window.innerWidth / 2;
@@ -81,7 +83,7 @@ export function WaveBg() {
       scene.add(particles);
 
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.domElement.style.position = "absolute";
       renderer.domElement.style.inset = "0";
@@ -104,8 +106,12 @@ export function WaveBg() {
       window.addEventListener("pointermove", onPointerMove);
       window.addEventListener("resize", onResize);
 
-      function animate() {
-        animId = requestAnimationFrame(animate);
+      let running = true;
+      let rafId = 0;
+
+      function frame() {
+        rafId = 0;
+        if (!running) return;
 
         camera.position.x += (mouseX - camera.position.x) * 0.05;
         camera.position.y += (200 - camera.position.y) * 0.05;
@@ -135,12 +141,43 @@ export function WaveBg() {
 
         renderer.render(scene, camera);
         count += 0.05;
+
+        rafId = requestAnimationFrame(frame);
       }
 
-      animate();
+      function start() {
+        if (running) return;
+        running = true;
+        rafId = requestAnimationFrame(frame);
+      }
+      function stop() {
+        running = false;
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+
+      rafId = requestAnimationFrame(frame);
+
+      // Pause the loop when the hero scrolls out of view or the tab is hidden
+      // (mobile keeps jank-free scrolling and saves battery).
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting && !document.hidden) start();
+          else stop();
+        }
+      }, { threshold: 0 });
+      io.observe(container);
+
+      function onVisibility() {
+        if (document.hidden) stop();
+        else start();
+      }
+      document.addEventListener("visibilitychange", onVisibility);
 
       cleanupFn = () => {
-        cancelAnimationFrame(animId);
+        stop();
+        io.disconnect();
+        document.removeEventListener("visibilitychange", onVisibility);
         window.removeEventListener("pointermove", onPointerMove);
         window.removeEventListener("resize", onResize);
         renderer.dispose();
