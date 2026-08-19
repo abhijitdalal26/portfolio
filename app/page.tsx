@@ -79,7 +79,7 @@ export default function Home() {
         <FadeUp>
           <div style={{ marginBottom: 72, maxWidth: 600, position: "relative", paddingLeft: 28, borderLeft: "3px solid var(--accent)" }}>
             <p style={{ fontFamily: "var(--sans)", fontSize: "clamp(19px, 2.2vw, 24px)", lineHeight: 1.65, color: "var(--ink)", margin: 0, position: "relative" }}>
-              Hello, I&apos;m a final year engineer at VJTI, Mumbai. I love
+              Hello, I&apos;m a final year engineer student at VJTI, Mumbai. I love
               working with neural networks, training models, and solving
               real world problems.
             </p>
