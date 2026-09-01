@@ -382,9 +382,12 @@ body {
 }
 
 /* ── Project detail: portrait hero video row ───────────── */
-.hero-video-portrait-media { flex: 0 0 240px; max-width: 240px; }
-@media (max-width: 640px) {
-  .hero-video-portrait-media { flex: 1 1 100%; max-width: 320px; margin: 0 auto; }
+.hero-video-portrait { display: grid; grid-template-columns: 240px 1fr; gap: 22px; margin-bottom: 18px; align-items: stretch; }
+.hero-video-portrait-media { position: relative; overflow: hidden; border-radius: 16px; border: 1px solid var(--line); background: #0b0e14; min-height: 240px; line-height: 0; }
+@media (max-width: 720px) {
+  .hero-video-portrait { grid-template-columns: 1fr; }
+  .hero-video-portrait-media { min-height: 0; aspect-ratio: 392 / 850; max-width: 300px; margin: 0 auto; width: 100%; }
+  .hero-video-portrait-media video { position: static !important; inset: auto !important; width: 100% !important; height: auto !important; aspect-ratio: 392 / 850; object-fit: cover; }
 }
 
 /* ── Aurora background animations ─────────────────────── */

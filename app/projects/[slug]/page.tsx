@@ -50,16 +50,15 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
 
   return (
     <div style={{ background: "var(--bg)", minHeight: "100vh" }}>
-      <div className="page-wrap" style={{ paddingTop: 48, paddingBottom: 88 }}>
+      <div className="page-wrap" style={{ paddingTop: 36, paddingBottom: 88 }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
 
           <FadeUp>
+            <a href="/projects" style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 14, fontWeight: 500, color: "var(--sub)", textDecoration: "none", marginBottom: 22 }}>
+              <svg width={16} height={16} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 12L6 8l4-4" /></svg>
+              Back to projects
+            </a>
             <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "10px 14px", marginBottom: 16 }}>
-              {project.logo && (
-                <div style={{ width: 44, height: 44, borderRadius: 12, overflow: "hidden", flexShrink: 0, border: "1px solid var(--line)" }}>
-                  <Image src={project.logo} alt="" width={44} height={44} priority style={{ objectFit: "cover", width: "100%", height: "100%" }} />
-                </div>
-              )}
               <h1 style={{ fontFamily: "var(--sans)", fontSize: "clamp(34px, 5.5vw, 54px)", letterSpacing: "-0.04em", lineHeight: 1.02, fontWeight: 700, margin: 0 }}>
                 {project.title}
               </h1>
@@ -71,11 +70,16 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             </div>
             <p style={{ fontSize: 16, color: "var(--ink)", maxWidth: 560, lineHeight: 1.65, marginBottom: 24 }}>{project.blurb}</p>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: project.liveDemo ? 20 : 40 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
               {project.tags.map((t) => <span key={t} className="chip">{t}</span>)}
             </div>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center", marginBottom: 40 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center", marginBottom: 36 }}>
+              {project.github && (
+                <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ padding: "10px 18px", fontSize: 14 }}>
+                  <GitHubIcon /> GitHub
+                </a>
+              )}
               {project.liveDemo && (
                 <a href={project.liveDemo} className="btn-primary">
                   {project.liveDemoLabel ?? "Try it: chat with the model"} <ArrowUpRight />
@@ -125,11 +129,11 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             project.heroVideoPortrait ? (
               <>
                 <FadeUp>
-                  <div className="hero-video-portrait" style={{ display: "flex", flexWrap: "wrap", gap: 22, marginBottom: 18, alignItems: "flex-start" }}>
-                    <div className="hero-video-portrait-media" style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "#0b0e14", flex: "0 0 260px", width: 260, maxWidth: "100%", aspectRatio: "392 / 850", alignSelf: "flex-start" }}>
-                      <ProjectVideo src={project.heroVideo} poster={project.heroVideoPoster ?? project.heroImage} portrait />
+                  <div className="hero-video-portrait">
+                    <div className="hero-video-portrait-media">
+                      <ProjectVideo src={project.heroVideo} poster={project.heroVideoPoster ?? project.heroImage} fill />
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 14, flex: "1 1 300px", minWidth: 260 }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 14, minWidth: 0, justifyContent: "center" }}>
                       {project.story.map((p, i) => (
                         <p key={i} style={{ fontSize: 15.5, lineHeight: 1.65, color: "var(--ink)" }}>{p}</p>
                       ))}
@@ -152,7 +156,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             ) : (
               <>
                 <FadeUp>
-                  <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 32 }}>
+                  <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 32, lineHeight: 0 }}>
                     <ProjectVideo src={project.heroVideo} poster={project.heroVideoPoster ?? project.heroImage} />
                   </div>
                 </FadeUp>
@@ -291,18 +295,15 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
 
           <FadeUp>
             <div style={{ borderTop: "1px solid var(--line)", paddingTop: 28 }}>
-              <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: project.papers?.length ? 20 : 0 }}>
-                {project.github && (
-                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn-ghost">
-                    <GitHubIcon /> GitHub
-                  </a>
-                )}
-                {project.links?.map((l) => (
-                  <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="btn-ghost">
-                    {l.label} <ArrowUpRight />
-                  </a>
-                ))}
-              </div>
+              {project.links && project.links.length > 0 && (
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: project.papers?.length ? 20 : 0 }}>
+                  {project.links.map((l) => (
+                    <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+                      {l.label} <ArrowUpRight />
+                    </a>
+                  ))}
+                </div>
+              )}
               {project.papers && project.papers.length > 0 && (
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 20px" }}>
                   {project.papers.map((p) => (
