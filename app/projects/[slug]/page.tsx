@@ -123,33 +123,59 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             </FadeUp>
           ) : project.heroVideo ? (
             project.heroVideoPortrait ? (
-              <FadeUp>
-                <div className="hero-video-portrait" style={{ display: "flex", flexWrap: "wrap", gap: 32, marginBottom: 40, alignItems: "flex-start" }}>
-                  <div className="hero-video-portrait-media" style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)" }}>
-                    <ProjectVideo src={project.heroVideo} poster={project.heroImage} />
+              <>
+                <FadeUp>
+                  <div className="hero-video-portrait" style={{ display: "flex", flexWrap: "wrap", gap: 22, marginBottom: 18, alignItems: "flex-start" }}>
+                    <div className="hero-video-portrait-media" style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "#0b0e14", flex: "0 0 260px", width: 260, maxWidth: "100%", aspectRatio: "392 / 850", alignSelf: "flex-start" }}>
+                      <ProjectVideo src={project.heroVideo} poster={project.heroVideoPoster ?? project.heroImage} portrait />
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 14, flex: "1 1 300px", minWidth: 260 }}>
+                      {project.story.map((p, i) => (
+                        <p key={i} style={{ fontSize: 15.5, lineHeight: 1.65, color: "var(--ink)" }}>{p}</p>
+                      ))}
+                    </div>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 18, flex: "1 1 240px", minWidth: 0 }}>
-                    {project.story.map((p, i) => (
-                      <p key={i} style={{ fontSize: 16, lineHeight: 1.75, color: "var(--ink)" }}>{p}</p>
-                    ))}
-                  </div>
-                </div>
-              </FadeUp>
+                </FadeUp>
+                {project.recommenderDemo && (
+                  <FadeUp>
+                    <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "14px 16px", borderRadius: 14, border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 28 }}>
+                      <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.6, color: "var(--ink)", flex: "1 1 260px", minWidth: 200 }}>
+                        Want to see how the recommender picks the next cover? Same 74k-book index, live taste clusters and scoring + MMR, running in your browser.
+                      </p>
+                      <a href={project.recommenderDemo} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ whiteSpace: "nowrap", flexShrink: 0 }}>
+                        {project.recommenderDemoLabel ?? "Open live recommender"} <ArrowUpRight />
+                      </a>
+                    </div>
+                  </FadeUp>
+                )}
+              </>
             ) : (
               <>
                 <FadeUp>
-                  <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 40 }}>
-                    <ProjectVideo src={project.heroVideo} poster={project.heroImage} />
+                  <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 32 }}>
+                    <ProjectVideo src={project.heroVideo} poster={project.heroVideoPoster ?? project.heroImage} />
                   </div>
                 </FadeUp>
 
                 <FadeUp>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 18, marginBottom: 40 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 28 }}>
                     {project.story.map((p, i) => (
-                      <p key={i} style={{ fontSize: 16, lineHeight: 1.75, color: "var(--ink)" }}>{p}</p>
+                      <p key={i} style={{ fontSize: 16, lineHeight: 1.7, color: "var(--ink)" }}>{p}</p>
                     ))}
                   </div>
                 </FadeUp>
+                {project.recommenderDemo && (
+                  <FadeUp>
+                    <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "16px 18px", borderRadius: 14, border: "1px solid var(--line)", background: "var(--panel)", marginBottom: 36 }}>
+                      <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.6, color: "var(--ink)", flex: "1 1 260px", minWidth: 200 }}>
+                        Want to see how the recommender picks the next cover? Same 74k-book index, live taste clusters and scoring + MMR, running in your browser.
+                      </p>
+                      <a href={project.recommenderDemo} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ whiteSpace: "nowrap", flexShrink: 0 }}>
+                        {project.recommenderDemoLabel ?? "Open live recommender"} <ArrowUpRight />
+                      </a>
+                    </div>
+                  </FadeUp>
+                )}
               </>
             )
           ) : (

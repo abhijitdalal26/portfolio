@@ -14,6 +14,7 @@ export type Project = {
   papers?: ProjectLink[];
   heroImage?: string;
   heroVideo?: string;
+  heroVideoPoster?: string;
   heroVideoPortrait?: boolean;
   heroEmbed?: string;
   thumbnail?: string;
@@ -30,6 +31,8 @@ export type Project = {
   liveDemo?: string;
   liveDemoLabel?: string;
   playStore?: string;
+  recommenderDemo?: string;
+  recommenderDemoLabel?: string;
 };
 
 export const projects: Project[] = [
@@ -284,31 +287,6 @@ slug: "smart-agriculture-advisory-system",
       imageMaxWidth: 320,
       caption: "The bot, KrishiMitra, running on OpenClaw directly on the Pi. Asked \"How is the farm\", it doesn't return a canned template, it pulls the actual live sensor values (air temp, humidity, soil temp, soil moisture, pH, light) at that moment, flags what's actually wrong (soil moisture reading a critical 0.0%), and reasons about the likely cause using the escalation rules in its AGENTS.md, correctly inferring the Arduino was probably disconnected rather than just reporting a scary number at face value.",
     },
-  },
-  {
-    slug: "projects-wiki",
-    title: "Projects Wiki",
-    tagline: "A Persistent Memory System for Working With LLMs",
-    order: 1,
-    status: "done",
-    kind: "Tools · Developer Workflow",
-    tags: ["Markdown", "Obsidian", "LLM Tooling", "CLI"],
-    blurb: "A docs-first workspace that turns messy notes into a maintained project wiki an LLM can actually keep up to date, so you stop re-explaining the same project from scratch every new chat.",
-    github: "https://github.com/abhijitdalal26/projects-wiki",
-    heroImage: "/projects/projects-wiki/screenshot.webp",
-    story: [
-      "Every long-running project with an LLM eventually runs into the same wall: the chat forgets everything the moment it ends, so you re-explain the same background, the same decisions, the same half-finished plans, over and over. Projects Wiki is my answer to that problem, a plain folder of markdown files that acts as a maintained \"project brain\" instead of disposable chat history.",
-      "The idea is to treat context like a codebase instead of a conversation. You dump raw material, notes, screenshots, transcripts, half-formed ideas, into a `raw/` folder for a project, and an LLM's job is to read that material and distill it into clean, current wiki pages, the same way you'd refactor messy code into a clean module. The next session doesn't start from zero; it starts by reading the wiki.",
-      "It's built around a bit of a Rick and Morty joke that turned out to be a genuinely useful mental model: a root file called `RICKPRIME.md` is the workspace's operating manual, read first in every session, and each individual project gets its own `MORTY.md`, a project-local operating card describing what the project is, what stage it's in, and what the LLM is allowed to touch. Shared knowledge that spans multiple projects lives in a `_citadel/` folder rather than being duplicated everywhere.",
-      "On top of that sits `portal`, a small catalog of markdown-defined commands (`new`, `open`, `log`, `check`, `bundle`, and more) that read less like a CLI tool and more like a set of instructions an LLM follows. Typing something like \"give me the recent log for harry-potter-gpt\" gets mapped to the closest matching portal command, and because the commands are just markdown files, anyone can add their own by writing a new `portal/<name>.md` and registering it in the index, no app code involved.",
-    ],
-    howItWorks: [
-      "The whole system is markdown and folder structure, no app, database, or server: `RICKPRIME.md` at the workspace root defines the directory layout, the required read order, and the core operations (`INIT`, `INGEST`, `QUERY`, `LINT`, `SUMMARIZE`) that any LLM session should follow.",
-      "Each project lives under `dimensions/<project>/` with two subfolders: `raw/` holds the original, unprocessed material (notes, dumps, screenshots, source docs), and `wiki/` holds the LLM-maintained distillation of that material, the actual project memory that stays current across sessions.",
-      "`MORTY.md` is the project-specific operating card inside each dimension: what the project is, what stage it's in, what the LLM is allowed to read, and any project-specific rules, so an LLM opening a project for the first time in a new session knows the ground rules immediately instead of guessing.",
-      "`portal/index.md` is the command catalog, with one markdown file per command (`open.md`, `log.md`, `bundle.md`, `check.md`, `new.md`, `list.md`) spelling out exactly what that command should read, check, or transform, and what it should hand back. Because `RICKPRIME.md` tells every session to load this catalog on boot, natural-language requests get mapped to the closest defined workflow without needing the exact command name.",
-      "Since it's just files, it pairs naturally with Obsidian for browsing and graph-viewing the wiki (the screenshot above is the actual graph of one of my own knowledge bases built this way) and with any CLI-based LLM, Gemini CLI, Claude Code, or similar, pointed at the workspace root, since the whole system is just an instruction set for whatever LLM reads it first.",
-    ],
   },
   {
     slug: "autonomous-racing-using-rl",
@@ -567,10 +545,10 @@ slug: "smart-agriculture-advisory-system",
     slug: "bookscroller",
     title: "Skrolla",
     tagline: "A TikTok Feed for Your Next Book",
-    order: 10,
-    status: "current",
+    order: 9,
+    status: "done",
     kind: "Mobile · Recommendation Systems",
-    tags: ["Kotlin", "Jetpack Compose", "CLIP", "Supabase", "Docker", "Android"],
+    tags: ["Kotlin", "Jetpack Compose", "SigLIP2 + bge-base (768-d)", "pgvector HNSW", "Supabase", "Android"],
     blurb: "A book discovery app that scrolls like TikTok but is built to do the opposite of what TikTok does. Swipe through book covers, get hooked on one, and it points you at the actual book instead of trying to keep you scrolling.",
     github: "",
     liveDemo: "https://skrolla.vercel.app/",
@@ -579,26 +557,20 @@ slug: "smart-agriculture-advisory-system",
     logo: "/projects/bookscroller/logo.webp",
     thumbnail: "/projects/bookscroller/logo.webp",
     heroVideo: "/projects/bookscroller/demo.mp4",
+    heroVideoPoster: "/projects/bookscroller/demo-poster.webp",
     heroVideoPortrait: true,
     story: [
       "A lot of people want to read more but never actually pick a book. They wait for something to grab them and it never does, because nothing is putting new books in front of their eyes the way a feed puts new videos in front of their eyes. Skrolla flips that. It looks like a short-form video feed and scrolls the same way, but instead of clips it's book covers, and instead of trying to hold your attention forever, its whole job is to spark enough curiosity that you go read the actual book.",
       "You scroll a feed of covers the way you'd scroll Reels or Shorts. Something catches your eye, you tap in, and you land in a chat with an AI about that book, spoiler free by default so it only gives you enough to get you curious, not enough to ruin the ending. If you want more, you can turn spoiler mode on and go as deep as you want. From there you can turn the conversation into a small saved card, a compact summary you can come back to later without rereading the whole chat.",
-      "The recommendation engine is the part I'm proudest of, since it's the piece with actual machine learning behind it rather than a simple genre filter. Every one of the roughly 106,000 titles in the catalog gets turned into a 1152-dimensional vector: a CLIP model reads the cover art for visual style and genre, and a sentence transformer reads the title, author, and description for tone and theme, and the two get combined into one embedding per book. As you scroll and dwell, save, or skip titles, the app quietly updates a taste vector in that same space, and a Supabase pgvector search pulls back the next batch of books that are close to it. The feed is built to explore first and personalize second, so it keeps surfacing books outside what you already like instead of narrowing down to a small loop of the same five genres.",
-      "Skrolla is available on the Google Play Store for anyone to try.",
     ],
-    howItWorks: [
-      "Every book in the catalog gets embedded twice: a CLIP vision model reads the cover for visual style and genre, and a sentence transformer reads the title, author, genres, and description for theme and tone. The two embeddings are combined into one 1152-dimensional vector per book.",
-      "As you scroll, the app watches how you interact with each cover: how long you dwell on it, whether you scroll back to it, whether you save it or skip past it fast. Those signals continuously update a taste vector that lives in the same embedding space as the books.",
-      "A nearest-neighbor search against that taste vector, run through Supabase's pgvector, pulls back the next batch of books to show you, refreshed in the background as you keep scrolling.",
-      "Tapping into a book opens a chat with an AI, spoiler free by default, that you can use to learn about the book, ask questions, or turn the conversation into a saved summary card.",
-      "The app itself is native Android, built with Kotlin and Jetpack Compose in an MVVM architecture.",
-    ],
+    recommenderDemo: "https://skrolla-recommender-demo.vercel.app",
+    recommenderDemoLabel: "Try the live recommender",
   },
   {
     slug: "skydrift",
     title: "Skydrift",
     tagline: "A Relaxing Browser Flight Sim",
-    order: 9,
+    order: 1,
     status: "done",
     kind: "Web Game · Three.js",
     tags: ["Three.js", "JavaScript", "WebGL", "Procedural Generation"],
