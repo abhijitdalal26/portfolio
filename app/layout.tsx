@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    creator: "@abhijitd_26",
+    creator: "@abhijitdalal26",
     title: "Abhijit Dalal",
     description,
     images: [`${siteUrl}/og-image.png`],
