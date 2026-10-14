@@ -1,0 +1,62 @@
+---
+title: "Skrolla: The Spark Before the Story"
+date: "2026-07-22"
+description: "Why I'm building a book discovery app that scrolls like TikTok but is designed to do the opposite of what TikTok does."
+---
+
+## A Thing We Inherited
+
+Humans love story. It can be a book, a movie, a manga, an anime, even a game. We want to know something interesting, and I think it's one of the oldest kinds of entertainment there is, passed down from our ancestors.
+
+The mode has changed. Stories were once just talk: grandparents and parents telling stories to their children, who told them forward again. There were wall paintings too. Then writing came, as humans developed through evolution. And today, those same stories live as digital bits and bytes.
+
+Writing changed the knowledge base. It preserves the exact words and thoughts of a writer, so you can read an old book and know exactly what someone was thinking, how they saw things. You can travel to an entirely different world just by reading a different book.
+
+> One glance at a book and you hear the voice of another person, perhaps someone dead for a thousand years. To read is to voyage through time.
+> — Carl Sagan
+
+Humans are pattern-seeking creatures, so it's a lot easier for us to learn and reason about the world when we can group events into patterns we've already seen elsewhere. I think that's part of why stories carry such a strong emotional pull, a way of understanding life, each other, and ourselves.
+
+## The Spark
+
+Skrolla is about sparking that interest. A lot of people want to read but never actually start, or never pick a book. On Skrolla, if something catches your eye while scrolling, you get a few questions, a rough idea of the book, just enough to spark something in your brain. And once something hooks you, it stays in the back of your mind. You want to know the entire thing.
+
+Even turning on spoiler mode and knowing the whole story doesn't kill that. It's happened to me: getting hooked on a book, or anything really, a blog, a video, then asking an AI about it, knowing the entire story, and still reading the whole thing anyway, even though I already knew the main things in it.
+
+If you're not like me, and you don't want the story spoiled, spoiler mode stays off by default. You just get the spark, your next obsession to go read. And if a book interests you enough that you want the whole story right there, you can go all in with spoilers.
+
+So this is really for two kinds of people. One is someone struggling to find something interesting to read, waiting for something to appear out of nowhere, and it's not going to, so you're better off scrolling and letting a few swipes find it for you. The other already wants to know things constantly: scroll, find something interesting, fall into the rabbit hole if it hooks them, then move to the next book. It helps them get through more books faster.
+
+## How Skrolla Works
+
+Skrolla is an Android app, a place to find your next read, a starting point for your next conversation, a way to explore literature, novels, and story books, and get hooked on whatever interests you. A book exploration platform.
+
+The home feed changes with a gradual mix of personalization and refreshes daily. Then there's the FYP feed, where you scroll books the way you'd scroll Insta Reels or YouTube Shorts, except the app focuses on exploration instead of a hyper-focused recommendation built only around your profile, and only very gradually shifts toward personalization. Exploration is what we believe in. You don't want to live only in your own vector space and miss the vast sea of ideas, knowledge, and literature out there. If it doesn't even appear in front of your eyes, how would you know it exists?
+
+Once something interests you while scrolling, you can instantly chat with an LLM about it. By default, the chat window is in spoiler-free mode, so it won't give away anything that would make your reading less interesting. Turning spoiler mode on is your choice. If you want to know the entire story, the LLM will walk you through it, and you can go into the rabbit hole with it.
+
+The chat window also has card creation. The point of it is turning a book into small memory cards you can visit later, summarizing the entire thing. While creating them, you can give input to modify what they contain. By default, they cover the book's story from start to end.
+
+The rest is normal: search, for when you already know what you want, and a library. One feature I like there is your shelf, the books you've explored so far. Once a book has passed your eyes, it won't come back in front of you again on Home or FYP, and if you want to look into it, you can just click there and see how many books you've explored. Then the usual saved lists, liked books, and chat history, so you can always go back and pick up or restart a conversation.
+
+## Why Exploration, Not Attention
+
+There are already a lot of apps and websites for book discovery. Instagram, TikTok, and other media apps recommend books and stories too, but their job is to hold your attention and always move you to the next thing. Then there's Goodreads, BookTok, and others doing this differently, and doing it well.
+
+Skrolla isn't trying to compete with any of them. It's solving a different problem. It starts at exploration, finding the interest that may never have come in front of your eyes because of how hyper-focused recommendation has gotten everywhere else. There's still recommendation here, just at a smaller scale. It starts as complete exploration and gradually, very slowly, shifts toward recommendation, and you always have the chance to reset your taste vector.
+
+Because of LLMs and media, there's a growing tendency to stop giving time to actually read a book. People say they'll just listen to the audiobook, have an AI summarize it, or watch a video instead. But reading the entire book is still the only way to get the real story an author was trying to convey.
+
+Our attention span is shrinking, we want fast, easy entertainment. So why does Skrolla's layout look like the same doomscrolling apps? Because it's actually the opposite. The goal is only to spark interest in a book, and once your mind is hooked, if you're really interested in the idea, there's a high chance you'll go read the entire book. The layout is just there because most people are already familiar with the format.
+
+LLMs already know everything, every book ever written. So why bother reading at all? Because it's about us, about humans knowing what ideas are out there. Even though the LLM knows everything, it won't tell you until you start the conversation. You need a starting point. It's also about preserving our own thinking ability and process. The LLM has every book ever written, and that's actually to our advantage: you can now get the context of a book written in another language, culture, and knowledge base, conveyed in your own language, at your own level, if you start with the right question, and the LLM is there to walk you through it.
+
+It's not about the answer. It's about querying this hyper-intelligent thing and knowing where to even start the conversation. That's where Skrolla comes in, giving you the spark of interest. It knows everything, but knowing what to ask, and where to start increasing your own knowledge, is what matters.
+
+## Beyond the English Shelf
+
+Right now, Skrolla's catalog is English first. That was just the practical place to start, not where I want it to stay.
+
+The next real phase for Skrolla is simply more: more books, and specifically more literature from other languages, other authors, other traditions of storytelling that don't usually make it into English-language recommendation feeds at all. There's a huge amount of story out there that most people never get pointed toward, not because it isn't good, but because nothing ever put it in front of them. That's the exact gap Skrolla exists to close, so it should apply to more than just what already travels well in English.
+
+It's a rough idea right now, more direction than plan. But the goal is for Skrolla's catalog to eventually look like the actual range of literature in the world, authors and languages included, not just the slice of it that was easiest to start with.

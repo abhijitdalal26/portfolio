@@ -1,0 +1,17 @@
+
+> portfolio-bold@0.1.0 dev
+> next dev --port 3002
+
+▲ Next.js 16.2.7 (Turbopack)
+- Local:         http://localhost:3002
+- Network:       http://10.123.57.248:3002
+✓ Ready in 1094ms
+
+ GET / 200 in 1411ms (next.js: 766ms, application-code: 645ms)
+ GET / 200 in 1008ms (next.js: 846ms, application-code: 162ms)
+ GET / 200 in 166ms (next.js: 81ms, application-code: 85ms)
+ GET / 200 in 262ms (next.js: 113ms, application-code: 149ms)
+ GET / 200 in 244ms (next.js: 116ms, application-code: 129ms)
+ GET / 200 in 210ms (next.js: 108ms, application-code: 102ms)
+ GET / 200 in 221ms (next.js: 114ms, application-code: 107ms)
+✓ Compiled in 1531ms

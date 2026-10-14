@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Julia Set Art Generator & Exporter</title>
+  <style>
+    :root {
+      --bg: #0b0b0d;
+      --card-bg: rgba(20, 20, 25, 0.65);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f3f4f6;
+      --text-sub: #9ca3af;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --success: #10b981;
+      --success-hover: #34d399;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      max-width: 800px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #60a5fa, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      color: var(--text-sub);
+      font-size: 1rem;
+    }
+
+    .preview-container {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      aspect-ratio: 3 / 1;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      background: #0d0d0f;
+      margin-bottom: 2rem;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .aspect-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      letter-spacing: 0.05em;
+    }
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 1000px;
+      margin-bottom: 2rem;
+    }
+
+    .control-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .control-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    label {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      font-weight: 600;
+    }
+
+    select, input[type="range"], input[type="number"] {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 8px;
+      outline: none;
+      font-size: 0.9rem;
+      transition: border-color 0.2s;
+    }
+
+    select:focus, input:focus {
+      border-color: var(--primary);
+    }
+
+    .color-picker-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.5rem;
+    }
+
+    .color-picker-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .color-picker-wrapper span {
+      font-size: 0.7rem;
+      color: var(--text-sub);
+    }
+
+    input[type="color"] {
+      -webkit-appearance: none;
+      border: none;
+      width: 100%;
+      height: 38px;
+      border-radius: 6px;
+      cursor: pointer;
+      background: none;
+    }
+
+    input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    input[type="color"]::-webkit-color-swatch {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    .dimension-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 1000px;
+      justify-content: center;
+    }
+
+    button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+    }
+
+    button:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    button.success {
+      background: var(--success);
+    }
+
+    button.success:hover {
+      background: var(--success-hover);
+    }
+
+    button.secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    button.secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .active-constant {
+      font-family: monospace;
+      font-size: 0.9rem;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 8px 12px;
+      border-radius: 8px;
+      display: block;
+      color: var(--primary-hover);
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Julia Set Custom Art Generator</h1>
+    <p>Interactively customize colors, shapes, and export in your exact desired dimensions (e.g. X/Twitter header, profile, desktop background).</p>
+  </header>
+
+  <div class="preview-container">
+    <div class="aspect-badge" id="aspectBadge">PREVIEW (1500 × 500)</div>
+    <canvas id="juliaCanvas"></canvas>
+  </div>
+
+  <div class="controls-grid">
+    <!-- COLOR CARD -->
+    <div class="control-card">
+      <h3>1. Palette & Colors</h3>
+      <div class="control-group">
+        <label for="presetSelect">Preset Theme Palette</label>
+        <select id="presetSelect">
+          <option value="blue_dark">Blue (Dark Theme)</option>
+          <option value="blue_light">Blue (Light Theme)</option>
+          <option value="fire_dark">Fire (Dark Theme)</option>
+          <option value="fire_light">Fire (Light Theme)</option>
+          <option value="custom">-- Custom Palette below --</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>Fine-tune Custom Gradient Colors</label>
+        <div class="color-picker-row">
+          <div class="color-picker-wrapper">
+            <input type="color" id="col0" value="#121212">
+            <span>0%</span>
+          </div>
+          <div class="color-picker-wrapper">
+            <input type="color" id="col1" value="#1a2942">
+            <span>32%</span>
+          </div>
+          <div class="color-picker-wrapper">
+            <input type="color" id="col2" value="#3b82f6">
+            <span>60%</span>
+          </div>
+          <div class="color-picker-wrapper">
+            <input type="color" id="col3" value="#93c5fd">
+            <span>84%</span>
+          </div>
+          <div class="color-picker-wrapper">
+            <input type="color" id="col4" value="#f2f0ed">
+            <span>100%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SHAPE CARD -->
+    <div class="control-card">
+      <h3>2. Shape & Animation</h3>
+      <div class="control-group">
+        <label for="waypointSelect">Set Shape / Waypoint</label>
+        <select id="waypointSelect">
+          <option value="auto">Auto-Cycle Animation</option>
+          <option value="0">Douady's Rabbit ([-0.4, 0.6])</option>
+          <option value="1">Spiral Dendrite ([-0.8, 0.156])</option>
+          <option value="2">Frost Filigree ([-0.7269, 0.1889])</option>
+          <option value="3">Dense Filament ([-0.194, 0.6557])</option>
+          <option value="4">Thin Sparkle ([0.28, 0.008])</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="speedRange">Animation Speed</label>
+        <input type="range" id="speedRange" min="0" max="100" value="40">
+      </div>
+      <div class="control-group">
+        <button id="playPauseBtn" class="secondary" style="justify-content: center;">
+          Pause Animation
+        </button>
+      </div>
+    </div>
+
+    <!-- DIMENSIONS AND DOWNLOAD CARD -->
+    <div class="control-card">
+      <h3>3. Export Dimensions</h3>
+      <div class="control-group">
+        <label>Select Preset Ratio or Input Custom</label>
+        <select id="dimPresetSelect">
+          <option value="1500x500">X (Twitter) Header (1500 × 500)</option>
+          <option value="3000x1000">X Header Retina (3000 × 1000)</option>
+          <option value="400x400">X Profile Picture (400 × 400)</option>
+          <option value="1920x1080">Desktop HD (1920 × 1080)</option>
+          <option value="1080x1920">Mobile Wallpaper (1080 × 1920)</option>
+          <option value="custom">Custom Size...</option>
+        </select>
+      </div>
+      <div class="dimension-inputs">
+        <div class="control-group">
+          <label for="customWidth">Width (px)</label>
+          <input type="number" id="customWidth" value="1500" min="100" max="6000">
+        </div>
+        <div class="control-group">
+          <label for="customHeight">Height (px)</label>
+          <input type="number" id="customHeight" value="500" min="100" max="6000">
+        </div>
+      </div>
+      <div class="control-group">
+        <span class="active-constant" id="coordsDisplay">x: -0.4000, y: 0.6000</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-container">
+    <button id="downloadBtn" class="success">Download Image in Selected Size</button>
+  </div>
+
+  <script>
+    const PRESETS = {
+      blue_dark: ["#121212", "#1a2942", "#3b82f6", "#93c5fd", "#f2f0ed"],
+      blue_light: ["#fafafa", "#dbeafe", "#2563eb", "#1e3a8a", "#111110"],
+      fire_dark: ["#0c0908", "#40100a", "#c93c14", "#f48f16", "#fff5ca"],
+      fire_light: ["#fafafa", "#fad5a5", "#e06e18", "#8c200f", "#1c0a06"]
+    };
+
+    const WAYPOINTS = [
+      [-0.4, 0.6],
+      [-0.8, 0.156],
+      [-0.7269, 0.1889],
+      [-0.194, 0.6557],
+      [0.28, 0.008],
+    ];
+
+    const MAX_ITER = 130;
+    const canvas = document.getElementById("juliaCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // UI Elements
+    const presetSelect = document.getElementById("presetSelect");
+    const col0 = document.getElementById("col0");
+    const col1 = document.getElementById("col1");
+    const col2 = document.getElementById("col2");
+    const col3 = document.getElementById("col3");
+    const col4 = document.getElementById("col4");
+    const colorPickers = [col0, col1, col2, col3, col4];
+
+    const waypointSelect = document.getElementById("waypointSelect");
+    const speedRange = document.getElementById("speedRange");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    const coordsDisplay = document.getElementById("coordsDisplay");
+
+    const dimPresetSelect = document.getElementById("dimPresetSelect");
+    const customWidth = document.getElementById("customWidth");
+    const customHeight = document.getElementById("customHeight");
+    const aspectBadge = document.getElementById("aspectBadge");
+    const downloadBtn = document.getElementById("downloadBtn");
+
+    let isPlaying = true;
+    let speed = 40;
+    let waypointChoice = "auto";
+    let current = { x: WAYPOINTS[0][0], y: WAYPOINTS[0][1] };
+    let idleT = 0;
+    let lut = new Uint8ClampedArray((MAX_ITER + 1) * 3);
+
+    // Parse hex color to rgb
+    function hexToRgb(hex) {
+      const bigint = parseInt(hex.slice(1), 16);
+      return [
+        (bigint >> 16) & 255,
+        (bigint >> 8) & 255,
+        bigint & 255
+      ];
+    }
+
+    function rgbToHex(r, g, b) {
+      return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    function getGradientColors() {
+      const stops = [
+        [0.00, hexToRgb(col0.value)],
+        [0.32, hexToRgb(col1.value)],
+        [0.60, hexToRgb(col2.value)],
+        [0.84, hexToRgb(col3.value)],
+        [1.00, hexToRgb(col4.value)]
+      ];
+      return stops;
+    }
+
+    function updateLUT() {
+      const stops = getGradientColors();
+      for (let i = 0; i <= MAX_ITER; i++) {
+        const t = Math.pow(i / MAX_ITER, 0.45);
+        let color = stops[stops.length - 1][1];
+        
+        for (let j = 0; j < stops.length - 1; j++) {
+          const [t0, c0] = stops[j];
+          const [t1, c1] = stops[j + 1];
+          if (t >= t0 && t <= t1) {
+            const lt = (t - t0) / (t1 - t0 || 1);
+            color = [
+              Math.round(lerp(c0[0], c1[0], lt)),
+              Math.round(lerp(c0[1], c1[1], lt)),
+              Math.round(lerp(c0[2], c1[2], lt)),
+            ];
+            break;
+          }
+        }
+        lut[i * 3] = color[0];
+        lut[i * 3 + 1] = color[1];
+        lut[i * 3 + 2] = color[2];
+      }
+    }
+
+    function waypointAt(t) {
+      const n = WAYPOINTS.length;
+      const scaled = ((t % 1) + 1) % 1 * n;
+      const i0 = Math.floor(scaled) % n;
+      const i1 = (i0 + 1) % n;
+      const lt = scaled - Math.floor(scaled);
+      const a = WAYPOINTS[i0];
+      const b = WAYPOINTS[i1];
+      return { x: lerp(a[0], b[0], lt), y: lerp(a[1], b[1], lt) };
+    }
+
+    function drawJulia(w, h, destCtx, cx, cy) {
+      const img = destCtx.createImageData(w, h);
+      const data = img.data;
+      const aspect = w / h;
+
+      let idx = 0;
+      for (let py = 0; py < h; py++) {
+        const y = (py / h - 0.5) * (3.0 / aspect);
+        for (let px = 0; px < w; px++) {
+          const x = (px / w - 0.5) * 3.0;
+          let zx = x, zy = y;
+          let zx2 = zx * zx, zy2 = zy * zy;
+          let iter = 0;
+          while (zx2 + zy2 <= 4.0 && iter < MAX_ITER) {
+            zy = 2.0 * zx * zy + cy;
+            zx = zx2 - zy2 + cx;
+            zx2 = zx * zx;
+            zy2 = zy * zy;
+            iter++;
+          }
+          let off;
+          if (iter >= MAX_ITER) {
+            off = MAX_ITER * 3;
+          } else {
+            const logZn = Math.log(zx2 + zy2) / 2.0;
+            const nu = Math.log(logZn / Math.LN2) / Math.LN2;
+            const smooth = Math.max(0, Math.min(MAX_ITER, Math.round(iter + 1 - nu)));
+            off = smooth * 3;
+          }
+          data[idx++] = lut[off];
+          data[idx++] = lut[off + 1];
+          data[idx++] = lut[off + 2];
+          data[idx++] = 255;
+        }
+      }
+      destCtx.putImageData(img, 0, 0);
+    }
+
+    function applyPresetColors(presetName) {
+      if (presetName === "custom") return;
+      const colors = PRESETS[presetName];
+      col0.value = colors[0];
+      col1.value = colors[1];
+      col2.value = colors[2];
+      col3.value = colors[3];
+      col4.value = colors[4];
+      updateLUT();
+    }
+
+    function handleResize() {
+      const w = parseInt(customWidth.value) || 1500;
+      const h = parseInt(customHeight.value) || 500;
+      aspectBadge.textContent = `PREVIEW (${w} × ${h})`;
+      
+      // Keep canvas resolution balanced for preview
+      const aspect = w / h;
+      canvas.width = 1200;
+      canvas.height = Math.round(1200 / aspect);
+    }
+
+    // Tick/Animation Loop
+    function tick() {
+      if (isPlaying && waypointChoice === "auto") {
+        idleT += (speed / 50) * 0.00025;
+        const p = waypointAt(idleT);
+        current.x = p.x;
+        current.y = p.y;
+      } else if (waypointChoice !== "auto") {
+        const idx = parseInt(waypointChoice);
+        current.x = WAYPOINTS[idx][0];
+        current.y = WAYPOINTS[idx][1];
+      }
+
+      coordsDisplay.textContent = `x: ${current.x.toFixed(4)}, y: ${current.y.toFixed(4)}`;
+      drawJulia(canvas.width, canvas.height, ctx, current.x, current.y);
+      requestAnimationFrame(tick);
+    }
+
+    // Color Inputs Event Listeners
+    presetSelect.addEventListener("change", (e) => {
+      applyPresetColors(e.target.value);
+    });
+
+    colorPickers.forEach(picker => {
+      picker.addEventListener("input", () => {
+        presetSelect.value = "custom";
+        updateLUT();
+      });
+    });
+
+    // Shapes & Animation Event Listeners
+    waypointSelect.addEventListener("change", (e) => {
+      waypointChoice = e.target.value;
+    });
+
+    speedRange.addEventListener("input", (e) => {
+      speed = parseInt(e.target.value);
+    });
+
+    playPauseBtn.addEventListener("click", () => {
+      isPlaying = !isPlaying;
+      playPauseBtn.textContent = isPlaying ? "Pause Animation" : "Resume Animation";
+      playPauseBtn.classList.toggle("secondary");
+    });
+
+    // Dimensions Event Listeners
+    dimPresetSelect.addEventListener("change", (e) => {
+      const val = e.target.value;
+      if (val !== "custom") {
+        const [w, h] = val.split("x");
+        customWidth.value = w;
+        customHeight.value = h;
+        handleResize();
+      }
+    });
+
+    customWidth.addEventListener("input", () => {
+      dimPresetSelect.value = "custom";
+      handleResize();
+    });
+
+    customHeight.addEventListener("input", () => {
+      dimPresetSelect.value = "custom";
+      handleResize();
+    });
+
+    // Export & Download
+    downloadBtn.addEventListener("click", () => {
+      const w = parseInt(customWidth.value) || 1500;
+      const h = parseInt(customHeight.value) || 500;
+      
+      // Temporary high-res canvas
+      const exportCanvas = document.createElement("canvas");
+      exportCanvas.width = w;
+      exportCanvas.height = h;
+      const exportCtx = exportCanvas.getContext("2d");
+
+      // Render at requested resolution
+      drawJulia(w, h, exportCtx, current.x, current.y);
+
+      // Trigger download
+      const link = document.createElement("a");
+      link.download = `julia_background_${w}x${h}.png`;
+      link.href = exportCanvas.toDataURL("image/png");
+      link.click();
+    });
+
+    // Setup initial state
+    updateLUT();
+    handleResize();
+    tick();
+  </script>
+</body>
+</html>

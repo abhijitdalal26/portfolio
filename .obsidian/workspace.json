@@ -1,0 +1,226 @@
+{
+  "main": {
+    "id": "47525b9eb6b19662",
+    "type": "split",
+    "children": [
+      {
+        "id": "f7142d5c2e90f74d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "81395ebdb3a2ca77",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "abhijits-words/Projects/ml-projects.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ml-projects"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "073bfd16a31997ba",
+    "type": "split",
+    "children": [
+      {
+        "id": "19cefc19615f5d71",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1b7893f347739a9e",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "57bfad3533e83965",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "32d4abc3fa70b399",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "a9484c91d76c40ef",
+    "type": "split",
+    "children": [
+      {
+        "id": "da3189161ec08755",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b66388d5e541f37c",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "abhijits-words/Projects/projects-wiki.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for projects-wiki"
+            }
+          },
+          {
+            "id": "4fe319938ea76149",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "abhijits-words/Projects/projects-wiki.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from projects-wiki"
+            }
+          },
+          {
+            "id": "d6e3c968f6a322a8",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "ac27ecae0a0c6194",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "9b4fa9034632bafe",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "abhijits-words/Projects/projects-wiki.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of projects-wiki"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "81395ebdb3a2ca77",
+  "lastOpenFiles": [
+    "CLAUDE.md.tmp.22248.33e6ebffe005",
+    "lib/projects.ts.tmp.22248.12923f95df97",
+    "public/projects/autonomous-racing-using-rl/runtime-breakdown.png",
+    "public/projects/autonomous-racing-using-rl/checkpoint-rewards.png",
+    "public/projects/autonomous-racing-using-rl/gym-solved.jpg",
+    "public/projects/autonomous-racing-using-rl/gym-mid.jpg",
+    "public/projects/autonomous-racing-using-rl/gym-early.jpg",
+    "public/projects/autonomous-racing-using-rl/demo.mp4",
+    "abhijits-words/Projects/smart-agriculture-advisory-system.md",
+    "abhijits-words/Projects/projects-wiki.md",
+    "abhijits-words/Projects/play-store-app-analysis.md",
+    "abhijits-words/Projects/PawVision.md",
+    "abhijits-words/Projects/movie-vector-galaxy.md",
+    "abhijits-words/Projects/Harry Potter GPT.md",
+    "abhijits-words/Projects/bookscroller.md",
+    "lib/projects.ts.tmp.22248.6ebfc7455848",
+    "app/globals.css.tmp.22248.987c6cee8f01",
+    "components/ScreenshotCarousel.tsx.tmp.22248.f11592bc3372",
+    "app/globals.css.tmp.22248.edd895ab474a",
+    "app/globals.css.tmp.22248.2a594222d80e",
+    "components/ScreenshotCarousel.tsx.tmp.22248.8c3e90ba2a23",
+    "app/projects/[slug]/page.tsx.tmp.22248.aa9cb88779b5",
+    "lib/projects.ts.tmp.22248.05d337cd8b9e",
+    "public/projects/smart-agriculture-advisory-system/openclaw.jpg",
+    "node_modules/rehype-external-links/readme.md",
+    "node_modules/is-absolute-url/readme.md",
+    "abhijits-words/Projects/ml-projects.md",
+    "public/projects/ml-projects/MNIST-arcitecture.jpg",
+    "public/projects/ml-projects/intro.png",
+    "public/projects/autonomous-racing-using-rl/hero.png",
+    "public/projects/autonomous-racing-using-rl/entropy-loss.png",
+    "abhijits-words/blogs/Evolution of neural architectures.md",
+    "abhijits-words/blogs/Skrolla - The spark before the story.md",
+    "CLAUDE.md",
+    "public/projects/MCP-Audit.md",
+    "README.md",
+    "autonomous-racing-using-rl.md"
+  ]
+}

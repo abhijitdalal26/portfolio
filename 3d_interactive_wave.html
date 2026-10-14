@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhijit Dalal | 3D Portfolio</title>
+    
+    <!-- Load Three.js Library from CDN for 3D rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* Light Mode */
+            --bg-color: #f8fafc;
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --btn-bg: #0f172a;
+            --btn-text: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            /* Dark Mode */
+            --bg-color: #030712;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --btn-bg: #f8fafc;
+            --btn-text: #0f172a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* Smooth transitions for UI elements */
+            transition: background-color 0.8s ease, color 0.8s ease;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow: hidden; /* Prevent scrolling, lock to full screen */
+        }
+
+        /* --- 3D CANVAS LAYER --- */
+        #webgl-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: auto; /* Allow mouse movement to register on canvas */
+        }
+
+        /* --- FOREGROUND CONTENT LAYER --- */
+        .content-layer {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+            pointer-events: none; /* Let mouse pass through to the 3D canvas */
+            /* Add a subtle radial gradient to ensure text readability over the 3D scene */
+            background: radial-gradient(circle, rgba(var(--bg-color), 0.6) 0%, rgba(0,0,0,0) 60%);
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 0.5rem;
+            pointer-events: auto;
+        }
+
+        p {
+            font-size: 1.3rem;
+            color: var(--text-sub);
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            pointer-events: auto;
+        }
+
+        button {
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.8s, color 0.8s;
+            pointer-events: auto;
+        }
+
+        button:hover {
+            transform: translateY(-3px) scale(1.02);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- Container for Three.js 3D Scene -->
+    <div id="webgl-container"></div>
+
+    <!-- Portfolio UI -->
+    <div class="content-layer">
+        <h1>Abhijit Dalal</h1>
+        <p>Data Analyst & Software Engineer</p>
+        <button id="theme-toggle" onclick="toggleTheme()">Switch to Light Mode</button>
+    </div>
+
+    <!-- 3D Logic -->
+    <script>
+        const container = document.getElementById('webgl-container');
+        
+        let scene, camera, renderer, particles;
+        let mouseX = 0, mouseY = 0;
+        let windowHalfX = window.innerWidth / 2;
+        let windowHalfY = window.innerHeight / 2;
+
+        // The wave grid settings
+        const SEPARATION = 60, AMOUNTX = 70, AMOUNTY = 70;
+        let count = 0; // Time variable for the wave animation
+
+        // Target colors for the smooth morphing
+        const colorDark = new THREE.Color('#0ea5e9'); // Neon cyan for dark mode
+        const colorLight = new THREE.Color('#4f46e5'); // Deep indigo for light mode
+        let currentTheme = 'dark';
+
+        function init() {
+            // 1. Camera setup (Field of view, aspect ratio, near clip, far clip)
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+            camera.position.z = 1000; // Pull camera back
+            camera.position.y = 300;  // Lift camera up slightly to look down at the wave
+
+            // 2. Scene setup
+            scene = new THREE.Scene();
+
+            // 3. Create the 3D particles
+            const numParticles = AMOUNTX * AMOUNTY;
+            const positions = new Float32Array(numParticles * 3);
+            const scales = new Float32Array(numParticles);
+
+            let i = 0, j = 0;
+            for ( let ix = 0; ix < AMOUNTX; ix ++ ) {
+                for ( let iy = 0; iy < AMOUNTY; iy ++ ) {
+                    // X position
+                    positions[ i ] = ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 );
+                    // Y position (height - will be animated later)
+                    positions[ i + 1 ] = 0;
+                    // Z position (depth)
+                    positions[ i + 2 ] = iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 );
+                    
+                    scales[ j ] = 1;
+                    i += 3;
+                    j ++;
+                }
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+            geometry.setAttribute( 'scale', new THREE.BufferAttribute( scales, 1 ) );
+
+            // We use a custom ShaderMaterial to make the dots look circular and allow scaling
+            const material = new THREE.ShaderMaterial( {
+                uniforms: {
+                    color: { value: colorDark }
+                },
+                vertexShader: `
+                    attribute float scale;
+                    void main() {
+                        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+                        // Point size changes based on distance (depth)
+                        gl_PointSize = scale * ( 300.0 / - mvPosition.z );
+                        gl_Position = projectionMatrix * mvPosition;
+                    }
+                `,
+                fragmentShader: `
+                    uniform vec3 color;
+                    void main() {
+                        // Create a soft circular shape instead of a square pixel
+                        if ( length( gl_PointCoord - vec2( 0.5, 0.5 ) ) > 0.475 ) discard;
+                        gl_FragColor = vec4( color, 1.0 );
+                    }
+                `
+            } );
+
+            particles = new THREE.Points( geometry, material );
+            scene.add( particles );
+
+            // 4. Renderer setup
+            renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } ); // alpha: true makes background transparent so CSS shows through
+            renderer.setPixelRatio( window.devicePixelRatio );
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            container.appendChild( renderer.domElement );
+
+            container.addEventListener( 'pointermove', onPointerMove );
+            window.addEventListener( 'resize', onWindowResize );
+        }
+
+        function onWindowResize() {
+            windowHalfX = window.innerWidth / 2;
+            windowHalfY = window.innerHeight / 2;
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+        }
+
+        function onPointerMove( event ) {
+            // Track mouse to shift camera slightly (interactive parallax)
+            if ( event.isPrimary === false ) return;
+            mouseX = event.clientX - windowHalfX;
+            mouseY = event.clientY - windowHalfY;
+        }
+
+        function animate() {
+            requestAnimationFrame( animate );
+            render();
+        }
+
+        function render() {
+            // 1. Interactive Camera Movement
+            // Smoothly interpolate camera position based on mouse movement
+            camera.position.x += ( mouseX - camera.position.x ) * .05;
+            camera.position.y += ( - mouseY + 200 - camera.position.y ) * .05; // Base height offset
+            camera.lookAt( scene.position );
+
+            // 2. The "Breathing/Alive" Wave Math
+            const positions = particles.geometry.attributes.position.array;
+            const scales = particles.geometry.attributes.scale.array;
+
+            let i = 0, j = 0;
+            for ( let ix = 0; ix < AMOUNTX; ix ++ ) {
+                for ( let iy = 0; iy < AMOUNTY; iy ++ ) {
+                    // Complex sine waves combined to create organic flowing movement
+                    positions[ i + 1 ] = ( Math.sin( ( ix + count ) * 0.3 ) * 50 ) +
+                                         ( Math.sin( ( iy + count ) * 0.5 ) * 50 );
+                    
+                    // Scale the dots up slightly when they hit the crest of the wave
+                    scales[ j ] = ( Math.sin( ( ix + count ) * 0.3 ) + 1 ) * 8 +
+                                  ( Math.sin( ( iy + count ) * 0.5 ) + 1 ) * 8;
+
+                    i += 3;
+                    j ++;
+                }
+            }
+
+            particles.geometry.attributes.position.needsUpdate = true;
+            particles.geometry.attributes.scale.needsUpdate = true;
+
+            // 3. Smoothly interpolate colors if theme changed
+            if (currentTheme === 'dark') {
+                particles.material.uniforms.color.value.lerp(colorDark, 0.05);
+            } else {
+                particles.material.uniforms.color.value.lerp(colorLight, 0.05);
+            }
+
+            renderer.render( scene, camera );
+            
+            // Advance time for the next frame
+            count += 0.05; 
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('theme-toggle');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                btn.textContent = 'Switch to Dark Mode';
+                currentTheme = 'light';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                btn.textContent = 'Switch to Light Mode';
+                currentTheme = 'dark';
+            }
+        }
+
+        // Boot up the 3D scene
+        window.onload = function() {
+            init();
+            animate();
+        };
+    </script>
+</body>
+</html>
