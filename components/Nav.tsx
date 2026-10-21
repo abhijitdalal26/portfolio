@@ -7,8 +7,9 @@ import { AnimatedSignature } from "./AnimatedSignature";
 import { ThemeToggle } from "./ThemeToggle";
 
 const links = [
-  { href: "/projects", label: "Projects" },
-  { href: "/blog",     label: "Blog"     },
+  // The homepage IS the projects page — the anchor scrolls to that section.
+  { href: "/#projects", label: "Projects", isActive: (p: string) => p === "/" || p.startsWith("/projects") },
+  { href: "/blog",     label: "Blog",     isActive: (p: string) => p === "/blog" || p.startsWith("/blog/") },
   // About hidden for now — bio still being reworked
 ];
 
@@ -32,10 +33,10 @@ export function Nav() {
 
           {/* Desktop */}
           <div className="nav-links">
-            {links.map(({ href, label }) => {
-              const isActive = pathname === href || pathname.startsWith(href + "/");
+            {links.map(({ href, label, isActive }) => {
+              const active = isActive(pathname);
               return (
-                <Link key={href} href={href} className={`nav-link${isActive ? " nav-link-active" : ""}`}>
+                <Link key={href} href={href} className={`nav-link${active ? " nav-link-active" : ""}`}>
                   {label}
                 </Link>
               );
@@ -67,10 +68,10 @@ export function Nav() {
 
       {menuOpen && (
         <div className="nav-mobile-menu">
-          {links.map(({ href, label }) => {
-            const isActive = pathname === href || pathname.startsWith(href + "/");
+          {links.map(({ href, label, isActive }) => {
+            const active = isActive(pathname);
             return (
-              <Link key={href} href={href} className={`nav-mobile-link${isActive ? " nav-link-active" : ""}`}>
+              <Link key={href} href={href} className={`nav-mobile-link${active ? " nav-link-active" : ""}`}>
                 {label}
               </Link>
             );

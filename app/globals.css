@@ -128,6 +128,9 @@ body {
 /* ── Marquee section labels ─────────────────────────── */
 .marquee-label { padding: 10px 48px 0; }
 
+/* ── Homepage projects anchor ───────────────────────── */
+#projects { scroll-margin-top: 24px; }
+
 /* ── Blog hero (JuliaHero background + title panel) ──────── */
 .blog-hero       { min-height: clamp(360px, 52vh, 520px); }
 .blog-hero-inner { padding-top: 120px; padding-bottom: 44px; }

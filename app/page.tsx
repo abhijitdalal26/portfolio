@@ -3,6 +3,7 @@ import Link from "next/link";
 import { WaveBg } from "@/components/WaveBg";
 import { FadeUp } from "@/components/FadeUp";
 import { ProjectCard } from "@/components/ProjectCard";
+import { StackMarquees } from "@/components/StackMarquees";
 import { getProjectsByStatus } from "@/lib/projects";
 import { getAllPosts, formatDate } from "@/lib/posts";
 import { RESUME_URL } from "@/lib/resume";
@@ -107,20 +108,22 @@ export default function Home() {
           </>
         )}
 
-        <FadeUp>
-          <div style={{ marginBottom: 32 }}>
-            <h2 style={{ fontFamily: "var(--sans)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
-              Projects
-            </h2>
-          </div>
-        </FadeUp>
+        <div id="projects">
+          <FadeUp>
+            <div style={{ marginBottom: 32 }}>
+              <h2 style={{ fontFamily: "var(--sans)", fontSize: "clamp(30px, 4.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
+                Projects
+              </h2>
+            </div>
+          </FadeUp>
 
-        <div className="grid-2">
-          {done.map((p, i) => (
-            <FadeUp key={p.slug} delay={(i % 2) * 90} className="h-full">
-              <ProjectCard project={p} />
-            </FadeUp>
-          ))}
+          <div className="grid-2">
+            {done.map((p, i) => (
+              <FadeUp key={p.slug} delay={(i % 2) * 90} className="h-full">
+                <ProjectCard project={p} />
+              </FadeUp>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -147,6 +150,9 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {/* ── Stack ────────────────────────────────────────── */}
+      <StackMarquees />
 
     </div>
   );

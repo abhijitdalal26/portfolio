@@ -28,8 +28,7 @@ app/
   layout.tsx           # Root: Providers (ThemeProvider), Nav, Footer
   globals.css          # Design tokens, responsive breakpoints, utility classes
   icon.svg             # Favicon — black "A" on off-white
-  page.tsx             # Home (wave hero, "Currently Working On" + timeline projects, blog list) — Server Component
-  projects/page.tsx    # Full project list (current + done, from lib/projects.ts)
+  page.tsx             # Home (wave hero, "Currently Working On" + projects grid, blog list, Areas/Stack marquee strips) — Server Component
   projects/[slug]/page.tsx # Project detail page (story, how it works, technical breakdown diagrams, my architecture, links/papers)
   blog/page.tsx         # Blog post list
   blog/[slug]/page.tsx  # Dynamic MDX post renderer + TOC sidebar
@@ -41,7 +40,8 @@ components/
   Nav.tsx              # "use client" — sticky nav, hamburger menu on mobile, theme toggle
   Providers.tsx        # "use client" — wraps children with ThemeProvider
   Footer.tsx
-  ProjectCard.tsx      # "use client" — homepage/listing card: image (or cat/dog-style split cardPreview) + title/tagline, whole card links to detail page
+  ProjectCard.tsx      # "use client" — homepage card: image (or cat/dog-style split cardPreview) + title/tagline, whole card links to detail page
+  StackMarquees.tsx   # Scrolling Areas/Stack pill strips (shared by the homepage and the About page)
   Toc.tsx              # "use client" — blog post table of contents: fixed toggle button in the post's own header (not the global nav), opens a left-side panel (not full-screen), stays open until explicitly closed
   WaveBg.tsx           # "use client" — Three.js particle wave background, used on homepage hero only
   JuliaHero.tsx        # "use client" — full-bleed canvas Julia-set fractal, absolutely positioned background behind the /blog hero title; cursor x maps across curated waypoint constants (rabbit, spiral, frost, filament, sparkle), idles through them when untouched
@@ -53,7 +53,7 @@ lib/projects.ts        # Project type + data (single source of truth for all pro
 lib/toc.ts             # extractHeadings() — parses ## headings from raw MDX, generates matching slugger ids for the TOC
 ```
 
-Some older experimental background components (`Hero.tsx`, `AuroraBg.tsx`, `ParticlesBg.tsx`, `VantaBg.tsx`) and a shared `Marquee.tsx` are unused leftovers — not wired into any page. About page's scrolling strips use a local `Marquee` function defined inline in `app/about/page.tsx`, not the shared component.
+Some older experimental background components (`Hero.tsx`, `AuroraBg.tsx`, `ParticlesBg.tsx`, `VantaBg.tsx`) and a shared `Marquee.tsx` are unused leftovers — not wired into any page. The scrolling Areas/Stack strips live in `components/StackMarquees.tsx` and are rendered by both the homepage (below the blog list) and the About page.
 
 ## Design System
 

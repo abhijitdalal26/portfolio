@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { projects, getProject } from "@/lib/projects";
 import { FadeUp } from "@/components/FadeUp";
@@ -54,10 +55,10 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
 
           <FadeUp>
-            <a href="/projects" style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 14, fontWeight: 500, color: "var(--sub)", textDecoration: "none", marginBottom: 22 }}>
+            <Link href="/#projects" style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 14, fontWeight: 500, color: "var(--sub)", textDecoration: "none", marginBottom: 22 }}>
               <svg width={16} height={16} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 12L6 8l4-4" /></svg>
               Back to projects
-            </a>
+            </Link>
             <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "10px 14px", marginBottom: 16 }}>
               <h1 style={{ fontFamily: "var(--sans)", fontSize: "clamp(34px, 5.5vw, 54px)", letterSpacing: "-0.04em", lineHeight: 1.02, fontWeight: 700, margin: 0 }}>
                 {project.title}
