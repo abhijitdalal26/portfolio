@@ -566,6 +566,48 @@ slug: "smart-agriculture-advisory-system",
       "A continuous day/night arc replaced the original's four hardcoded lighting presets. The sun now traces one smooth circular path so it visibly climbs out of the sea at dawn and sinks back into it at dusk, instead of snapping between fixed positions.",
     ],
   },
+  {
+    slug: "pytorch-transformer",
+    title: "Transformer From Scratch",
+    tagline: "English to Dutch, Trained From Zero",
+    order: 10,
+    status: "done",
+    kind: "Machine Learning · NLP",
+    tags: ["PyTorch", "Transformer", "Machine Translation", "NLP", "BLEU"],
+    blurb: "Attention Is All You Need, implemented from scratch in PyTorch and trained on English to Dutch book sentences until it actually started translating.",
+    github: "https://github.com/abhijitdalal26/transformers-from-scratch",
+    papers: [
+      { label: "Attention Is All You Need (Vaswani et al., 2017)", href: "https://arxiv.org/abs/1706.03762" },
+    ],
+    thumbnail: "/projects/pytorch-transformer/attention-is-all-you-need.png",
+    story: [
+      "Every language model you have ever talked to is a Transformer, so I wrote one myself — attention, encoders, decoders, masks, positional encoding, all of it in plain PyTorch — and then trained it on English to Dutch book sentences until it started producing real translations.",
+      "The dataset is small (38,652 sentence pairs) and the model is small (73M parameters), so it is not going to beat Google Translate. It is, though, the complete thing: the 2017 architecture trained end to end and instrumented well enough to actually learn from. It scores 24.2 BLEU-4, and it overfits so visibly that watching it happen turned out to be the most useful result in the whole project.",
+    ],
+    howItWorks: [
+      "model.py holds the entire architecture — sinusoidal positional encoding, multi-head attention, the feed-forward block, residual connections and layer norm, six encoder and six decoder layers, with causal masking on the decoder side.",
+      "dataset.py tokenises the parallel corpus and builds both the causal and the padding masks; train.py runs the loop, decodes a held-out sample every epoch, and writes a per-epoch metrics CSV. The BLEU score is hand-written, because the library one returned 0.0 in this environment.",
+      "The whole run is 20 epochs on a single Colab T4, about 87,000 steps. Validation BLEU climbed for 17 epochs and then fell off a cliff, and that cliff is where the interesting part starts.",
+    ],
+    diagramsIntro: "What actually happened during training, in pictures.",
+    diagrams: [
+      {
+        title: "Validation BLEU-4 per epoch",
+        image: "/projects/pytorch-transformer/val-bleu.png",
+        caption: "The score climbs for 17 epochs and then turns over. Epoch 17 is the checkpoint worth keeping — the training loss never shows this turning point.",
+      },
+      {
+        title: "Overfitting: validation BLEU against training loss",
+        image: "/projects/pytorch-transformer/overfitting.png",
+        caption: "Both curves on one axis. They cross at the peak. After that the model keeps fitting the training data better while getting worse at the actual task.",
+      },
+      {
+        title: "Attention heatmaps",
+        image: "/projects/pytorch-transformer/attention.png",
+        caption: "Encoder self-attention, decoder self-attention, and the cross-attention that lines each English word up with its Dutch counterpart. Reading these is the fastest way to see the model learned structure rather than a lookup table.",
+      },
+    ],
+  },
 ];
 
 export function getProject(slug: string) {
