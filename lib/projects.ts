@@ -362,6 +362,12 @@ slug: "smart-agriculture-advisory-system",
         image: "/projects/autonomous-racing-using-rl/runtime-breakdown.webp",
         caption: "A profile of the 1M-step run's wall-clock time. Stepping the Unity environment itself (env_step, physics + rendering four karts) ate roughly 3,000 of the run's ~3,400 seconds, versus about 411 seconds spent actually advancing the PPO trainer (the gradient updates). The bottleneck was Unity simulating the world, not the neural network learning from it.",
       },
+      {
+        title: "Final Gameplay: Unity .exe running",
+        embed: "/projects/autonomous-racing-using-rl/final-gameplay-video.html",
+        embedHeight: 450,
+        caption: "Final gameplay video showing the exported Unity .exe file running with the trained RL agent driving the kart autonomously. This is the standalone build where the trained PPO policy (KartAgent.onnx) runs inference directly without Unity Editor or Python, demonstrating the complete end-to-end pipeline from training to deployment.",
+      },
     ],
     architectureSteps: [
       "Observations: 5 forward-fanned raycast distance sensors + kart speed/velocity (vector obs, no camera)",
