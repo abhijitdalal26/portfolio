@@ -43,4 +43,8 @@ next-env.d.ts
 # local backup of original (uncompressed) images/videos
 /originals/
 
+# local-only blog artwork (never deployed)
+/blog-art/
+/public/blog/
+
 .vercel
