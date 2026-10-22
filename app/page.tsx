@@ -5,13 +5,34 @@ import { FadeUp } from "@/components/FadeUp";
 import { ProjectCard } from "@/components/ProjectCard";
 import { StackMarquees } from "@/components/StackMarquees";
 import { getProjectsByStatus } from "@/lib/projects";
-import { getAllPosts, formatDate } from "@/lib/posts";
+import { getAllPosts } from "@/lib/posts";
+import { getSubstackPosts, formatSubstackDate } from "@/lib/substack";
 import { RESUME_URL } from "@/lib/resume";
 
-export default function Home() {
+export default async function Home() {
   const current = getProjectsByStatus("current");
   const done = getProjectsByStatus("done");
-  const posts = getAllPosts().slice(0, 4);
+
+  const localPosts = getAllPosts();
+  const substackPosts = await getSubstackPosts();
+
+  // One writing list: local posts + Substack, newest first.
+  const writing = [
+    ...localPosts.map((p) => ({
+      key: `local-${p.slug}`,
+      title: p.title,
+      date: p.date,
+      href: `/blog/${p.slug}`,
+      external: false,
+    })),
+    ...substackPosts.map((p) => ({
+      key: `substack-${p.link}`,
+      title: p.title,
+      date: p.date,
+      href: p.link,
+      external: true,
+    })),
+  ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
     <div style={{ background: "var(--bg)", color: "var(--ink)", fontFamily: "var(--sans)" }}>
@@ -128,7 +149,7 @@ export default function Home() {
       </div>
 
       {/* ── Writing ──────────────────────────────────────── */}
-      {posts.length > 0 && (
+      {writing.length > 0 && (
         <div className="page-wrap s-pt-64 s-pb-88">
           <FadeUp>
             <div style={{ marginBottom: 28, borderTop: "1px solid var(--line)", paddingTop: 28 }}>
@@ -139,15 +160,32 @@ export default function Home() {
           </FadeUp>
 
           <div style={{ display: "flex", flexDirection: "column" }}>
-            {posts.map((post, i) => (
-              <FadeUp key={post.slug} delay={(i % 2) * 90}>
-                <Link href={`/blog/${post.slug}`} className="blog-row" style={{ textUnderlineOffset: 3 }}>
-                  <span style={{ fontSize: 17, fontWeight: 400, color: "var(--ink)", letterSpacing: "-0.02em" }}>{post.title}</span>
-                  <span style={{ fontSize: 12, color: "var(--faint)", fontFamily: "var(--mono)", flexShrink: 0, whiteSpace: "nowrap" }}>{formatDate(post.date)}</span>
-                </Link>
+            {writing.map((post, i) => (
+              <FadeUp key={post.key} delay={(i % 2) * 90}>
+                {post.external ? (
+                  <a
+                    href={post.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="blog-row"
+                    style={{ textUnderlineOffset: 3 }}
+                  >
+                    <span style={{ fontSize: 17, fontWeight: 400, color: "var(--ink)", letterSpacing: "-0.02em" }}>{post.title}</span>
+                    <span style={{ fontSize: 12, color: "var(--faint)", fontFamily: "var(--mono)", flexShrink: 0, whiteSpace: "nowrap" }}>{formatSubstackDate(post.date)} ↗</span>
+                  </a>
+                ) : (
+                  <Link href={post.href} className="blog-row" style={{ textUnderlineOffset: 3 }}>
+                    <span style={{ fontSize: 17, fontWeight: 400, color: "var(--ink)", letterSpacing: "-0.02em" }}>{post.title}</span>
+                    <span style={{ fontSize: 12, color: "var(--faint)", fontFamily: "var(--mono)", flexShrink: 0, whiteSpace: "nowrap" }}>{formatSubstackDate(post.date)}</span>
+                  </Link>
+                )}
               </FadeUp>
             ))}
           </div>
+
+          <Link href="/blog" style={{ display: "inline-block", marginTop: 18, fontSize: 13, color: "var(--sub)", fontWeight: 500 }}>
+            All writing →
+          </Link>
         </div>
       )}
 
