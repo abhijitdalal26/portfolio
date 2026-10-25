@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatedSignature } from "./AnimatedSignature";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -18,7 +18,12 @@ export function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const isHome = pathname === "/";
 
-  useEffect(() => { setMenuOpen(false); }, [pathname]);
+  // Close the mobile menu on navigation (reset during render, not in an effect).
+  const [lastPath, setLastPath] = useState(pathname);
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
+    setMenuOpen(false);
+  }
 
   return (
     <div style={{ position: "relative", zIndex: 10 }}>

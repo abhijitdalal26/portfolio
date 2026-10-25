@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useMounted } from "@/lib/useMounted";
 
 export function Cursor() {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
 
   const mx = useMotionValue(-200);
   const my = useMotionValue(-200);
@@ -18,7 +19,6 @@ export function Cursor() {
   const ringY = useSpring(my, { stiffness: 130, damping: 22 });
 
   useEffect(() => {
-    setMounted(true);
     const handler = (e: MouseEvent) => {
       mx.set(e.clientX);
       my.set(e.clientY);

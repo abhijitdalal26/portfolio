@@ -45,7 +45,9 @@ export function Toc({ items }: { items: TocItem[] }) {
   const [nearFooter, setNearFooter] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia("(min-width: 721px)").matches) setOpen(true);
+    if (!window.matchMedia("(min-width: 721px)").matches) return;
+    const raf = requestAnimationFrame(() => setOpen(true));
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   useEffect(() => {

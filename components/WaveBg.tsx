@@ -26,9 +26,8 @@ export function WaveBg() {
       const AMOUNTX = isMobile ? 44 : 70;
       const AMOUNTY = isMobile ? 44 : 70;
       let count = 0;
-      let mouseX = 0, mouseY = 0;
+      let mouseX = 0;
       let halfW = window.innerWidth / 2;
-      let halfH = window.innerHeight / 2;
 
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
       camera.position.z = 1000;
@@ -92,12 +91,10 @@ export function WaveBg() {
       function onPointerMove(e: PointerEvent) {
         if (!e.isPrimary) return;
         mouseX = e.clientX - halfW;
-        mouseY = e.clientY - halfH;
       }
 
       function onResize() {
         halfW = window.innerWidth / 2;
-        halfH = window.innerHeight / 2;
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);

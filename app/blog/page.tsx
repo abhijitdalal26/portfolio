@@ -62,7 +62,7 @@ export default async function Blog() {
                   >
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <p style={{ fontSize: 17, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.02em", lineHeight: 1.3, marginBottom: 6 }}>{post.title}</p>
-                      <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--faint)" }}>{post.description}</p>
+                      <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--ink)" }}>{post.description}</p>
                     </div>
                     <div className="blog-row-meta" style={{ flexShrink: 0, paddingTop: 2, textAlign: "right" }}>
                       <p style={{ fontSize: 12, color: "var(--faint)", fontFamily: "var(--mono)", marginBottom: 6, whiteSpace: "nowrap" }}>{formatDate(post.date)}</p>
@@ -81,7 +81,7 @@ export default async function Blog() {
                   Writing on Substack
                 </h2>
                 <a
-                  href="https://abhijitdalal.substack.com"
+                  href="https://abhijitdalal.substack.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ fontSize: 13, color: "var(--sub)", fontWeight: 500 }}
@@ -90,7 +90,7 @@ export default async function Blog() {
                 </a>
               </div>
 
-              <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--faint)", marginBottom: 12 }}>
+              <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--ink)", marginBottom: 12 }}>
                 I also write about history, science and AI over on Substack. Every post lives there — click through to read.
               </p>
 
@@ -107,7 +107,7 @@ export default async function Blog() {
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <p style={{ fontSize: 17, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.02em", lineHeight: 1.3, marginBottom: 6 }}>{post.title}</p>
                         {post.description && (
-                          <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--faint)" }}>{post.description}</p>
+                          <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--ink)" }}>{post.description}</p>
                         )}
                       </div>
                       <div className="blog-row-meta" style={{ flexShrink: 0, paddingTop: 2, textAlign: "right" }}>

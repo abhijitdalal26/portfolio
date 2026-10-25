@@ -25,7 +25,7 @@ export function Footer() {
           <a href="https://x.com/abhijitdalal26" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="social-icon footer-social-icon">
             <svg width={16} height={16} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
-           <a href="https://substack.com/@abhijitdalal" target="_blank" rel="noopener noreferrer" aria-label="Substack" className="social-icon footer-social-icon">
+           <a href="https://abhijitdalal.substack.com/" target="_blank" rel="noopener noreferrer" aria-label="Substack" className="social-icon footer-social-icon">
              <svg width={16} height={16} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
            </a>
           <a href="mailto:abhijitdalal7462@gmail.com" aria-label="Email" className="social-icon footer-social-icon">
