@@ -37,6 +37,27 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "big-business-map",
+    title: "Big Business Map",
+    tagline: "The World's Biggest Companies, Mapped",
+    order: 11,
+    status: "current",
+    kind: "Data · Research Site",
+    tags: ["Python", "pandas", "ECharts", "Forbes Global 2000", "Fortune Global 500", "GitHub Pages"],
+    blurb: "An interactive map of the world's biggest companies: the Forbes Global 2000 and Fortune Global 500 (2026 editions), plus big unlisted Indian firms and large private companies, built to see where business power sits without the noise of tiny firms.",
+    github: "https://github.com/abhijitdalal26/big-business-map",
+    liveDemo: "https://abhijitdalal26.github.io/big-business-map/",
+    liveDemoLabel: "Visit the site",
+    heroImage: "/projects/big-business-map/world-map.png",
+    thumbnail: "/projects/big-business-map/world-map.png",
+    screenshots: ["/projects/big-business-map/world-map.png", "/projects/big-business-map/overview.png"],
+    stageLabel: "In Progress",
+    story: [
+      "Big Business Map is a research site that answers one question: what do the largest companies on earth look like, and where are they? It pulls together the Forbes Global 2000 and Fortune Global 500, adds big unlisted Indian companies and large private firms, and sets them against world GDP, stock markets and venture funding.",
+      "It is still in progress. The company lists are updated to the 2026 editions, and more private and unlisted companies are being added.",
+    ],
+  },
+  {
     slug: "pawvision",
     title: "PawVision",
     tagline: "Cat vs Dog Classifier",
