@@ -43,8 +43,8 @@ components/
   ProjectCard.tsx      # "use client" — homepage card: image (or cat/dog-style split cardPreview) + title/tagline, whole card links to detail page
   StackMarquees.tsx   # Scrolling Areas/Stack pill strips (shared by the homepage and the About page)
   Toc.tsx              # "use client" — blog post table of contents: fixed toggle button in the post's own header (not the global nav), opens a left-side panel (not full-screen), stays open until explicitly closed
-  HomeHero.tsx         # Homepage hero: "Abhijit" + accent italic serif "Dalal" with a hand-drawn swoosh, plain intro text, connect group (View CV button + GitHub/X/Substack/Email buttons with brand-coloured icon badges), PortraitRing. Faint dot-grid + accent glow background (.hero-shell), pulled up under the transparent home nav.
-  PortraitRing.tsx     # Colour circular portrait with a rotating "Student ✦ Builder ✦ Engineer ✦ Writer" ring (accent separators) and a soft glow (pure SVG + CSS, theme-aware)
+  HomeHero.tsx         # Homepage hero: "Abhijit" + accent italic serif "Dalal" with a hand-drawn swoosh, plain intro text, connect group (View CV button + GitHub/LinkedIn/X/Substack/Email buttons with brand-coloured icon badges), PortraitRing. Faint dot-grid background (no glow) (.hero-shell), pulled up under the transparent home nav.
+  PortraitRing.tsx     # Colour circular portrait with a plain rotating "Student · Builder · Engineer · Writer" ring — deliberately no accent colour or glow (pure SVG + CSS)
   LocalTime.tsx        # "use client" — live Mumbai (IST) HH:MM clock shown in the footer
   JuliaHero.tsx        # "use client" — full-bleed canvas Julia-set fractal, absolutely positioned background behind the /blog hero title; cursor x maps across curated waypoint constants (rabbit, spiral, frost, filament, sparkle), idles through them when untouched
   FadeUp.tsx           # "use client" — IntersectionObserver scroll-reveal wrapper
@@ -83,7 +83,7 @@ Text hierarchy (Notion-style): headings, primary reading content (story paragrap
 - `max-width: 720px` — mobile: 20px padding, single-column grids, hamburger nav
 - `max-width: 560px` — blog rows stack vertically
 - `max-width: 900px` — hero stacks and centres (portrait on top)
-- `max-width: 520px` — hero CV becomes full width, socials become a 4-up row of icon-over-label tiles
+- `max-width: 520px` — hero CV becomes full width, socials become a 5-up row of icon-over-label tiles
 - `max-width: 400px` — 16px side padding
 
 ### Key utility classes
@@ -160,3 +160,5 @@ Projects to feature on the site, in the order worked on (from `abhijitdalal26` G
 Every project currently in `lib/projects.ts` has a full write-up. `bookscroller` (Skrolla) is the only remaining `status: "current"` project (still being built out, not yet at final content).
 
 When picking up the next one: ask what images/diagrams the user has ready in `public/projects/<slug>/` (or check what's already there), write `story` + `howItWorks` following the two-audience split above, and check if a real model/architecture file exists in the project's own GitHub repo before writing any specifics — pull exact values (layer configs, hyperparameters) from there rather than guessing.
+
+One email address everywhere: `abhijitdalal2609@gmail.com` (hero, About, footer "Say hello" + icon). LinkedIn: https://www.linkedin.com/in/abhijitdalal/

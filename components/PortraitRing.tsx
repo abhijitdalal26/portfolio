@@ -4,8 +4,7 @@ import Image from "next/image";
 const WORDS = ["Student", "Builder", "Engineer", "Writer"];
 
 /**
- * Circular colour portrait with a slowly rotating ring of words around it
- * (separators in the accent colour) and a soft accent glow behind it.
+ * Circular colour portrait with a slowly rotating ring of words around it. Kept plain on purpose.
  * Pure SVG + CSS (spin speeds up on hover), no JS. Colours follow the theme tokens.
  */
 export function PortraitRing() {
@@ -21,7 +20,7 @@ export function PortraitRing() {
             {ring.map((w, i) => (
               <Fragment key={i}>
                 {w}
-                <tspan className="portrait-ring-sep"> ✦ </tspan>
+                {" · "}
               </Fragment>
             ))}
           </textPath>
