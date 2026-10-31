@@ -8,7 +8,7 @@
   --sub:        #6b6966;
   --faint:      #a09e9a;
   --line:       rgba(0,0,0,0.09);
-  --accent:     #c2410c;   /* terracotta */
+  --accent:     #111110;   /* monochrome: accent = ink */
   --accent-ink: #fafaf9;
   --panel-glass: rgba(250,250,249,0.82);
 
@@ -24,7 +24,7 @@
   --sub:        #78716c;
   --faint:      #57534e;
   --line:       rgba(255,255,255,0.09);
-  --accent:     #f0754a;   /* terracotta, lifted for dark bg */
+  --accent:     #f2f0ed;   /* monochrome: accent = ink */
   --accent-ink: #121212;
   --panel-glass: rgba(26,25,24,0.72);
 }
@@ -43,8 +43,8 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Text selection — on-brand accent tint */
-::selection { background: color-mix(in srgb, var(--accent) 24%, transparent); color: var(--ink); }
+/* Text selection — neutral tint */
+::selection { background: color-mix(in srgb, var(--ink) 16%, transparent); color: var(--ink); }
 
 /* Custom scrollbar */
 * { scrollbar-width: thin; scrollbar-color: var(--faint) transparent; }
@@ -565,7 +565,7 @@ body {
 .nav-mobile-link:hover { color: var(--ink); }
 
 /* ── Home hero ───────────────────────────────────────────
-   Faint dot-grid background, name with a hand-drawn swoosh,
+   Faint topographic contour lines behind the portrait, name with a hand-drawn swoosh,
    plain intro, connect group (CV + brand-badged socials), colour
    portrait ring. Pulled up under the transparent home nav so the dots
    run behind it. */
@@ -578,17 +578,6 @@ body {
   margin-top: -92px;
   padding-top: 92px;
 }
-.hero-shell::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image: radial-gradient(circle, color-mix(in srgb, var(--ink) 17%, transparent) 1px, transparent 1.6px);
-  background-size: 24px 24px;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 50%, transparent 100%);
-          mask-image: linear-gradient(to bottom, #000 0%, #000 50%, transparent 100%);
-  pointer-events: none;
-}
 
 .hero {
   display: grid;
@@ -599,6 +588,7 @@ body {
   padding-bottom: 104px;
 }
 
+.hero-text { position: relative; z-index: 1; }
 .hero-name {
   font-family: var(--sans);
   font-size: clamp(50px, 7.6vw, 104px);
@@ -614,7 +604,8 @@ body {
   font-style: italic;
   font-weight: 500;
   letter-spacing: -0.02em;
-  color: var(--accent);
+  font-weight: 400;
+  color: var(--ink);
   padding-right: 0.06em;
   white-space: nowrap;
 }
@@ -628,8 +619,8 @@ body {
 }
 .hero-swoosh path {
   fill: none;
-  stroke: var(--accent);
-  stroke-width: 4;
+  stroke: var(--faint);
+  stroke-width: 3.5;
   stroke-linecap: round;
   vector-effect: non-scaling-stroke;
   stroke-dasharray: 1;
@@ -665,10 +656,8 @@ body {
 }
 .cv-btn-arrow { display: inline-block; transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
 .cv-btn:hover {
-  background: var(--accent);
-  color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px -14px var(--accent);
+  box-shadow: 0 16px 32px -14px color-mix(in srgb, var(--ink) 85%, transparent);
 }
 .cv-btn:hover .cv-btn-arrow { transform: translate(2px, -2px); }
 
@@ -713,9 +702,28 @@ body {
 .hero-link-x        { --brand: #000000; }
 .hero-link-substack { --brand: #ff6719; }
 .hero-link-linkedin { --brand: #0a66c2; }
-.hero-link-email    { --brand: var(--accent); }
 .dark .hero-link-github { --brand: #f0f0ee; --brand-ink: #111110; }
 .dark .hero-link-x      { --brand: #f0f0ee; --brand-ink: #111110; }
+
+/* Topographic contour lines radiating from behind the portrait (TopoLines.tsx).
+   Very faint, static, faded out with a radial mask so they never hit an edge. */
+.hero-portrait { position: relative; }
+.topo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1200px;
+  height: 1200px;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(circle at center, #000 22%, transparent 49%);
+          mask-image: radial-gradient(circle at center, #000 22%, transparent 49%);
+}
+.topo path { fill: none; stroke: var(--ink); stroke-width: 1; opacity: 0.11; vector-effect: non-scaling-stroke; }
+.topo path.topo-major { opacity: 0.2; }
+.dark .topo path { opacity: 0.13; }
+.dark .topo path.topo-major { opacity: 0.22; }
 
 /* Colour portrait with a plain rotating ring of words */
 .portrait-ring { position: relative; width: 310px; aspect-ratio: 1; }
@@ -765,6 +773,7 @@ body {
   .hero { grid-template-columns: 1fr; gap: 18px; padding-top: 16px; padding-bottom: 64px; text-align: center; }
   .hero-portrait { order: -1; display: flex; justify-content: center; }
   .portrait-ring { width: 230px; }
+  .topo { width: 900px; height: 900px; }
   .portrait-ring-text text { font-size: 15.5px; letter-spacing: 0.2em; }
   .hero-intro { margin: 22px auto 28px; }
   .hero-connect { flex-direction: column; gap: 14px; }
@@ -774,13 +783,14 @@ body {
 @media (max-width: 720px) {
   .hero-shell { margin-top: -80px; padding-top: 80px; }
 }
-/* Phones: CV full width, socials as a tidy 5-up row of icon-over-label tiles */
+/* Phones: CV full width, socials as a tidy 4-up row of icon-over-label tiles */
 @media (max-width: 520px) {
   .portrait-ring { width: 200px; }
+  .topo { width: 760px; height: 760px; }
   .portrait-ring-text text { font-size: 17px; letter-spacing: 0.16em; }
   .hero-connect { align-items: stretch; }
   .cv-btn { justify-content: center; height: 50px; }
-  .hero-links { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+  .hero-links { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
   .hero-link {
     flex-direction: column;
     justify-content: center;
@@ -835,14 +845,15 @@ body {
   font-style: italic;
   font-weight: 500;
   letter-spacing: -0.02em;
-  color: var(--accent);
+  font-weight: 400;
+  color: var(--ink);
   padding-right: 0.04em;
 }
 .footer-hello-arrow {
   display: inline-block;
   font-weight: 300;
   font-size: 0.55em;
-  color: var(--accent);
+  color: var(--sub);
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .footer-hello-link:hover .footer-hello-arrow { transform: translate(10px, -10px); }

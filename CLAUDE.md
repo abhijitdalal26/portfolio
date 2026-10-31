@@ -43,7 +43,8 @@ components/
   ProjectCard.tsx      # "use client" — homepage card: image (or cat/dog-style split cardPreview) + title/tagline, whole card links to detail page
   StackMarquees.tsx   # Scrolling Areas/Stack pill strips (shared by the homepage and the About page)
   Toc.tsx              # "use client" — blog post table of contents: fixed toggle button in the post's own header (not the global nav), opens a left-side panel (not full-screen), stays open until explicitly closed
-  HomeHero.tsx         # Homepage hero: "Abhijit" + accent italic serif "Dalal" with a hand-drawn swoosh, plain intro text, connect group (View CV button + GitHub/LinkedIn/X/Substack/Email buttons with brand-coloured icon badges), PortraitRing. Faint dot-grid background (no glow) (.hero-shell), pulled up under the transparent home nav.
+  HomeHero.tsx         # Homepage hero: bold "Abhijit" + italic serif "Dalal" (same ink colour) with a grey hand-drawn swoosh, plain intro text, connect group (View CV button + GitHub/LinkedIn/X/Substack buttons with brand-coloured icon badges — email is only in the footer), PortraitRing with TopoLines behind it. Pulled up under the transparent home nav.
+  TopoLines.tsx        # Faint static topographic contour loops radiating from behind the portrait (generated at build time, radial-mask fade)
   PortraitRing.tsx     # Colour circular portrait with a plain rotating "Student · Builder · Engineer · Writer" ring — deliberately no accent colour or glow (pure SVG + CSS)
   LocalTime.tsx        # "use client" — live Mumbai (IST) HH:MM clock shown in the footer
   JuliaHero.tsx        # "use client" — full-bleed canvas Julia-set fractal, absolutely positioned background behind the /blog hero title; cursor x maps across curated waypoint constants (rabbit, spiral, frost, filament, sparkle), idles through them when untouched
@@ -69,8 +70,10 @@ CSS variables defined in `:root` / `.dark` in `globals.css`:
 | `--sub`    | `#6b6966`   | `#78716c`   |
 | `--faint`  | `#a09e9a`   | `#57534e`   |
 | `--line`   | `rgba(0,0,0,0.09)` | `rgba(255,255,255,0.09)` |
-| `--accent` | `#c2410c` (terracotta) | `#f0754a` |
+| `--accent` | `#111110` (= ink) | `#f2f0ed` (= ink) |
 | `--panel-glass` | `rgba(250,250,249,0.82)` | `rgba(26,25,24,0.72)` |
+
+The site is deliberately **monochrome**: `--accent` equals `--ink` in each theme (blue and terracotta were both tried and rejected). The only colour on the homepage hero is the photo and the brand badges on the social buttons. Don't reintroduce a coloured accent without asking.
 
 `--panel-glass` is a translucent, `backdrop-filter: blur(...)`-paired variant of `--panel` for frosted-glass overlays sitting on top of busy/animated backgrounds (e.g. the text scrim on the `/blog` hero over `JuliaHero`).
 
@@ -83,7 +86,7 @@ Text hierarchy (Notion-style): headings, primary reading content (story paragrap
 - `max-width: 720px` — mobile: 20px padding, single-column grids, hamburger nav
 - `max-width: 560px` — blog rows stack vertically
 - `max-width: 900px` — hero stacks and centres (portrait on top)
-- `max-width: 520px` — hero CV becomes full width, socials become a 5-up row of icon-over-label tiles
+- `max-width: 520px` — hero CV becomes full width, socials become a 4-up row of icon-over-label tiles
 - `max-width: 400px` — 16px side padding
 
 ### Key utility classes
@@ -161,4 +164,4 @@ Every project currently in `lib/projects.ts` has a full write-up. `bookscroller`
 
 When picking up the next one: ask what images/diagrams the user has ready in `public/projects/<slug>/` (or check what's already there), write `story` + `howItWorks` following the two-audience split above, and check if a real model/architecture file exists in the project's own GitHub repo before writing any specifics — pull exact values (layer configs, hyperparameters) from there rather than guessing.
 
-One email address everywhere: `abhijitdalal2609@gmail.com` (hero, About, footer "Say hello" + icon). LinkedIn: https://www.linkedin.com/in/abhijitdalal/
+One email address everywhere: `abhijitdalal2609@gmail.com` (About, footer "Say hello" + icon; not in the hero). LinkedIn: https://www.linkedin.com/in/abhijitdalal/
