@@ -6,6 +6,13 @@ import { LocalTime } from "./LocalTime";
 export function Footer() {
   return (
     <footer id="site-footer" style={{ borderTop: "1px solid var(--line)" }}>
+      <div className="page-wrap footer-hello">
+        <p className="footer-hello-eyebrow">Have an idea, a question, or just want to talk?</p>
+        <a href="mailto:abhijitdalal7462@gmail.com" className="footer-hello-link">
+          Say <em>hello</em>
+          <span className="footer-hello-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
       <div className="page-wrap footer-row">
         <div>
           <Link

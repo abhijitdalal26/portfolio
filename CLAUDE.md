@@ -39,7 +39,7 @@ app/
 components/
   Nav.tsx              # "use client" — nav links (Projects, Blog), hamburger menu on mobile, theme toggle. CV is NOT in the nav — it is the main button in the hero connect group.
   Providers.tsx        # "use client" — wraps children with ThemeProvider
-  Footer.tsx
+  Footer.tsx           # Big "Say hello" email call-to-action, name, ©, Mumbai + live IST time, social icons
   ProjectCard.tsx      # "use client" — homepage card: image (or cat/dog-style split cardPreview) + title/tagline, whole card links to detail page
   StackMarquees.tsx   # Scrolling Areas/Stack pill strips (shared by the homepage and the About page)
   Toc.tsx              # "use client" — blog post table of contents: fixed toggle button in the post's own header (not the global nav), opens a left-side panel (not full-screen), stays open until explicitly closed
@@ -69,7 +69,7 @@ CSS variables defined in `:root` / `.dark` in `globals.css`:
 | `--sub`    | `#6b6966`   | `#78716c`   |
 | `--faint`  | `#a09e9a`   | `#57534e`   |
 | `--line`   | `rgba(0,0,0,0.09)` | `rgba(255,255,255,0.09)` |
-| `--accent` | `#2563eb`   | `#3b82f6`   |
+| `--accent` | `#c2410c` (terracotta) | `#f0754a` |
 | `--panel-glass` | `rgba(250,250,249,0.82)` | `rgba(26,25,24,0.72)` |
 
 `--panel-glass` is a translucent, `backdrop-filter: blur(...)`-paired variant of `--panel` for frosted-glass overlays sitting on top of busy/animated backgrounds (e.g. the text scrim on the `/blog` hero over `JuliaHero`).

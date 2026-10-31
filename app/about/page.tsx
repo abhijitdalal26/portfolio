@@ -46,7 +46,7 @@ export default function About() {
                 <a href="https://abhijitdalal.substack.com/" target="_blank" rel="noopener noreferrer" aria-label="Substack" className="social-icon">
                   <svg width={18} height={18} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
                 </a>
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=agdalal_b23@el.vjti.ac.in" target="_blank" rel="noopener noreferrer" aria-label="College Email" className="social-icon">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abhijitdalal2609@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email" className="social-icon">
                   <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 7 10-7"/></svg>
                 </a>
                 <a

@@ -8,7 +8,7 @@
   --sub:        #6b6966;
   --faint:      #a09e9a;
   --line:       rgba(0,0,0,0.09);
-  --accent:     #2563eb;
+  --accent:     #c2410c;   /* terracotta */
   --accent-ink: #fafaf9;
   --panel-glass: rgba(250,250,249,0.82);
 
@@ -24,7 +24,7 @@
   --sub:        #78716c;
   --faint:      #57534e;
   --line:       rgba(255,255,255,0.09);
-  --accent:     #3b82f6;
+  --accent:     #f0754a;   /* terracotta, lifted for dark bg */
   --accent-ink: #121212;
   --panel-glass: rgba(26,25,24,0.72);
 }
@@ -827,6 +827,49 @@ body {
 @media (max-width: 560px) {
   .blog-row             { flex-direction: column; gap: 4px; padding: 10px 14px; }
   .blog-row-meta        { text-align: left; padding-top: 0; }
+}
+
+/* ── Footer "Say hello" call-to-action ── */
+.footer-hello { padding-top: 72px; padding-bottom: 8px; }
+.footer-hello-eyebrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sub);
+  margin-bottom: 14px;
+}
+.footer-hello-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.22em;
+  font-family: var(--sans);
+  font-size: clamp(54px, 10vw, 140px);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  color: var(--ink);
+  text-decoration: none;
+}
+.footer-hello-link em {
+  font-family: var(--disp);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  padding-right: 0.04em;
+}
+.footer-hello-arrow {
+  display: inline-block;
+  font-weight: 300;
+  font-size: 0.55em;
+  color: var(--accent);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.footer-hello-link:hover .footer-hello-arrow { transform: translate(10px, -10px); }
+.footer-hello-link:hover em { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 0.12em; }
+@media (max-width: 720px) {
+  .footer-hello { padding-top: 48px; }
 }
 
 /* ── Footer ─────────────────────────────────────────────── */
