@@ -103,12 +103,12 @@ export default async function Home() {
                     style={{ textUnderlineOffset: 3 }}
                   >
                     <span style={{ fontSize: 17, fontWeight: 400, color: "var(--ink)", letterSpacing: "-0.02em" }}>{post.title}</span>
-                    <span style={{ fontSize: 12, color: "var(--faint)", fontFamily: "var(--mono)", flexShrink: 0, whiteSpace: "nowrap" }}>{formatSubstackDate(post.date)} ↗</span>
+                    <span style={{ fontSize: 12.5, color: "var(--sub)", fontFamily: "var(--mono)", flexShrink: 0, whiteSpace: "nowrap" }}>{formatSubstackDate(post.date)} ↗</span>
                   </a>
                 ) : (
                   <Link href={post.href} className="blog-row" style={{ textUnderlineOffset: 3 }}>
                     <span style={{ fontSize: 17, fontWeight: 400, color: "var(--ink)", letterSpacing: "-0.02em" }}>{post.title}</span>
-                    <span style={{ fontSize: 12, color: "var(--faint)", fontFamily: "var(--mono)", flexShrink: 0, whiteSpace: "nowrap" }}>{formatSubstackDate(post.date)}</span>
+                    <span style={{ fontSize: 12.5, color: "var(--sub)", fontFamily: "var(--mono)", flexShrink: 0, whiteSpace: "nowrap" }}>{formatSubstackDate(post.date)}</span>
                   </Link>
                 )}
               </FadeUp>

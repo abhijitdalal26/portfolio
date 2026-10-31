@@ -49,7 +49,7 @@ export default async function BlogPost({ params }: Props) {
             >
               {post.title}
             </h1>
-            <span style={{ fontFamily: "var(--mono)", fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--faint)", display: "block", marginBottom: 16 }}>
+            <span style={{ fontFamily: "var(--mono)", fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--sub)", display: "block", marginBottom: 16 }}>
               {formatDate(post.date)}
             </span>
             {post.description && (

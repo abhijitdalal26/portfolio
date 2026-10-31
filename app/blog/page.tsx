@@ -65,7 +65,7 @@ export default async function Blog() {
                       <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--ink)" }}>{post.description}</p>
                     </div>
                     <div className="blog-row-meta" style={{ flexShrink: 0, paddingTop: 2, textAlign: "right" }}>
-                      <p style={{ fontSize: 12, color: "var(--faint)", fontFamily: "var(--mono)", marginBottom: 6, whiteSpace: "nowrap" }}>{formatDate(post.date)}</p>
+                      <p style={{ fontSize: 12.5, color: "var(--sub)", fontFamily: "var(--mono)", marginBottom: 6, whiteSpace: "nowrap" }}>{formatDate(post.date)}</p>
                       <span style={{ fontSize: 13, color: "var(--sub)", fontWeight: 500 }}>Read →</span>
                     </div>
                   </Link>
@@ -111,7 +111,7 @@ export default async function Blog() {
                         )}
                       </div>
                       <div className="blog-row-meta" style={{ flexShrink: 0, paddingTop: 2, textAlign: "right" }}>
-                        <p style={{ fontSize: 12, color: "var(--faint)", fontFamily: "var(--mono)", marginBottom: 6, whiteSpace: "nowrap" }}>{formatSubstackDate(post.date)}</p>
+                        <p style={{ fontSize: 12.5, color: "var(--sub)", fontFamily: "var(--mono)", marginBottom: 6, whiteSpace: "nowrap" }}>{formatSubstackDate(post.date)}</p>
                         <span style={{ fontSize: 13, color: "var(--sub)", fontWeight: 500 }}>Read on Substack ↗</span>
                       </div>
                     </a>

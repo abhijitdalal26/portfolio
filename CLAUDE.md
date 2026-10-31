@@ -67,7 +67,7 @@ CSS variables defined in `:root` / `.dark` in `globals.css`:
 | `--bg`     | `#fafaf9`   | `#121212`   |
 | `--panel`  | `#f2f0ed`   | `#1a1918`   |
 | `--ink`    | `#111110`   | `#f2f0ed`   |
-| `--sub`    | `#6b6966`   | `#78716c`   |
+| `--sub`    | `#6b6966`   | `#a8a29e`   |
 | `--faint`  | `#a09e9a`   | `#57534e`   |
 | `--line`   | `rgba(0,0,0,0.09)` | `rgba(255,255,255,0.09)` |
 | `--accent` | `#111110` (= ink) | `#f2f0ed` (= ink) |
