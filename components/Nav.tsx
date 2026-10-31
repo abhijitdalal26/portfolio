@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { AnimatedSignature } from "./AnimatedSignature";
 import { ThemeToggle } from "./ThemeToggle";
-import { RESUME_URL } from "@/lib/resume";
 
 const links = [
   // The homepage IS the projects page — the anchor scrolls to that section.
@@ -47,7 +46,6 @@ export function Nav() {
                 </Link>
               );
             })}
-            <a href={RESUME_URL} target="_blank" rel="noopener noreferrer" className="nav-link">CV ↗</a>
             <ThemeToggle />
           </div>
 
@@ -83,7 +81,6 @@ export function Nav() {
               </Link>
             );
           })}
-          <a href={RESUME_URL} target="_blank" rel="noopener noreferrer" className="nav-mobile-link">CV ↗</a>
         </div>
       )}
     </div>

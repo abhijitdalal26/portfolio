@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { LocalTime } from "./LocalTime";
 
 export function Footer() {
   return (
@@ -15,6 +16,9 @@ export function Footer() {
           </Link>
           <span style={{ fontSize: 13, color: "var(--faint)", fontFamily: "var(--mono)" }}>
             © {new Date().getFullYear()} Abhijit Dalal
+          </span>
+          <span style={{ fontSize: 13, color: "var(--faint)", fontFamily: "var(--mono)", display: "block", marginTop: 3 }}>
+            Mumbai, India · <LocalTime /> IST
           </span>
         </div>
 

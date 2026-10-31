@@ -28,7 +28,7 @@ app/
   layout.tsx           # Root: Providers (ThemeProvider), Nav, Footer
   globals.css          # Design tokens, responsive breakpoints, utility classes
   icon.svg             # Favicon — black "A" on off-white
-  page.tsx             # Home (hero: name + intro + one-row social links, PortraitRing on the right; then "Currently Working On" + projects grid, blog list, Areas/Stack marquee strips) — Server Component
+  page.tsx             # Home (<HomeHero />; then "Currently Working On" + projects grid, blog list, Areas/Stack marquee strips) — Server Component
   projects/[slug]/page.tsx # Project detail page (story, how it works, technical breakdown diagrams, my architecture, links/papers)
   blog/page.tsx         # Blog post list
   blog/[slug]/page.tsx  # Dynamic MDX post renderer + TOC sidebar
@@ -37,13 +37,15 @@ app/
   sitemap.ts            # Auto-generated sitemap (posts + projects)
   robots.ts
 components/
-  Nav.tsx              # "use client" — nav links (Projects, Blog, CV ↗), hamburger menu on mobile, theme toggle. CV lives here only, not in the hero links.
+  Nav.tsx              # "use client" — nav links (Projects, Blog), hamburger menu on mobile, theme toggle. CV is NOT in the nav — it is the main button in the hero connect group.
   Providers.tsx        # "use client" — wraps children with ThemeProvider
   Footer.tsx
   ProjectCard.tsx      # "use client" — homepage card: image (or cat/dog-style split cardPreview) + title/tagline, whole card links to detail page
   StackMarquees.tsx   # Scrolling Areas/Stack pill strips (shared by the homepage and the About page)
   Toc.tsx              # "use client" — blog post table of contents: fixed toggle button in the post's own header (not the global nav), opens a left-side panel (not full-screen), stays open until explicitly closed
-  PortraitRing.tsx     # Homepage hero photo: black-and-white circular portrait with a rotating "Student · Builder · Engineer · Writer" text ring (pure SVG + CSS, theme-aware)
+  HomeHero.tsx         # Homepage hero: "Abhijit" + accent italic serif "Dalal" with a hand-drawn swoosh, plain intro text, connect group (View CV button + GitHub/X/Substack/Email buttons with brand-coloured icon badges), PortraitRing. Faint dot-grid + accent glow background (.hero-shell), pulled up under the transparent home nav.
+  PortraitRing.tsx     # Colour circular portrait with a rotating "Student ✦ Builder ✦ Engineer ✦ Writer" ring (accent separators) and a soft glow (pure SVG + CSS, theme-aware)
+  LocalTime.tsx        # "use client" — live Mumbai (IST) HH:MM clock shown in the footer
   JuliaHero.tsx        # "use client" — full-bleed canvas Julia-set fractal, absolutely positioned background behind the /blog hero title; cursor x maps across curated waypoint constants (rabbit, spiral, frost, filament, sparkle), idles through them when untouched
   FadeUp.tsx           # "use client" — IntersectionObserver scroll-reveal wrapper
   AnimatedSignature.tsx # Nav logo ("Ad" cursive signature)
@@ -80,11 +82,12 @@ Text hierarchy (Notion-style): headings, primary reading content (story paragrap
 - `max-width: 1024px` — tablet: 32px side padding
 - `max-width: 720px` — mobile: 20px padding, single-column grids, hamburger nav
 - `max-width: 560px` — blog rows stack vertically
-- `max-width: 400px` / `340px` — hero social links tighten to stay on one row; they only wrap below 340px
+- `max-width: 900px` — hero stacks and centres (portrait on top)
+- `max-width: 520px` — hero CV becomes full width, socials become a 4-up row of icon-over-label tiles
 - `max-width: 400px` — 16px side padding
 
 ### Key utility classes
-`.page-wrap`, `.grid-2`, `.grid-2-wide`, `.about-cols`, `.blog-row`, `.hero`, `.hero-name`, `.hero-intro`, `.hero-link`, `.portrait-ring`, `.about-photo`, `.btn-primary`, `.btn-ghost`, `.chip`, `.prose`, `.pulse-dot`, `.s-pt-80`, `.s-pt-64`, `.s-pb-88`
+`.page-wrap`, `.grid-2`, `.grid-2-wide`, `.about-cols`, `.blog-row`, `.hero-shell`, `.hero`, `.hero-name`, `.hero-name-accent`, `.hero-intro`, `.cv-btn`, `.hero-link` (+ `.hero-link-<brand>`), `.portrait-ring`, `.about-photo`, `.btn-primary`, `.btn-ghost`, `.chip`, `.prose`, `.pulse-dot`, `.s-pt-80`, `.s-pt-64`, `.s-pb-88`
 
 `.prose h2`/`h3` have `scroll-margin-top: 160px` so jumping to a TOC anchor leaves the tail of the previous section visible instead of snapping the heading flush to the viewport top.
 

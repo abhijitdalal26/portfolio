@@ -564,37 +564,134 @@ body {
 }
 .nav-mobile-link:hover { color: var(--ink); }
 
-/* ── Home hero: name + intro + links | portrait ring ───── */
+/* ── Home hero ───────────────────────────────────────────
+   Dot-grid + soft accent glow background, name with a hand-drawn swoosh,
+   plain intro, connect group (CV + brand-badged socials), colour
+   portrait ring. Pulled up under the transparent home nav so the dots
+   run behind it. */
+.hero-shell {
+  position: relative;
+  /* visible (not hidden) so the glow fades out instead of being cut at the bottom;
+     html/body overflow-x: clip already stops any sideways scroll */
+  overflow: visible;
+  isolation: isolate;
+  margin-top: -92px;
+  padding-top: 92px;
+}
+.hero-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--ink) 17%, transparent) 1px, transparent 1.6px);
+  background-size: 24px 24px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 50%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 50%, transparent 100%);
+  pointer-events: none;
+}
+.hero-shell::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 640px;
+  height: 640px;
+  right: max(2%, calc(50% - 640px));
+  top: 4%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 17%, transparent) 0%, transparent 62%);
+  pointer-events: none;
+}
+
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 56px;
   align-items: center;
-  padding-top: 64px;
-  padding-bottom: 96px;
+  padding-top: 56px;
+  padding-bottom: 104px;
 }
+
 .hero-name {
   font-family: var(--sans);
-  font-size: clamp(48px, 7.4vw, 96px);
-  line-height: 1;
+  font-size: clamp(50px, 7.6vw, 104px);
+  line-height: 1.02;
   font-weight: 800;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.045em;
   color: var(--ink);
 }
+.hero-name-accent {
+  position: relative;
+  display: inline-block;
+  font-family: var(--disp);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  padding-right: 0.06em;
+  white-space: nowrap;
+}
+.hero-swoosh {
+  position: absolute;
+  left: 0;
+  bottom: -0.1em;
+  width: 100%;
+  height: 0.26em;
+  overflow: visible;
+}
+.hero-swoosh path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: swoosh-draw 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.65s forwards;
+}
+@keyframes swoosh-draw { to { stroke-dashoffset: 0; } }
+
 .hero-intro {
-  font-size: clamp(18px, 1.9vw, 22px);
-  line-height: 1.6;
+  font-size: clamp(18px, 1.85vw, 21px);
+  line-height: 1.65;
   color: var(--ink);
   max-width: 600px;
-  margin: 24px 0 32px;
+  margin: 30px 0 34px;
 }
-.hero-links { display: flex; flex-wrap: nowrap; gap: 10px; }   /* one row on every width above 360px */
-.hero-link {
+/* Connect group */
+.hero-connect { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+
+.cv-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  min-height: 42px;
-  padding: 0 18px;
+  gap: 9px;
+  height: 46px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14.5px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 10px 26px -14px color-mix(in srgb, var(--ink) 80%, transparent);
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+}
+.cv-btn-arrow { display: inline-block; transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.cv-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -14px var(--accent);
+}
+.cv-btn:hover .cv-btn-arrow { transform: translate(2px, -2px); }
+
+.hero-links { display: flex; flex-wrap: nowrap; gap: 8px; }
+.hero-link {
+  --brand: var(--accent);
+  --brand-ink: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 46px;
+  padding: 0 16px 0 6px;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: var(--panel);
@@ -602,34 +699,69 @@ body {
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
+  transition: border-color 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
 }
-.hero-link:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); transform: translateY(-1px); }
+.hero-link-badge {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--brand);
+  color: var(--brand-ink);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hero-link:hover {
+  border-color: var(--brand);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -16px var(--brand);
+}
+.hero-link:hover .hero-link-badge { transform: rotate(-10deg) scale(1.06); }
 
-/* Black-and-white circular portrait with a rotating ring of words */
-.portrait-ring { position: relative; width: 300px; aspect-ratio: 1; }
+.hero-link-github   { --brand: #24292f; }
+.hero-link-x        { --brand: #000000; }
+.hero-link-substack { --brand: #ff6719; }
+.hero-link-email    { --brand: var(--accent); }
+.dark .hero-link-github { --brand: #f0f0ee; --brand-ink: #111110; }
+.dark .hero-link-x      { --brand: #f0f0ee; --brand-ink: #111110; }
+
+/* Colour portrait with a rotating ring of words + soft glow */
+.portrait-ring { position: relative; width: 310px; aspect-ratio: 1; }
+.portrait-ring::before {
+  content: "";
+  position: absolute;
+  inset: 14%;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 45%, transparent), transparent 70%);
+  filter: blur(26px);
+  z-index: 0;
+}
 .portrait-ring-text {
   position: absolute; inset: 0; width: 100%; height: 100%;
   overflow: visible;
-  animation: ring-spin 30s linear infinite;
+  animation: ring-spin 32s linear infinite;
 }
 .portrait-ring-text text {
   font-family: var(--mono);
   font-size: 14px;
-  letter-spacing: 0.28em;
+  font-weight: 500;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   fill: var(--ink);
 }
+.portrait-ring-text .portrait-ring-sep { fill: var(--accent); }
 .portrait-ring:hover .portrait-ring-text { animation-duration: 10s; }
 .portrait-ring-photo {
   position: absolute; inset: 19%;
   border-radius: 50%;
   overflow: hidden;
-  filter: grayscale(1) contrast(1.05);
-  box-shadow: 0 0 0 6px var(--bg), 0 0 0 7px var(--line);
-  transition: filter 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 1;
+  box-shadow: 0 0 0 5px var(--bg), 0 0 0 6.5px color-mix(in srgb, var(--accent) 55%, transparent), 0 20px 40px -18px rgba(0,0,0,0.45);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.portrait-ring:hover .portrait-ring-photo { filter: grayscale(0.1); transform: scale(1.03); }
+.portrait-ring:hover .portrait-ring-photo { transform: scale(1.04); }
 @keyframes ring-spin { to { transform: rotate(360deg); } }
 
 /* Entrance — staggered rise on first paint */
@@ -644,34 +776,42 @@ body {
 .hero-portrait             { animation-delay: 0.2s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-text > *, .hero-portrait { animation: none; }
-  .portrait-ring-text { animation: none; }
+  .hero-text > *, .hero-portrait, .portrait-ring-text { animation: none; }
+  .hero-swoosh path { animation: none; stroke-dashoffset: 0; }
 }
 
-@media (max-width: 1024px) {
-  .hero { gap: 32px; }
-  .hero-links { gap: 8px; }
-  .hero-link { padding: 0 14px; font-size: 13.5px; }
-  .portrait-ring { width: 240px; }
-  .portrait-ring-text text { font-size: 15px; }
-}
-@media (max-width: 720px) {
-  .hero { grid-template-columns: 1fr; gap: 20px; padding-top: 24px; padding-bottom: 56px; text-align: center; }
+/* Tablet & phone: stack, centred, portrait on top */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 18px; padding-top: 16px; padding-bottom: 64px; text-align: center; }
   .hero-portrait { order: -1; display: flex; justify-content: center; }
-  .portrait-ring { width: 210px; }
-  .portrait-ring-text text { font-size: 16px; letter-spacing: 0.22em; }
-  .hero-intro { margin: 16px auto 24px; }
+  .portrait-ring { width: 230px; }
+  .portrait-ring-text text { font-size: 15.5px; letter-spacing: 0.2em; }
+  .hero-intro { margin: 22px auto 28px; }
+  .hero-connect { flex-direction: column; gap: 14px; }
   .hero-links { justify-content: center; }
-  .hero-link { min-height: 44px; }
+  .hero-shell::after { right: 50%; transform: translateX(50%); top: 0; width: 520px; height: 520px; }
   .home-intro-wrap { padding-top: 0 !important; }
 }
-@media (max-width: 400px) {
-  .portrait-ring { width: 190px; }
-  .hero-links { gap: 4px; }
-  .hero-link { padding: 0 9px; gap: 5px; font-size: 12.5px; }
+@media (max-width: 720px) {
+  .hero-shell { margin-top: -80px; padding-top: 80px; }
 }
-@media (max-width: 340px) {
-  .hero-links { flex-wrap: wrap; }   /* very small phones: allow a second row rather than overflow */
+/* Phones: CV full width, socials as a tidy 4-up row of icon-over-label tiles */
+@media (max-width: 520px) {
+  .portrait-ring { width: 200px; }
+  .portrait-ring-text text { font-size: 17px; letter-spacing: 0.16em; }
+  .hero-connect { align-items: stretch; }
+  .cv-btn { justify-content: center; height: 50px; }
+  .hero-links { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .hero-link {
+    flex-direction: column;
+    justify-content: center;
+    height: auto;
+    gap: 6px;
+    padding: 10px 4px 9px;
+    border-radius: 16px;
+    font-size: 12px;
+  }
+  .hero-link-badge { width: 32px; height: 32px; }
 }
 
 /* ── Blog list row ──────────────────────────────────────── */

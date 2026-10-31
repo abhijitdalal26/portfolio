@@ -1,12 +1,15 @@
+import { Fragment } from "react";
 import Image from "next/image";
 
-const RING = "Student · Builder · Engineer · Writer · Student · Builder · Engineer · Writer · ";
+const WORDS = ["Student", "Builder", "Engineer", "Writer"];
 
 /**
- * Black-and-white circular portrait with a slowly rotating ring of words around it.
- * Pure SVG + CSS (spin speeds up on hover), no JS. Colors follow the theme tokens.
+ * Circular colour portrait with a slowly rotating ring of words around it
+ * (separators in the accent colour) and a soft accent glow behind it.
+ * Pure SVG + CSS (spin speeds up on hover), no JS. Colours follow the theme tokens.
  */
 export function PortraitRing() {
+  const ring = [...WORDS, ...WORDS];
   return (
     <div className="portrait-ring">
       <svg className="portrait-ring-text" viewBox="0 0 300 300" aria-hidden="true">
@@ -14,7 +17,14 @@ export function PortraitRing() {
           <path id="portrait-ring-path" d="M150,150 m-132,0 a132,132 0 1,1 264,0 a132,132 0 1,1 -264,0" />
         </defs>
         <text>
-          <textPath href="#portrait-ring-path" textLength="826" lengthAdjust="spacing">{RING}</textPath>
+          <textPath href="#portrait-ring-path" textLength="826" lengthAdjust="spacing">
+            {ring.map((w, i) => (
+              <Fragment key={i}>
+                {w}
+                <tspan className="portrait-ring-sep"> ✦ </tspan>
+              </Fragment>
+            ))}
+          </textPath>
         </text>
       </svg>
       <div className="portrait-ring-photo">
