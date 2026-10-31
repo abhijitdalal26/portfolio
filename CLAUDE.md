@@ -28,7 +28,7 @@ app/
   layout.tsx           # Root: Providers (ThemeProvider), Nav, Footer
   globals.css          # Design tokens, responsive breakpoints, utility classes
   icon.svg             # Favicon — black "A" on off-white
-  page.tsx             # Home (wave hero, "Currently Working On" + projects grid, blog list, Areas/Stack marquee strips) — Server Component
+  page.tsx             # Home (hero: name + intro + one-row social links, PortraitRing on the right; then "Currently Working On" + projects grid, blog list, Areas/Stack marquee strips) — Server Component
   projects/[slug]/page.tsx # Project detail page (story, how it works, technical breakdown diagrams, my architecture, links/papers)
   blog/page.tsx         # Blog post list
   blog/[slug]/page.tsx  # Dynamic MDX post renderer + TOC sidebar
@@ -37,13 +37,13 @@ app/
   sitemap.ts            # Auto-generated sitemap (posts + projects)
   robots.ts
 components/
-  Nav.tsx              # "use client" — sticky nav, hamburger menu on mobile, theme toggle
+  Nav.tsx              # "use client" — nav links (Projects, Blog, CV ↗), hamburger menu on mobile, theme toggle. CV lives here only, not in the hero links.
   Providers.tsx        # "use client" — wraps children with ThemeProvider
   Footer.tsx
   ProjectCard.tsx      # "use client" — homepage card: image (or cat/dog-style split cardPreview) + title/tagline, whole card links to detail page
   StackMarquees.tsx   # Scrolling Areas/Stack pill strips (shared by the homepage and the About page)
   Toc.tsx              # "use client" — blog post table of contents: fixed toggle button in the post's own header (not the global nav), opens a left-side panel (not full-screen), stays open until explicitly closed
-  WaveBg.tsx           # "use client" — Three.js particle wave background, used on homepage hero only
+  PortraitRing.tsx     # Homepage hero photo: black-and-white circular portrait with a rotating "Student · Builder · Engineer · Writer" text ring (pure SVG + CSS, theme-aware)
   JuliaHero.tsx        # "use client" — full-bleed canvas Julia-set fractal, absolutely positioned background behind the /blog hero title; cursor x maps across curated waypoint constants (rabbit, spiral, frost, filament, sparkle), idles through them when untouched
   FadeUp.tsx           # "use client" — IntersectionObserver scroll-reveal wrapper
   AnimatedSignature.tsx # Nav logo ("Ad" cursive signature)
@@ -53,7 +53,7 @@ lib/projects.ts        # Project type + data (single source of truth for all pro
 lib/toc.ts             # extractHeadings() — parses ## headings from raw MDX, generates matching slugger ids for the TOC
 ```
 
-Some older experimental background components (`Hero.tsx`, `AuroraBg.tsx`, `ParticlesBg.tsx`, `VantaBg.tsx`) and a shared `Marquee.tsx` are unused leftovers — not wired into any page. The scrolling Areas/Stack strips live in `components/StackMarquees.tsx` and are rendered by both the homepage (below the blog list) and the About page.
+The homepage hero has no animated background (the Three.js `WaveBg` and the `three` package were removed). `html, body` use `overflow-x: clip` so the spinning portrait ring can never cause sideways scroll on phones. Some older experimental background components (`Hero.tsx`, `AuroraBg.tsx`, `ParticlesBg.tsx`, `VantaBg.tsx`) and a shared `Marquee.tsx` are unused leftovers — not wired into any page. The scrolling Areas/Stack strips live in `components/StackMarquees.tsx` and are rendered by both the homepage (below the blog list) and the About page.
 
 ## Design System
 
@@ -80,11 +80,11 @@ Text hierarchy (Notion-style): headings, primary reading content (story paragrap
 - `max-width: 1024px` — tablet: 32px side padding
 - `max-width: 720px` — mobile: 20px padding, single-column grids, hamburger nav
 - `max-width: 560px` — blog rows stack vertically
-- `max-width: 480px` — avatar shrinks
+- `max-width: 400px` / `340px` — hero social links tighten to stay on one row; they only wrap below 340px
 - `max-width: 400px` — 16px side padding
 
 ### Key utility classes
-`.page-wrap`, `.grid-2`, `.grid-2-wide`, `.about-cols`, `.blog-row`, `.hero-content`, `.hero-avatar`, `.about-photo`, `.btn-primary`, `.btn-ghost`, `.chip`, `.prose`, `.pulse-dot`, `.s-pt-80`, `.s-pt-64`, `.s-pb-88`
+`.page-wrap`, `.grid-2`, `.grid-2-wide`, `.about-cols`, `.blog-row`, `.hero`, `.hero-name`, `.hero-intro`, `.hero-link`, `.portrait-ring`, `.about-photo`, `.btn-primary`, `.btn-ghost`, `.chip`, `.prose`, `.pulse-dot`, `.s-pt-80`, `.s-pt-64`, `.s-pb-88`
 
 `.prose h2`/`h3` have `scroll-margin-top: 160px` so jumping to a TOC anchor leaves the tail of the previous section visible instead of snapping the heading flush to the viewport top.
 

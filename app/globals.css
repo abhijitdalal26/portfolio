@@ -31,6 +31,7 @@
 
 /* ── Base ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: clip; }
 html { background: var(--bg); }
 body {
   background: var(--bg);
@@ -563,63 +564,114 @@ body {
 }
 .nav-mobile-link:hover { color: var(--ink); }
 
-/* ── Hero entrance — staggered rise on first paint ─────── */
+/* ── Home hero: name + intro + links | portrait ring ───── */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 56px;
+  align-items: center;
+  padding-top: 64px;
+  padding-bottom: 96px;
+}
+.hero-name {
+  font-family: var(--sans);
+  font-size: clamp(48px, 7.4vw, 96px);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+.hero-intro {
+  font-size: clamp(18px, 1.9vw, 22px);
+  line-height: 1.6;
+  color: var(--ink);
+  max-width: 600px;
+  margin: 24px 0 32px;
+}
+.hero-links { display: flex; flex-wrap: nowrap; gap: 10px; }   /* one row on every width above 360px */
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.hero-link:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); transform: translateY(-1px); }
+
+/* Black-and-white circular portrait with a rotating ring of words */
+.portrait-ring { position: relative; width: 300px; aspect-ratio: 1; }
+.portrait-ring-text {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  overflow: visible;
+  animation: ring-spin 30s linear infinite;
+}
+.portrait-ring-text text {
+  font-family: var(--mono);
+  font-size: 14px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  fill: var(--ink);
+}
+.portrait-ring:hover .portrait-ring-text { animation-duration: 10s; }
+.portrait-ring-photo {
+  position: absolute; inset: 19%;
+  border-radius: 50%;
+  overflow: hidden;
+  filter: grayscale(1) contrast(1.05);
+  box-shadow: 0 0 0 6px var(--bg), 0 0 0 7px var(--line);
+  transition: filter 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.portrait-ring:hover .portrait-ring-photo { filter: grayscale(0.1); transform: scale(1.03); }
+@keyframes ring-spin { to { transform: rotate(360deg); } }
+
+/* Entrance — staggered rise on first paint */
 @keyframes hero-rise {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: none; }
 }
-.hero-content > * {
-  animation: hero-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-.hero-content > *:nth-child(1) { animation-delay: 0.05s; }
-.hero-content > *:nth-child(2) { animation-delay: 0.16s; }
-.hero-content > *:nth-child(3) { animation-delay: 0.27s; }
-.hero-content > *:nth-child(4) { animation-delay: 0.38s; }
+.hero-text > *, .hero-portrait { animation: hero-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.hero-text > :nth-child(1) { animation-delay: 0.05s; }
+.hero-text > :nth-child(2) { animation-delay: 0.16s; }
+.hero-text > :nth-child(3) { animation-delay: 0.27s; }
+.hero-portrait             { animation-delay: 0.2s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-content > * { animation: none; }
+  .hero-text > *, .hero-portrait { animation: none; }
+  .portrait-ring-text { animation: none; }
 }
 
-/* ── Hero responsive ────────────────────────────────────── */
-.hero-content {
-  position: relative;
-  z-index: 1;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 72px 24px 48px;
+@media (max-width: 1024px) {
+  .hero { gap: 32px; }
+  .hero-links { gap: 8px; }
+  .hero-link { padding: 0 14px; font-size: 13.5px; }
+  .portrait-ring { width: 240px; }
+  .portrait-ring-text text { font-size: 15px; }
 }
 @media (max-width: 720px) {
-  /* Keep enough height for the wave background to read as a hero, without
-     forcing a full 100vh (which felt like dead space on short content). */
-  .hero-wrap    { min-height: min(80svh, 600px) !important; }
-  .hero-content { padding: 32px 20px 28px; justify-content: center; }
+  .hero { grid-template-columns: 1fr; gap: 20px; padding-top: 24px; padding-bottom: 56px; text-align: center; }
+  .hero-portrait { order: -1; display: flex; justify-content: center; }
+  .portrait-ring { width: 210px; }
+  .portrait-ring-text text { font-size: 16px; letter-spacing: 0.22em; }
+  .hero-intro { margin: 16px auto 24px; }
+  .hero-links { justify-content: center; }
+  .hero-link { min-height: 44px; }
+  .home-intro-wrap { padding-top: 0 !important; }
 }
-
-@media (max-width: 480px) {
-  .hero-wrap    { min-height: min(70svh, 520px) !important; }
+@media (max-width: 400px) {
+  .portrait-ring { width: 190px; }
+  .hero-links { gap: 4px; }
+  .hero-link { padding: 0 9px; gap: 5px; font-size: 12.5px; }
 }
-
-@media (max-width: 720px) {
-  .home-intro-wrap { padding-top: 28px !important; }
-  .hero-roles      { margin-bottom: 24px !important; }
-}
-
-.hero-avatar {
-  width: 112px;
-  height: 112px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin: 0 auto 32px;
-  border: 2px solid rgba(0,0,0,0.1);
-}
-@media (max-width: 480px) {
-  .hero-avatar { width: 80px; height: 80px; margin-bottom: 24px; }
+@media (max-width: 340px) {
+  .hero-links { flex-wrap: wrap; }   /* very small phones: allow a second row rather than overflow */
 }
 
 /* ── Blog list row ──────────────────────────────────────── */
