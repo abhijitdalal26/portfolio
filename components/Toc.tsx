@@ -95,9 +95,9 @@ export function Toc({ items }: { items: TocItem[] }) {
     };
   }, []);
 
-  // The toggle is fixed to the viewport, so without this it floats on top of
-  // the footer's own social icons once they scroll into view at the end of
-  // the post. Hide it before it ever reaches that space.
+  // The toggle and the desktop panel are fixed to the viewport, so without
+  // this they float on top of the footer ("Say hello", social icons) once it
+  // scrolls into view at the end of the post. Hide both before they reach it.
   useEffect(() => {
     const footer = document.getElementById("site-footer");
     if (!footer) return;
@@ -137,7 +137,7 @@ export function Toc({ items }: { items: TocItem[] }) {
       {open && (
         <>
           <div className="toc-backdrop" onClick={() => setOpen(false)} aria-hidden="true" />
-          <div className="toc-panel">
+          <div className={`toc-panel${nearFooter ? " toc-panel-hidden" : ""}`}>
             <button
               onClick={() => setOpen(false)}
               aria-label="Close contents"

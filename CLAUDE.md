@@ -45,7 +45,7 @@ components/
   Toc.tsx              # "use client" — blog post table of contents: fixed toggle button in the post's own header (not the global nav), opens a left-side panel (not full-screen), stays open until explicitly closed
   HomeHero.tsx         # Homepage hero: bold "Abhijit" + italic serif "Dalal" (same ink colour) with a grey hand-drawn swoosh, plain intro text, connect group (GitHub/LinkedIn/X/Substack buttons with brand-coloured icon badges — the resume is in the nav, email is only in the footer), PortraitRing with TopoLines behind it. Pulled up under the transparent home nav.
   TopoLines.tsx        # Faint static topographic contour loops radiating from behind the portrait (generated at build time, radial-mask fade)
-  PortraitRing.tsx     # Colour circular portrait with a plain rotating "Student · Builder · Engineer · Writer" ring — deliberately no accent colour or glow (pure SVG + CSS)
+  PortraitRing.tsx     # Colour circular portrait with a plain rotating "Builder · Engineer · Writer" ring — deliberately no accent colour or glow (pure SVG + CSS)
   LocalTime.tsx        # "use client" — live Mumbai (IST) HH:MM clock shown in the footer
   JuliaHero.tsx        # "use client" — full-bleed canvas Julia-set fractal, absolutely positioned background behind the /blog hero title; cursor x maps across curated waypoint constants (rabbit, spiral, frost, filament, sparkle), idles through them when untouched
   FadeUp.tsx           # "use client" — IntersectionObserver scroll-reveal wrapper
@@ -160,7 +160,7 @@ Projects to feature on the site, in the order worked on (from `abhijitdalal26` G
 - [x] `play-store-app-analysis` — Play Store market research (2022 archive + fresh 2026 scrape). Has 19 real `diagrams` (static + interactive Plotly embeds) + `papers`/`links` to the Kaggle datasets/notebook.
 - [x] `projects-wiki` — markdown-based persistent memory/wiki system for working with LLMs across sessions (`RICKPRIME.md`/`MORTY.md`/`portal` command catalog). `order: 6`, no `diagrams`/`architectureSteps` (nothing to benchmark or diagram — it's pure workflow/docs tooling), just `story`/`howItWorks`.
 
-- [x] `cliptrail` — cross-device encrypted clipboard history (Rust/Tauri/Android). `order: 12`, `status: "current"`. Deliberately minimal (user request): blurb, two-line `story`, hero/thumbnail = the project site's social card, links to the site, docs and security page. The project's own README and site carry the full explanation — don't expand it here.
+- [x] `cliptrail` — cross-device encrypted clipboard history (Rust/Tauri/Android). `order: 12`, `status: "done"` (user wants it with the normal projects, not "Currently Working On"). Deliberately minimal (user request): blurb, two-line `story`, hero/thumbnail = the project site's social card, links to the site, docs and security page. The project's own README and site carry the full explanation — don't expand it here.
 
 Every project currently in `lib/projects.ts` has a full write-up. `bookscroller` (Skrolla) is the only remaining `status: "current"` project (still being built out, not yet at final content).
 

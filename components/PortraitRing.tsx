@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import Image from "next/image";
 
-const WORDS = ["Student", "Builder", "Engineer", "Writer"];
+const WORDS = ["Builder", "Engineer", "Writer"];
 
 /**
  * Circular colour portrait with a slowly rotating ring of words around it. Kept plain on purpose.

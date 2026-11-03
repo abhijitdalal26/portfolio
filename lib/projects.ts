@@ -41,7 +41,7 @@ export const projects: Project[] = [
     title: "ClipTrail",
     tagline: "Your Clipboard, Everywhere",
     order: 12,
-    status: "current",
+    status: "done",
     kind: "Desktop · Mobile · Systems",
     tags: ["Rust", "Tauri 2", "React", "TypeScript", "Kotlin", "SQLite", "Android"],
     blurb: "Open-source clipboard history that syncs end-to-end encrypted between Windows, macOS, Linux and Android. Search everything you've copied and paste it on any device.",

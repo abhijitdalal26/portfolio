@@ -827,6 +827,14 @@ body {
   color: var(--ink);
   padding-right: 0.04em;
 }
+.footer-hello-arrow {
+  display: inline-block;
+  font-weight: 300;
+  font-size: 0.55em;
+  color: var(--sub);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.footer-hello-link:hover .footer-hello-arrow { transform: translate(10px, -10px); }
 .footer-hello-link:hover em { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 0.12em; }
 @media (max-width: 720px) {
   .footer-hello { padding-top: 48px; }
@@ -924,6 +932,10 @@ body {
   flex-direction: column;
   justify-content: center;
   overflow-y: auto;
+  transition: opacity 0.2s ease;
+}
+@media (min-width: 721px) {
+  .toc-panel-hidden { opacity: 0; pointer-events: none; }
 }
 
 .toc-panel-inner { padding: 48px 32px; }

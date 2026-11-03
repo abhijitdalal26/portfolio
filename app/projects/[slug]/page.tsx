@@ -7,6 +7,11 @@ import { FadeUp } from "@/components/FadeUp";
 import { ScreenshotCarousel } from "@/components/ScreenshotCarousel";
 import { ProjectVideo } from "@/components/ProjectVideo";
 
+/** One size for the header action buttons (GitHub, live site, Play Store) so they line up. */
+const HEADER_BTN = { padding: "10px 18px", fontSize: 14 } as const;
+// .btn-ghost has a 1px border; match its height on the filled button.
+const HEADER_BTN_FILLED = { ...HEADER_BTN, border: "1px solid transparent" } as const;
+
 function ArrowUpRight() {
   return (
     <svg width={13} height={13} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -77,12 +82,12 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
 
             <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center", marginBottom: 36 }}>
               {project.github && (
-                <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ padding: "10px 18px", fontSize: 14 }}>
+                <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn-ghost" style={HEADER_BTN}>
                   <GitHubIcon /> GitHub
                 </a>
               )}
               {project.liveDemo && (
-                <a href={project.liveDemo} className="btn-primary">
+                <a href={project.liveDemo} className="btn-primary" style={HEADER_BTN_FILLED}>
                   {project.liveDemoLabel ?? "Try it: chat with the model"} <ArrowUpRight />
                 </a>
               )}
@@ -92,7 +97,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-ghost"
-                  style={{ display: "inline-flex", alignItems: "center", gap: 9 }}
+                  style={{ ...HEADER_BTN, gap: 9 }}
                 >
                   <GooglePlayIcon />
                   Get it on Google Play
