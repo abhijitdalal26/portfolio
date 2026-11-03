@@ -639,27 +639,6 @@ body {
 /* Connect group */
 .hero-connect { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 
-.cv-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  height: 46px;
-  padding: 0 20px;
-  border-radius: 999px;
-  background: var(--ink);
-  color: var(--bg);
-  font-size: 14.5px;
-  font-weight: 600;
-  text-decoration: none;
-  box-shadow: 0 10px 26px -14px color-mix(in srgb, var(--ink) 80%, transparent);
-  transition: background 0.25s ease, color 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
-}
-.cv-btn-arrow { display: inline-block; transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
-.cv-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 32px -14px color-mix(in srgb, var(--ink) 85%, transparent);
-}
-.cv-btn:hover .cv-btn-arrow { transform: translate(2px, -2px); }
 
 .hero-links { display: flex; flex-wrap: wrap; gap: 8px; }
 .hero-link {
@@ -783,13 +762,12 @@ body {
 @media (max-width: 720px) {
   .hero-shell { margin-top: -80px; padding-top: 80px; }
 }
-/* Phones: CV full width, socials as a tidy 4-up row of icon-over-label tiles */
+/* Phones: socials as a tidy 4-up row of icon-over-label tiles */
 @media (max-width: 520px) {
   .portrait-ring { width: 200px; }
   .topo { width: 760px; height: 760px; }
   .portrait-ring-text text { font-size: 17px; letter-spacing: 0.16em; }
   .hero-connect { align-items: stretch; }
-  .cv-btn { justify-content: center; height: 50px; }
   .hero-links { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
   .hero-link {
     flex-direction: column;
@@ -849,14 +827,6 @@ body {
   color: var(--ink);
   padding-right: 0.04em;
 }
-.footer-hello-arrow {
-  display: inline-block;
-  font-weight: 300;
-  font-size: 0.55em;
-  color: var(--sub);
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.footer-hello-link:hover .footer-hello-arrow { transform: translate(10px, -10px); }
 .footer-hello-link:hover em { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 0.12em; }
 @media (max-width: 720px) {
   .footer-hello { padding-top: 48px; }

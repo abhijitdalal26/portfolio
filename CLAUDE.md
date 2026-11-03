@@ -37,13 +37,13 @@ app/
   sitemap.ts            # Auto-generated sitemap (posts + projects)
   robots.ts
 components/
-  Nav.tsx              # "use client" — nav links (Projects, Blog), hamburger menu on mobile, theme toggle. CV is NOT in the nav — it is the main button in the hero connect group.
+  Nav.tsx              # "use client" — nav links (Projects, Blog), hamburger menu on mobile, theme toggle, and a "Resume" link (opens `RESUME_URL` from `lib/resume.ts` in a new tab; also in the mobile menu). The resume lives only in the nav, not in the hero.
   Providers.tsx        # "use client" — wraps children with ThemeProvider
   Footer.tsx           # Big "Say hello" email call-to-action, name, ©, Mumbai + live IST time, social icons
   ProjectCard.tsx      # "use client" — homepage card: image (or cat/dog-style split cardPreview) + title/tagline, whole card links to detail page
   StackMarquees.tsx   # Scrolling Areas/Stack pill strips (shared by the homepage and the About page)
   Toc.tsx              # "use client" — blog post table of contents: fixed toggle button in the post's own header (not the global nav), opens a left-side panel (not full-screen), stays open until explicitly closed
-  HomeHero.tsx         # Homepage hero: bold "Abhijit" + italic serif "Dalal" (same ink colour) with a grey hand-drawn swoosh, plain intro text, connect group (View CV button + GitHub/LinkedIn/X/Substack buttons with brand-coloured icon badges — email is only in the footer), PortraitRing with TopoLines behind it. Pulled up under the transparent home nav.
+  HomeHero.tsx         # Homepage hero: bold "Abhijit" + italic serif "Dalal" (same ink colour) with a grey hand-drawn swoosh, plain intro text, connect group (GitHub/LinkedIn/X/Substack buttons with brand-coloured icon badges — the resume is in the nav, email is only in the footer), PortraitRing with TopoLines behind it. Pulled up under the transparent home nav.
   TopoLines.tsx        # Faint static topographic contour loops radiating from behind the portrait (generated at build time, radial-mask fade)
   PortraitRing.tsx     # Colour circular portrait with a plain rotating "Student · Builder · Engineer · Writer" ring — deliberately no accent colour or glow (pure SVG + CSS)
   LocalTime.tsx        # "use client" — live Mumbai (IST) HH:MM clock shown in the footer
@@ -86,11 +86,11 @@ Text hierarchy (Notion-style): headings, primary reading content (story paragrap
 - `max-width: 720px` — mobile: 20px padding, single-column grids, hamburger nav
 - `max-width: 560px` — blog rows stack vertically
 - `max-width: 900px` — hero stacks and centres (portrait on top)
-- `max-width: 520px` — hero CV becomes full width, socials become a 4-up row of icon-over-label tiles
+- `max-width: 520px` — hero socials become a 4-up row of icon-over-label tiles
 - `max-width: 400px` — 16px side padding
 
 ### Key utility classes
-`.page-wrap`, `.grid-2`, `.grid-2-wide`, `.about-cols`, `.blog-row`, `.hero-shell`, `.hero`, `.hero-name`, `.hero-name-accent`, `.hero-intro`, `.cv-btn`, `.hero-link` (+ `.hero-link-<brand>`), `.portrait-ring`, `.about-photo`, `.btn-primary`, `.btn-ghost`, `.chip`, `.prose`, `.pulse-dot`, `.s-pt-80`, `.s-pt-64`, `.s-pb-88`
+`.page-wrap`, `.grid-2`, `.grid-2-wide`, `.about-cols`, `.blog-row`, `.hero-shell`, `.hero`, `.hero-name`, `.hero-name-accent`, `.hero-intro`, `.hero-link` (+ `.hero-link-<brand>`), `.portrait-ring`, `.about-photo`, `.btn-primary`, `.btn-ghost`, `.chip`, `.prose`, `.pulse-dot`, `.s-pt-80`, `.s-pt-64`, `.s-pb-88`
 
 `.prose h2`/`h3` have `scroll-margin-top: 160px` so jumping to a TOC anchor leaves the tail of the previous section visible instead of snapping the heading flush to the viewport top.
 
@@ -159,6 +159,8 @@ Projects to feature on the site, in the order worked on (from `abhijitdalal26` G
 - [x] `skydrift` — solo flying sim built on top of the open-source `birds.cafe` (github.com/kanavtwtgg/birds.cafe), credited via a `links` entry. Uses `heroEmbed` (first project to do so) pointed at the live Cloudflare Pages deployment instead of a static hero image/video. `status: "done"` (not actively being worked on). Copy deliberately only covers what's live in v1 (solo flight + island biomes) — the repo also has a real-time multiplayer/stranger-chat layer, but it's disabled for the v1 launch, so it's left out of the write-up rather than describing an unshipped feature.
 - [x] `play-store-app-analysis` — Play Store market research (2022 archive + fresh 2026 scrape). Has 19 real `diagrams` (static + interactive Plotly embeds) + `papers`/`links` to the Kaggle datasets/notebook.
 - [x] `projects-wiki` — markdown-based persistent memory/wiki system for working with LLMs across sessions (`RICKPRIME.md`/`MORTY.md`/`portal` command catalog). `order: 6`, no `diagrams`/`architectureSteps` (nothing to benchmark or diagram — it's pure workflow/docs tooling), just `story`/`howItWorks`.
+
+- [x] `cliptrail` — cross-device encrypted clipboard history (Rust/Tauri/Android). `order: 12`, `status: "current"`. Deliberately minimal (user request): blurb, two-line `story`, hero/thumbnail = the project site's social card, links to the site, docs and security page. The project's own README and site carry the full explanation — don't expand it here.
 
 Every project currently in `lib/projects.ts` has a full write-up. `bookscroller` (Skrolla) is the only remaining `status: "current"` project (still being built out, not yet at final content).
 

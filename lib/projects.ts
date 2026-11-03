@@ -37,6 +37,29 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "cliptrail",
+    title: "ClipTrail",
+    tagline: "Your Clipboard, Everywhere",
+    order: 12,
+    status: "current",
+    kind: "Desktop · Mobile · Systems",
+    tags: ["Rust", "Tauri 2", "React", "TypeScript", "Kotlin", "SQLite", "Android"],
+    blurb: "Open-source clipboard history that syncs end-to-end encrypted between Windows, macOS, Linux and Android. Search everything you've copied and paste it on any device.",
+    github: "https://github.com/abhijitdalal26/cliptrail",
+    liveDemo: "https://abhijitdalal26.github.io/cliptrail/",
+    liveDemoLabel: "Visit the site",
+    heroImage: "/projects/cliptrail/cliptrail.png",
+    thumbnail: "/projects/cliptrail/cliptrail.png",
+    links: [
+      { label: "Docs", href: "https://abhijitdalal26.github.io/cliptrail/docs/" },
+      { label: "Security", href: "https://abhijitdalal26.github.io/cliptrail/security.html" },
+    ],
+    story: [
+      "ClipTrail keeps everything you copy (text, links, code, images, files), sorts it by kind and makes it searchable from a quick picker. Copy on the laptop, paste on the phone.",
+      "One Rust core runs on every platform. Devices pair by QR code and sync over Wi-Fi or a self-hosted relay; clips are end-to-end encrypted, and the history is encrypted on disk too. Still in active development.",
+    ],
+  },
+  {
     slug: "big-business-map",
     title: "Big Business Map",
     tagline: "The World's Biggest Companies, Mapped",

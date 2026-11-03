@@ -10,7 +10,6 @@ export function Footer() {
         <p className="footer-hello-eyebrow">Have an idea, a question, or just want to talk?</p>
         <a href="mailto:abhijitdalal2609@gmail.com" className="footer-hello-link">
           Say <em>hello</em>
-          <span className="footer-hello-arrow" aria-hidden="true">↗</span>
         </a>
       </div>
       <div className="page-wrap footer-row">
