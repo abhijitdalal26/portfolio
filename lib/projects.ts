@@ -53,6 +53,8 @@ export const projects: Project[] = [
     logo: "/projects/hacksmedia/logo.png",
     screenshots: [
       "/projects/hacksmedia/watch.webp",
+      "/projects/hacksmedia/podcasts.webp",
+      "/projects/hacksmedia/episode.webp",
       "/projects/hacksmedia/topic.webp",
       "/projects/hacksmedia/quotes-shelf.webp",
       "/projects/hacksmedia/topics.webp",
