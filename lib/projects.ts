@@ -51,8 +51,18 @@ export const projects: Project[] = [
     heroImage: "/projects/hacksmedia/home.webp",
     thumbnail: "/projects/hacksmedia/home.webp",
     logo: "/projects/hacksmedia/logo.png",
-    screenshots: ["/projects/hacksmedia/watch.webp", "/projects/hacksmedia/book.webp"],
-    links: [
+    screenshots: [
+      "/projects/hacksmedia/watch.webp",
+      "/projects/hacksmedia/topic.webp",
+      "/projects/hacksmedia/quotes-shelf.webp",
+      "/projects/hacksmedia/topics.webp",
+      "/projects/hacksmedia/book.webp",
+      "/projects/hacksmedia/books.webp",
+      "/projects/hacksmedia/search.webp",
+      "/projects/hacksmedia/about.webp",
+    ],
+    // plain text links (the `papers` slot renders underlined links, not buttons)
+    papers: [
       { label: "HackerTube", href: "https://hackertube.org" },
       { label: "HackerBooks", href: "https://hackerbooks.org" },
       { label: "HackerBlogs", href: "https://hackerblogs.app" },
