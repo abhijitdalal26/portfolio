@@ -162,6 +162,8 @@ Projects to feature on the site, in the order worked on (from `abhijitdalal26` G
 
 - [x] `cliptrail` — cross-device encrypted clipboard history (Rust/Tauri/Android). `order: 12`, `status: "done"` (user wants it with the normal projects, not "Currently Working On"). Deliberately minimal (user request): blurb, two-line `story`, hero/thumbnail = the project site's social card, links to the site, docs and security page. The project's own README and site carry the full explanation — don't expand it here.
 
+- [x] `hacksmedia` — HacksMedia, unified HackerTube/HackerBooks/HackerBlogs knowledge discovery site (https://hacksmedia.vercel.app). `order: 13`, `status: "done"` (user wants it in Projects, not "Currently Working On"). `story` uses the user's own words from `abhijits-words/Projects/hacksmedia.md` (typos fixed only; the research-paper idea left out because it isn't built). `github: ""` because the repo is private, so no GitHub button. Screenshots are of the live site.
+
 Every project currently in `lib/projects.ts` has a full write-up. `bookscroller` (Skrolla) is the only remaining `status: "current"` project (still being built out, not yet at final content).
 
 When picking up the next one: ask what images/diagrams the user has ready in `public/projects/<slug>/` (or check what's already there), write `story` + `howItWorks` following the two-audience split above, and check if a real model/architecture file exists in the project's own GitHub repo before writing any specifics — pull exact values (layer configs, hyperparameters) from there rather than guessing.

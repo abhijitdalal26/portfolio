@@ -37,6 +37,37 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "hacksmedia",
+    title: "HacksMedia",
+    tagline: "YouTube and Google Books, but for Hacker News",
+    order: 13,
+    status: "done",
+    kind: "Web · Knowledge Discovery",
+    tags: ["Next.js 16", "React 19", "TypeScript", "SQLite", "Python", "Cloudflare R2", "Vercel"],
+    blurb: "A knowledge discovery platform where HackerTube, HackerBooks and HackerBlogs belong together. Videos, books and blogs in their own sections, and if you want to go deeper, the related things are right there.",
+    github: "",
+    liveDemo: "https://hacksmedia.vercel.app",
+    liveDemoLabel: "Visit the site",
+    heroImage: "/projects/hacksmedia/home.webp",
+    thumbnail: "/projects/hacksmedia/home.webp",
+    logo: "/projects/hacksmedia/logo.png",
+    screenshots: ["/projects/hacksmedia/watch.webp", "/projects/hacksmedia/book.webp"],
+    links: [
+      { label: "HackerTube", href: "https://hackertube.org" },
+      { label: "HackerBooks", href: "https://hackerbooks.org" },
+      { label: "HackerBlogs", href: "https://hackerblogs.app" },
+    ],
+    story: [
+      "Recently HackerTube and HackerBooks got so much attention (the Karpathy thing), so I was thinking of a platform where those things belong together. It's like YouTube and Google Books, but for Hacker News. HackerTube, HackerBooks and HackerBlogs are all solving the same problem but are different. What I want to build is the unified version.",
+      "Videos, books and blogs are the main thing. I know we can't mix the books and videos, so we keep them separate, but if you want to go deeper you will be able to see the related things. As you're watching a video you see related videos, books, blogs and articles below it, so you can go in any direction you want on the topic you are consuming, as deep as you want.",
+      "The Hacker News data is publicly available and these people already created a lot, so we build on top of that, and keep the good features from all three sites.",
+    ],
+    howItWorks: [
+      "One catalog of about 31,700 videos, books, blogs and podcasts, with 464,000 original Hacker News comments, built by a Python pipeline from the open Hacker News archive and the data HackerTube, HackerBooks and HackerBlogs published. It lives in a single SQLite database; covers, blog images and the catalog itself are served from Cloudflare R2.",
+      "The web app is Next.js 16 and React 19 on Vercel, with one JSON API that the web uses today and a mobile app can use later, so the backend stays the same for both. Related items are computed across types, so every page links out to videos, books and blogs on the same topic. There are no accounts: saves, lists and history stay in your browser.",
+    ],
+  },
+  {
     slug: "cliptrail",
     title: "ClipTrail",
     tagline: "Your Clipboard, Everywhere",
