@@ -8,7 +8,7 @@ Personal portfolio + blog for Abhijit Dalal.
 npm run dev      # Start dev server (http://localhost:3002)
 npm run build    # Static export to out/
 npm run lint     # ESLint
-git push         # Deploy: Cloudflare Pages builds main automatically
+git push         # Deploy: Cloudflare Workers Builds deploys main automatically
 ```
 
 ## Stack
@@ -138,12 +138,12 @@ The GitHub button always renders with the actual GitHub logo icon (`GitHubIcon` 
 
 ## Deployment
 
-- **Host:** Cloudflare Pages (moved from Vercel 2026-11-08). The site is a fully static export (`output: "export"`, `images.unoptimized` in `next.config.ts`), so there's no server: no API routes, no ISR, no `next/image` resizing. `app/sitemap.ts` / `app/robots.ts` need `export const dynamic = "force-static"`.
-- **Pages build settings:** branch `main`, build command `npm run build`, output dir `out`, env var `NEXT_PUBLIC_SITE_URL` = the custom domain (read by `lib/site.ts`; used for metadata, sitemap, robots).
+- **Host:** Cloudflare Workers with static assets (Worker `portfolio`, moved from Vercel 2026-11-08; created as a Worker, not a Pages project). The site is a fully static export (`output: "export"`, `images.unoptimized` in `next.config.ts`), so there's no server: no API routes, no ISR, no `next/image` resizing. `app/sitemap.ts` / `app/robots.ts` need `export const dynamic = "force-static"`.
+- **Build settings (Workers Builds):** branch `main`, build command `npm run build`, deploy command `npx wrangler deploy`. `wrangler.jsonc` points `assets.directory` at `./out` with `not_found_handling: "404-page"` — without it wrangler auto-detects Next.js and tries an OpenNext server build, which fails. Build env var `NEXT_PUBLIC_SITE_URL` = `https://abhijitdalal.com` (read by `lib/site.ts`; used for metadata, sitemap, robots). Fallback URL: https://portfolio.abhijitdalal2609.workers.dev
 - **Live URL:** https://abhijitdalal.com (domain bought on Namecheap, nameservers pointed at Cloudflare; also the default in `lib/site.ts`).
 - **Analytics:** Cloudflare Web Analytics, enabled in the Pages dashboard (no code). Vercel Analytics/Speed Insights were removed.
 - **Substack feed** (`lib/substack.ts`) is fetched at build time only, so new Substack posts show up on the next deploy.
-- **Size limit:** Cloudflare Pages caps each file at 25 MiB. The largest today is the ~22.5 MB ONNX wasm for the Harry Potter chat demo.
+- **Size limit:** Cloudflare caps each file at 25 MiB. The largest today is the ~22.5 MB ONNX wasm for the Harry Potter chat demo.
 - **GitHub:** https://github.com/abhijitdalal26/portfolio
 - Old Vercel deployment (`abhijitdalal.vercel.app`, project `portfolio-website`) can be retired once the domain is live.
 
