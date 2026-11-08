@@ -3,12 +3,11 @@ import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Providers } from "@/components/Providers";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SITE_URL } from "@/lib/site";
 
 const title = { template: "%s | Abhijit Dalal", default: "Abhijit Dalal" };
 const description = "I build apps and study how intelligence works. Engineer from India.";
-const siteUrl = "https://abhijitdalal.vercel.app";
+const siteUrl = SITE_URL;
 
 export const metadata: Metadata = {
   title,
@@ -58,8 +57,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
           <Footer />
         </Providers>
-        <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );

@@ -6,9 +6,9 @@ Personal portfolio + blog for Abhijit Dalal.
 
 ```bash
 npm run dev      # Start dev server (http://localhost:3002)
-npm run build    # Production build
+npm run build    # Static export to out/
 npm run lint     # ESLint
-vercel --prod    # Deploy to Vercel
+git push         # Deploy: Cloudflare Pages builds main automatically
 ```
 
 ## Stack
@@ -138,10 +138,14 @@ The GitHub button always renders with the actual GitHub logo icon (`GitHubIcon` 
 
 ## Deployment
 
-- **Live URL:** https://abhijitdalal.vercel.app
+- **Host:** Cloudflare Pages (moved from Vercel 2026-11-08). The site is a fully static export (`output: "export"`, `images.unoptimized` in `next.config.ts`), so there's no server: no API routes, no ISR, no `next/image` resizing. `app/sitemap.ts` / `app/robots.ts` need `export const dynamic = "force-static"`.
+- **Pages build settings:** branch `main`, build command `npm run build`, output dir `out`, env var `NEXT_PUBLIC_SITE_URL` = the custom domain (read by `lib/site.ts`; used for metadata, sitemap, robots).
+- **Domain:** bought on Namecheap, nameservers pointed at Cloudflare.
+- **Analytics:** Cloudflare Web Analytics, enabled in the Pages dashboard (no code). Vercel Analytics/Speed Insights were removed.
+- **Substack feed** (`lib/substack.ts`) is fetched at build time only, so new Substack posts show up on the next deploy.
+- **Size limit:** Cloudflare Pages caps each file at 25 MiB. The largest today is the ~22.5 MB ONNX wasm for the Harry Potter chat demo.
 - **GitHub:** https://github.com/abhijitdalal26/portfolio
-- **Vercel project:** `portfolio-website` (abhijit-dalals-projects team)
-- To enable auto-deploy on push: Vercel dashboard → Settings → Git → connect repo
+- Old Vercel deployment (`abhijitdalal.vercel.app`, project `portfolio-website`) can be retired once the domain is live.
 
 ## Project Content Status
 

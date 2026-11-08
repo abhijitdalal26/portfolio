@@ -1,8 +1,11 @@
 import { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/posts";
 import { projects } from "@/lib/projects";
+import { SITE_URL } from "@/lib/site";
 
-const BASE_URL = "https://abhijitdalal.vercel.app";
+export const dynamic = "force-static";
+
+const BASE_URL = SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
