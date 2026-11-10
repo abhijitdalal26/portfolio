@@ -1,6 +1,11 @@
 {
   "redirects": [
     {
+      "source": "/",
+      "destination": "https://abhijitdalal.com/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "destination": "https://abhijitdalal.com/:path*",
       "permanent": true
