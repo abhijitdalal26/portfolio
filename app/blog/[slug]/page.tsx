@@ -7,6 +7,7 @@ import rehypeExternalLinks from "rehype-external-links";
 import { getAllPosts, getPost, formatDate } from "@/lib/posts";
 import { extractHeadings } from "@/lib/toc";
 import { Toc } from "@/components/Toc";
+import { SITE_URL } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -18,7 +19,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) return {};
-  return { title: post.title, description: post.description };
+  return {
+    title: post.title,
+    description: post.description,
+    alternates: { canonical: `/blog/${slug}` },
+  };
 }
 
 export default async function BlogPost({ params }: Props) {
@@ -28,8 +33,23 @@ export default async function BlogPost({ params }: Props) {
 
   const headings = extractHeadings(post.content);
 
+  // Tells search engines this page is an article, who wrote it and when.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    url: `${SITE_URL}/blog/${slug}`,
+    author: { "@type": "Person", name: "Abhijit Dalal", url: SITE_URL },
+  };
+
   return (
     <div style={{ background: "var(--bg)", minHeight: "100vh" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="page-wrap s-pt-80" style={{ paddingBottom: 96 }}>
         <div style={{ maxWidth: 680, margin: "0 auto" }}>
 

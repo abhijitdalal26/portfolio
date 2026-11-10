@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   title,
   description,
   metadataBase: new URL(siteUrl),
+  robots: { index: true, follow: true },
   openGraph: {
     title: "Abhijit Dalal",
     description,

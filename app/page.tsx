@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { HomeHero } from "@/components/HomeHero";
 import { FadeUp } from "@/components/FadeUp";
@@ -6,6 +7,35 @@ import { StackMarquees } from "@/components/StackMarquees";
 import { getProjectsByStatus } from "@/lib/projects";
 import { getAllPosts } from "@/lib/posts";
 import { getSubstackPosts, formatSubstackDate } from "@/lib/substack";
+import { SITE_URL } from "@/lib/site";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
+
+// Tells search engines who this site belongs to and links the social profiles,
+// so a search for the name can show this site alongside them.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      name: "Abhijit Dalal",
+      url: SITE_URL,
+    },
+    {
+      "@type": "Person",
+      name: "Abhijit Dalal",
+      url: SITE_URL,
+      image: `${SITE_URL}/og-image.png`,
+      jobTitle: "Engineer",
+      sameAs: [
+        "https://github.com/abhijitdalal26",
+        "https://www.linkedin.com/in/abhijitdalal/",
+        "https://x.com/abhijitdalal26",
+        "https://abhijitdalal.substack.com/",
+      ],
+    },
+  ],
+};
 
 export default async function Home() {
   const current = getProjectsByStatus("current");
@@ -34,6 +64,10 @@ export default async function Home() {
 
   return (
     <div style={{ background: "var(--bg)", color: "var(--ink)", fontFamily: "var(--sans)" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       <HomeHero />
 

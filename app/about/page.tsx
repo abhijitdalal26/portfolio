@@ -3,7 +3,7 @@ import Image from "next/image";
 import { RESUME_URL } from "@/lib/resume";
 import { StackMarquees } from "@/components/StackMarquees";
 
-export const metadata: Metadata = { title: "About" };
+export const metadata: Metadata = { title: "About", alternates: { canonical: "/about" } };
 
 export default function About() {
   return (

@@ -145,7 +145,8 @@ The GitHub button always renders with the actual GitHub logo icon (`GitHubIcon` 
 - **Substack feed** (`lib/substack.ts`) is fetched at build time only, so new Substack posts show up on the next deploy.
 - **Size limit:** Cloudflare caps each file at 25 MiB. The largest today is the ~22.5 MB ONNX wasm for the Harry Potter chat demo.
 - **GitHub:** https://github.com/abhijitdalal26/portfolio
-- Old Vercel deployment (`abhijitdalal.vercel.app`, project `portfolio-website`) can be retired once the domain is live.
+- Old Vercel deployment (`abhijitdalal.vercel.app`, project `portfolio-website`): `vercel.json` 301-redirects every path to the same path on https://abhijitdalal.com, so old links and Google rankings carry over. Keep the Vercel project alive (don't delete it) or old links break.
+- **SEO:** every page sets `alternates.canonical` (pointing at abhijitdalal.com) so the workers.dev and vercel.app copies never compete in search. The homepage has Person/WebSite JSON-LD (with `sameAs` social links) and blog posts have BlogPosting JSON-LD. New pages need their own `alternates: { canonical: "/path" }` — it is deliberately not set in the root layout.
 
 ## Project Content Status
 

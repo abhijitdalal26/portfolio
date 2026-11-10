@@ -4,7 +4,7 @@ import { getAllPosts, formatDate } from "@/lib/posts";
 import { getSubstackPosts, formatSubstackDate } from "@/lib/substack";
 import { JuliaHero } from "@/components/JuliaHero";
 
-export const metadata: Metadata = { title: "Blog" };
+export const metadata: Metadata = { title: "Blog", alternates: { canonical: "/blog" } };
 
 export default async function Blog() {
   const posts = getAllPosts();

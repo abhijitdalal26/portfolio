@@ -6,6 +6,7 @@ import { StageComparison } from "@/components/StageComparison";
 export const metadata: Metadata = {
   title: "Chat: Harry Potter GPT",
   description: "Chat with the DPO-aligned Harry Potter GPT model, running entirely in your browser.",
+  alternates: { canonical: "/projects/harry-potter-gpt/chat" },
 };
 
 export default function HarryPotterChatPage() {
