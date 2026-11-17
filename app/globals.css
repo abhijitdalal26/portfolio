@@ -133,7 +133,7 @@ body {
 #projects { scroll-margin-top: 24px; }
 
 /* ── Blog hero (JuliaHero background + title panel) ──────── */
-.blog-hero       { min-height: clamp(360px, 52vh, 520px); }
+.blog-hero       { min-height: clamp(360px, 52vh, 520px); display: flex; align-items: flex-end; }
 .blog-hero-inner { padding-top: 120px; padding-bottom: 44px; }
 
 @media (max-width: 720px) {
@@ -144,8 +144,8 @@ body {
   .marquee-label{ padding: 10px 20px 0; }
   .about-main   { padding-top: 40px; padding-bottom: 40px; }
   .about-social { justify-content: center; }
-  .blog-hero       { min-height: clamp(220px, 32vh, 300px); }
-  .blog-hero-inner { padding-top: 44px; padding-bottom: 24px; }
+  .blog-hero       { min-height: clamp(300px, 46vh, 420px); align-items: center; }
+  .blog-hero-inner { padding-top: 32px; padding-bottom: 32px; }
 }
 
 /* ── Hover helpers (CSS-only, usable from Server Components) ── */
@@ -791,6 +791,7 @@ body {
   padding: 12px 14px;
   margin: 0 -14px;
 }
+.blog-row-meta { text-align: right; }
 @media (max-width: 560px) {
   .blog-row             { flex-direction: column; gap: 4px; padding: 10px 14px; }
   .blog-row-meta        { text-align: left; padding-top: 0; }

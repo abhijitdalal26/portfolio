@@ -17,8 +17,6 @@ export default async function Blog() {
         style={{
           position: "relative",
           overflow: "hidden",
-          display: "flex",
-          alignItems: "flex-end",
         }}
       >
         <JuliaHero />
@@ -49,34 +47,9 @@ export default async function Blog() {
       <div className="page-wrap" style={{ paddingTop: 48, paddingBottom: 88 }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
 
-          {posts.length === 0 ? (
-            <p style={{ color: "var(--faint)" }}>No posts yet.</p>
-          ) : (
-            <div>
-              {posts.map((post, i) => (
-                <div key={post.slug}>
-                  {i > 0 && <div style={{ height: 1, background: "var(--line)" }} />}
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="hover-row blog-row"
-                  >
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <p style={{ fontSize: 17, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.02em", lineHeight: 1.3, marginBottom: 6 }}>{post.title}</p>
-                      <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--ink)" }}>{post.description}</p>
-                    </div>
-                    <div className="blog-row-meta" style={{ flexShrink: 0, paddingTop: 2, textAlign: "right" }}>
-                      <p style={{ fontSize: 12.5, color: "var(--sub)", fontFamily: "var(--mono)", marginBottom: 6, whiteSpace: "nowrap" }}>{formatDate(post.date)}</p>
-                      <span style={{ fontSize: 13, color: "var(--sub)", fontWeight: 500 }}>Read →</span>
-                    </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          )}
-
           {substackPosts.length > 0 && (
-            <div style={{ marginTop: 64 }}>
-              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 16, borderTop: "1px solid var(--line)", paddingTop: 24, marginBottom: 8, flexWrap: "wrap" }}>
+            <div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, marginBottom: 8, flexWrap: "wrap" }}>
                 <h2 style={{ fontFamily: "var(--sans)", fontSize: 22, fontWeight: 600, letterSpacing: "-0.03em", color: "var(--ink)" }}>
                   Writing on Substack
                 </h2>
@@ -84,9 +57,16 @@ export default async function Blog() {
                   href="https://abhijitdalal.substack.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ fontSize: 13, color: "var(--sub)", fontWeight: 500 }}
+                  aria-label="Subscribe on Substack"
+                  title="Subscribe on Substack"
+                  style={{ display: "inline-flex", alignItems: "center" }}
                 >
-                  Subscribe ↗
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"
+                      fill="#FF6719"
+                    />
+                  </svg>
                 </a>
               </div>
 
@@ -109,12 +89,43 @@ export default async function Blog() {
                         {post.description && (
                           <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--ink)" }}>{post.description}</p>
                         )}
-                      </div>
-                      <div className="blog-row-meta" style={{ flexShrink: 0, paddingTop: 2, textAlign: "right" }}>
-                        <p style={{ fontSize: 12.5, color: "var(--sub)", fontFamily: "var(--mono)", marginBottom: 6, whiteSpace: "nowrap" }}>{formatSubstackDate(post.date)}</p>
-                        <span style={{ fontSize: 13, color: "var(--sub)", fontWeight: 500 }}>Read on Substack ↗</span>
+                        <p style={{ fontSize: 12.5, color: "var(--sub)", fontFamily: "var(--mono)", marginTop: 6 }}>{formatSubstackDate(post.date)}</p>
                       </div>
                     </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {posts.length === 0 ? (
+            substackPosts.length === 0 && <p style={{ color: "var(--faint)" }}>No posts yet.</p>
+          ) : (
+            <div style={{ marginTop: substackPosts.length > 0 ? 64 : 0 }}>
+              {substackPosts.length > 0 && (
+                <div style={{ borderTop: "1px solid var(--line)", paddingTop: 24, marginBottom: 8 }}>
+                  <h2 style={{ fontFamily: "var(--sans)", fontSize: 22, fontWeight: 600, letterSpacing: "-0.03em", color: "var(--ink)" }}>
+                    From the blog
+                  </h2>
+                </div>
+              )}
+              <div>
+                {posts.map((post, i) => (
+                  <div key={post.slug}>
+                    {i > 0 && <div style={{ height: 1, background: "var(--line)" }} />}
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="hover-row blog-row"
+                    >
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <p style={{ fontSize: 17, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.02em", lineHeight: 1.3, marginBottom: 6 }}>{post.title}</p>
+                        <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--ink)" }}>{post.description}</p>
+                      </div>
+                      <div className="blog-row-meta" style={{ flexShrink: 0, paddingTop: 2 }}>
+                        <p style={{ fontSize: 12.5, color: "var(--sub)", fontFamily: "var(--mono)", marginBottom: 6, whiteSpace: "nowrap" }}>{formatDate(post.date)}</p>
+                        <span style={{ fontSize: 13, color: "var(--sub)", fontWeight: 500 }}>Read →</span>
+                      </div>
+                    </Link>
                   </div>
                 ))}
               </div>

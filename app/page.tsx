@@ -25,7 +25,7 @@ const jsonLd = {
       "@type": "Person",
       name: "Abhijit Dalal",
       url: SITE_URL,
-      image: `${SITE_URL}/og-image.png`,
+      image: `${SITE_URL}/og-cover.png`,
       jobTitle: "Engineer",
       sameAs: [
         "https://github.com/abhijitdalal26",

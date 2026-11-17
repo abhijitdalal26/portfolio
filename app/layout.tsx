@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     siteName: "Abhijit Dalal",
     images: [
       {
-        url: `${siteUrl}/og-image.png`,
+        url: `${siteUrl}/og-cover.png?v=2`,
         width: 1200,
         height: 630,
         alt: "Abhijit Dalal — Student, Builder, Engineer",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     creator: "@abhijitdalal26",
     title: "Abhijit Dalal",
     description,
-    images: [`${siteUrl}/og-image.png`],
+    images: [`${siteUrl}/og-cover.png?v=2`],
   },
 };
 
