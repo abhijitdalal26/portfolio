@@ -119,7 +119,7 @@ export const projects: Project[] = [
     screenshots: ["/projects/earth-economy/world-map.png", "/projects/earth-economy/overview.png"],
     story: [
       "Earth Economy is a research site that answers one question: what do the largest companies on earth look like, and where are they? It pulls together the Forbes Global 2000 and Fortune Global 500, adds big unlisted Indian companies and large private firms, and sets them against world GDP, stock markets and venture funding.",
-      "It is still in progress. The company lists are updated to the 2026 editions, and more private and unlisted companies are being added.",
+      "It is a one-time snapshot built on the 2026 editions of both lists. A 25-year view stitches every Forbes edition since 2011 into one history, showing which companies rose and fell from 2001 to 2025 and which kinds of business gained or lost share.",
     ],
   },
   {
